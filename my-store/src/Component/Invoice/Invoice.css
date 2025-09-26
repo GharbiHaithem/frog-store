@@ -1,0 +1,24 @@
+.invoice {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      border: 1px solid #ddd;
+    }
+    
+    .invoice h1 {
+      text-align: center;
+    }
+    
+    .invoice table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .invoice table, .invoice th, .invoice td {
+      border: 1px solid #ddd;
+    }
+    
+    .invoice th, .invoice td {
+      padding: 8px;
+      text-align: left;
+    }
+    

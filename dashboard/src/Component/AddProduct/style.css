@@ -1,0 +1,35 @@
+.custom-file-upload input[type="file"] {
+      display: none;
+    }
+    
+    .custom-file-upload {
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      background-color: #4f8db66d;
+      color: white;
+      border-radius: 5px;
+    
+    }
+    
+    .custom-file-upload:hover {
+      background-color: #aaa;
+    }
+    
+    .custom-file-uploads{
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      background-color: #1d1c1cba;
+      color: white;
+      border-radius: 5px;
+      width: 100%;
+      height: 100%;
+    }
+    .custom-file-uploads input[type="file"] {
+      display: none;
+    }
+    .c:hover{
+background:#2bdf52c2 !important;
+margin-top:10px
+    }
