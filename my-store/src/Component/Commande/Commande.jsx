@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { cartDetails, deletecart, deleteproductfromcart } from '../../features/cart/cartSlice';
 
 import i from '../../assets/spinner-icon-12071.gif'
+import { Helmet } from 'react-helmet-async';
 const Commande = ({userfromstorage,setUserRecover,setDisconnect,disconnect,userRecover}) => {
   const  dispatch = useDispatch()
  

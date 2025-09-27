@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { commandebyid as fn } from '../../features/commande/commandeSlice'
 import { CiEdit } from 'react-icons/ci'
 import html2pdf from 'html2pdf.js';
+import { Helmet } from 'react-helmet-async'
 const DetailsCommande = () => {
       const {id} = useParams()
       const dispatch = useDispatch()

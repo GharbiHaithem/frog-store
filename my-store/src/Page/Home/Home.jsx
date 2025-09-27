@@ -8,6 +8,7 @@ import ProductCard from '../../Component/ProductCard/ProductCard'
 import { useNavigate } from 'react-router-dom'
 import i from '../../assets/acccc-removebg-preview.png'
 import { allproduct } from '../../features/product/productSlice'
+import { Helmet } from 'react-helmet-async'
 const Home = () => {
 const navigate=useNavigate()
 const dispatch = useDispatch()

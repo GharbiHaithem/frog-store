@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { productByid, resetState } from '../../features/product/productSlice'
 import InputQuantity from '../InputQuantity/InputQuantity'
 import { cartDetails, createcart } from '../../features/cart/cartSlice'
+import { Helmet } from 'react-helmet-async'
 
 const SingleProduct = ({ setQuantity, quantity }) => {
   const { id } = useParams()

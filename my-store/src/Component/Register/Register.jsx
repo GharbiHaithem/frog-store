@@ -11,6 +11,7 @@ import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { MdOutlineHolidayVillage } from "react-icons/md";
 import { CiBarcode } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
+import { Helmet } from 'react-helmet-async';
 const Register = () => {
       let signupSchema = yup.object().shape({
     lastname:yup.string().required('lastname is required'),

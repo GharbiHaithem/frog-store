@@ -4,6 +4,7 @@ import { cartDetails, deleteproductfromcart } from '../../features/cart/cartSlic
 import InputQuantity from '../InputQuantity/InputQuantity'
 import { FaTrashCan } from "react-icons/fa6"
 import { useNavigate } from 'react-router'
+import { Helmet } from 'react-helmet-async'
 
 const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload }) => {
   const dispatch = useDispatch()
@@ -49,6 +50,11 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
   }, [detailscart?.items])
 console.log(detailscart?.items?.length)
   return (
+        <>
+        <Helmet>
+          <title>My Cart</title>
+          <meta name="Page de checkout"  content="page a propos des commande a payer"></meta>
+        </Helmet>
     <div className="md:w-[80%] w-full mx-auto min-h-[80vh] py-10">
       <div className="flex flex-col md:flex-row gap-10">
         {/* 🛒 Liste produits */}
@@ -128,6 +134,7 @@ console.log(detailscart?.items?.length)
         )}
       </div>
     </div>
+    </>
   )
 }
 

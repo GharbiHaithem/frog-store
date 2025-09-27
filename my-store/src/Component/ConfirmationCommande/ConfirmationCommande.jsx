@@ -5,6 +5,7 @@ import { cartDetails } from '../../features/cart/cartSlice'
 import GeneratePDF from '../GeneratePdf/GeneratePdf'
 import i from '../../assets/spinner-icon-12071.gif'
 import axios from 'axios'
+import { Helmet } from 'react-helmet-async'
 
 const ConfirmationCommande = () => {
   const user = JSON.parse(localStorage.getItem('user'))
