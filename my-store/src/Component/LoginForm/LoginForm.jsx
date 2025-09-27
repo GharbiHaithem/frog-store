@@ -48,6 +48,11 @@ const [erreur,setErreur]= useState({})
   }, [isSuccess, user, navigate])
 
   return (
+     <>
+       <Helmet>
+         <title>Authentification</title>
+         <meta name="Page d'Authentification "  content="page Authentification"></meta>
+       </Helmet>
     <div className="w-full flex justify-center items-center min-h-[100vh] bg-gray-50 px-5">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6 uppercase">Connectez-vous</h1>
@@ -107,6 +112,7 @@ const [erreur,setErreur]= useState({})
         </p>
       </div>
     </div>
+    </>
   )
 }
 

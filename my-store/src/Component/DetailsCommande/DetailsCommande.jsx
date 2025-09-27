@@ -29,6 +29,11 @@ const DetailsCommande = () => {
             html2pdf().from(element).set(opt).save();
           };
   return (
+       <>
+       <Helmet>
+         <title>Détails Commande</title>
+         <meta name="Page de Détails Commande"  content="page a propos des Détails Commande"></meta>
+       </Helmet>
     <div className='md:w-[80%] w-full mx-auto mb-10   mt-[150px]  h-[100vh] my-10'>
       <h1 className='text-sm font-semibold text-center uppercase  '>Détails de la commande</h1>
     <div ref={componentRef}>
@@ -92,6 +97,7 @@ const DetailsCommande = () => {
       Télécharger le PDF
       </button>
     </div>
+    </>
   )
 }
 

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { createuser, resetState, updateUser } from "../../features/auth/authSlice";
 import i from '../../assets/spinner-icon-12071.gif'
 import x1 from "../../assets/aqw-removebg-preview.png";
+import { Helmet } from "react-helmet-async";
 const Checkout = ({userfromstorage,setUserRecover}) => {
   
     const  dispatch = useDispatch()
@@ -303,6 +304,11 @@ const Checkout = ({userfromstorage,setUserRecover}) => {
     },[disconnection,dispatch])
   console.log(erreur)
   return (
+    <>
+    <Helmet>
+      <title>Checkout</title>
+      <meta name="Page de checkout"  content="page a propos des commande a payer"></meta>
+    </Helmet>
     <div className="md:w-[80%] mx-auto w-full">
       <div className="flex items-center mt-2">
         <div className="mx-5 h-[60px]  flex flex-col  items-center text-lg font-semibold ">
@@ -612,6 +618,7 @@ const Checkout = ({userfromstorage,setUserRecover}) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -44,6 +44,11 @@ const ConfirmationCommande = () => {
 
   return (
     <>
+      
+       <Helmet>
+         <title>Confirmation commande</title>
+         <meta name="Confirmation commande"  content="page Confirmation commande"></meta>
+       </Helmet>
       {!isLoading ? (
         <div className="md:w-[80%] w-full mb-20 mt-12 h-auto mx-auto">
           {/* ✅ Confirmation Message */}

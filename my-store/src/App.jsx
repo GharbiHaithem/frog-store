@@ -18,6 +18,7 @@ import { CiUser } from "react-icons/ci";
 import Register from './Component/Register/Register';
 import CommandeUser  from './Component/CommandeUser/CommandeUser';
 import DetailsCommande from './Component/DetailsCommande/DetailsCommande'
+import {HelmetProvider} from 'react-helmet-async'
 function App() {
   const [openMenu, setOpenMenu] = useState(false)
   const userfromstorage = JSON.parse(localStorage.getItem('user'))
@@ -68,8 +69,8 @@ function App() {
 
   console.log(userRecover?.connected)
   return (
-    <>
-      <div className=''>
+    <HelmetProvider>
+      <div>
 
         <Routes>
           <Route path='/' element={<Layout cartitem={detailscart?.items?.length} setOpenSearch={setOpenSearch} openSearch={openSearch} setOpenMenu={setOpenMenu} openMenu={openMenu} />}>
@@ -161,7 +162,7 @@ function App() {
         </div>
       )}
 
-    </>
+    </HelmetProvider>
   )
 }
 

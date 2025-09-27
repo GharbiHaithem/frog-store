@@ -41,6 +41,12 @@ const SingleProduct = ({ setQuantity, quantity }) => {
   const navigate = useNavigate()
   const { productbyid,isLoading } = useSelector(state => state?.product)
   return (
+     <>
+      
+       <Helmet>
+         <title>{productbyid?.titre}</title>
+         <meta name={productbyid?.titre}  content={productbyid?.titre}></meta>
+       </Helmet>
   <div className='md:w-[80%] mt-[80px] w-[95%] mx-auto bg-white p-4 relative'>
       {isLoadingCart&& <div className='absolute w-full h-full top-0 left-0 bg-[#dbdbdb9f]'>
         <div class="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
@@ -152,7 +158,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
         </div>
       </div>
     </div>
-
+</>
   )
 }
 

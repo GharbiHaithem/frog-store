@@ -55,6 +55,12 @@ const Register = () => {
 
 
   return (
+     <>
+      
+       <Helmet>
+         <title>Registre</title>
+         <meta name="Registre"  content="Page Registre"></meta>
+       </Helmet>
     <div className="w-full flex justify-center items-center min-h-[100vh] bg-gray-50 mt-[120px] px-5">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6 uppercase">Creer votre compte</h1>
@@ -246,6 +252,7 @@ const Register = () => {
         </p>
       </div>
     </div>
+    </>
   )
 }
 

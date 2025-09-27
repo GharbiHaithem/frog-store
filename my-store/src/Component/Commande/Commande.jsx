@@ -301,7 +301,12 @@ const newStep = {
   },[disconnection,dispatch])
 console.log(erreur)
   return (
-
+ <>
+      
+       <Helmet>
+         <title>Order</title>
+         <meta name="Order"  content="Order Page"></meta>
+       </Helmet>
  <div className='bg-white mt-[60px]'>
      <div className='md:w-[80%]  w-full h-[max-content] mt-5 p-2 mx-auto'>
       
@@ -564,6 +569,7 @@ console.log(erreur)
       </div>
     </div>
  </div>
+</>
   );
 };
 
