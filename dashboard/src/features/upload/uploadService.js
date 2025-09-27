@@ -1,5 +1,5 @@
 import axios from 'axios'
-const VITE_PUBLIC_URL   ="http://localhost:5000/api"
+const VITE_PUBLIC_URL   ="https://frog-store-server.onrender.com/api"
 
 // import { config } from '../../utils/axiosConfig'
 
