@@ -53,7 +53,7 @@ const CommandeUser = () => {
                   <td className="px-6 py-3 font-semibold text-gray-800">
                     {row?.cart?.items?.reduce(
                       (sum, current) =>
-                        sum + current.product.prix * current.quantity,
+                        sum + current?.product?.prix * current?.quantity,
                       0
                     )}
                     ,00 TND

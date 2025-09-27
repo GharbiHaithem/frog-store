@@ -76,7 +76,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
   <div className="w-full h-auto border rounded-2xl overflow-hidden shadow-sm">
     <img
       src={productbyid &&productbyid?.images_product[0]?.url}
-      className='w-full h-full object-cover hover:scale-105 transition-transform duration-300'
+      className='w-full md:h-full h-[250px] object-cover hover:scale-105 transition-transform duration-300'
       alt="product"
     />
   </div>
@@ -144,10 +144,10 @@ const SingleProduct = ({ setQuantity, quantity }) => {
               <InputQuantity setQuantity={setQuantity} />
             </div>
             <div className='mt-3 flex flex-col gap-4'>
-              <button className='bg-white text-black text-sm font-light border p-4' onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
+              <button className='bg-white text-black text-sm font-light rounded-lg border p-4' onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
             setTimeout(()=>{ dispatch(cartDetails(cartUuid))},3000)
             }}>Add To Cart</button>
-              <button className='bg-black text-white text-sm font-light border p-4' onClick={() =>{
+              <button className='bg-black text-white text-sm font-light border rounded-lg p-4' onClick={() =>{
                 dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
                    setTimeout(()=>{ dispatch(cartDetails(cartUuid))
                     setTimeout(()=>{   navigate('/checkout')},2000)

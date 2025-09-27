@@ -76,7 +76,7 @@ const DetailsCommande = () => {
     {/* Ligne pour le sous-total */}
     <tr>
       <td colSpan="3" className="px-4 py-2 border text-right font-bold">Sous-total</td>
-      <td className="px-4 py-2 text-right">{  commandebyid?.cart?.items.reduce((sum,current)=>sum + current.product.prix * current.quantity, 0)},00 TND</td>
+      <td className="px-4 py-2 text-right">{  commandebyid?.cart?.items?.reduce((sum,current)=>sum + current?.product?.prix * current?.quantity, 0)},00 TND</td>
     </tr>
     {/* Ligne pour les frais de livraison */}
     <tr>
@@ -86,7 +86,7 @@ const DetailsCommande = () => {
     {/* Ligne pour le total */}
     <tr className="font-bold">
       <td colSpan="3" className="px-4 py-2 border text-right">Total</td>
-      <td className="px-4 py-2 text-right">{ commandebyid?.cart?.items.reduce((sum,current)=>sum + current.product.prix * current.quantity, 0)+7},00 TND</td>
+      <td className="px-4 py-2 text-right">{ commandebyid?.cart?.items?.reduce((sum,current)=>sum + current?.product?.prix * current?.quantity, 0)+7},00 TND</td>
     </tr>
   </tbody>
 </table>

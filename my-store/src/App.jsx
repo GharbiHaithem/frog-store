@@ -93,7 +93,7 @@ function App() {
       </div>
       {openMenu && <div className='fixed mt-[82px] w-full h-full  left-0 top-0'>
         <div className='flex flex-col justify-between bg-white'>
-          <div className='flex flex-col h-[400px] gap-5 my-10  mx-5  '>
+          <div className='flex flex-col h-[300px] gap-5 my-10  mx-5  '>
             <span className='text-sm' onClick={() => {
               navigate('/')
               setOpenMenu(false)

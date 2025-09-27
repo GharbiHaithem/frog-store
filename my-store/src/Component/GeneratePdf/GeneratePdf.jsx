@@ -1,35 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import html2pdf from 'html2pdf.js';
 import Invoice from '../Invoice/Invoice';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { FaWhatsapp } from 'react-icons/fa';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'; // Icon spinner
 
-const GeneratePDF = ({sendMessage2,commande,sendMessage,user,pdfUrl,setPdfUrl}) => {
-  console.log({user,sendMessage2,pdfUrl})
-  const handleSendToWhatsApp = (pdfUrl) => {
+const GeneratePDF = ({ sendMessage2, commande, sendMessage, user, pdfUrl, setPdfUrl }) => {
+  const [load, setLoad] = useState(false);
+
+const handleSendToWhatsApp = (pdfUrl) => {
   const phoneNumber = "21622013583";
   const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=Voici%20le%20lien%20:%20${encodeURIComponent(
     pdfUrl
   )}`;
 
-  // Redirection dans le même onglet
-  window.location.href = whatsappLink;
+  // Ouvre dans un nouvel onglet/fenêtre
+  window.open(whatsappLink, '_blank');
 };
-  useEffect(()=>{
-    console.log(pdfUrl?.length>0)
-    if(pdfUrl?.length>0){
-    handleSendToWhatsApp(pdfUrl)
-    }
-    },[pdfUrl])
-    console.log(pdfUrl?.length>0) 
+
   const generatePDF = async () => {
-    // Créez un conteneur temporaire pour rendre le composant
     const element = document.createElement('div');
     document.body.appendChild(element);
-
-    // Rendre le composant React dans le conteneur temporaire
     const root = createRoot(element);
     root.render(<Invoice commande={commande} user={user} />);
 
@@ -42,12 +34,8 @@ const GeneratePDF = ({sendMessage2,commande,sendMessage,user,pdfUrl,setPdfUrl}) 
     };
 
     const pdfBlob = await html2pdf().set(opt).from(element).toPdf().output('blob');
-    document.body.removeChild(element); // Nettoyage
-
-    // Convertir le Blob en fichier
-    const pdfFile = new File([pdfBlob], 'facture.pdf', { type: 'application/pdf' });
-
-    return pdfFile;
+    document.body.removeChild(element);
+    return new File([pdfBlob], 'facture.pdf', { type: 'application/pdf' });
   };
 
   const uploadPDF = async (file) => {
@@ -58,35 +46,49 @@ const GeneratePDF = ({sendMessage2,commande,sendMessage,user,pdfUrl,setPdfUrl}) 
       const response = await axios.post('https://phone-store-node-server.onrender.com/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-
       return response.data.url;
     } catch (error) {
       console.error('Erreur lors de l\'upload du PDF:', error);
       throw error;
     }
   };
-  useEffect(()=>{
-    if (pdfUrl && typeof pdfUrl === 'string' && pdfUrl.trim() !== '') {
-      handleSendToWhatsApp(pdfUrl);
-    }
-  },[pdfUrl]);
+
   const handleGenerateAndUpload = async () => {
+    setLoad(true); // START loader
     try {
       const pdfFile = await generatePDF();
-      const pdfUrl = await uploadPDF(pdfFile);
-      console.log('PDF uploadé avec succès:', pdfUrl);
-      setPdfUrl(pdfUrl)
-      sendMessage2()
-     
+      const url = await uploadPDF(pdfFile);
+      setPdfUrl(url);
+      sendMessage2();
+      handleSendToWhatsApp(url);
     } catch (error) {
-      console.error('Erreur lors du traitement de la commande:', error);
+      console.error('Erreur lors du traitement:', error);
+    } finally {
+      setLoad(false); // STOP loader
     }
   };
 
   return (
     <div>
-    
-      <button  onClick={handleGenerateAndUpload} className='bg-[#25d366]  w-full p-2 fixed bottom-0 left-0 text-white flex items-center  gap-3 justify-center'><FaWhatsapp className='text-xl'/>Commandez avec WhatsApp</button>
+      <button
+        onClick={handleGenerateAndUpload}
+        disabled={load}
+        className={`bg-[#25d366] p-4 w-[80%] mx-auto fixed bottom-0 text-white flex items-center gap-3 justify-center rounded-md ${
+          load ? 'opacity-70 cursor-not-allowed' : 'hover:bg-green-700 transition'
+        }`}
+      >
+        {load ? (
+          <>
+            <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
+            Préparation du PDF...
+          </>
+        ) : (
+          <>
+            <FaWhatsapp className="text-3xl" />
+            Commandez avec WhatsApp
+          </>
+        )}
+      </button>
     </div>
   );
 };
