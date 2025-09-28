@@ -11,12 +11,12 @@ const ProductCard = ({ img1, img2, title, oldPrice, newPrice ,onClick}) => {
       onMouseLeave={() => setHover(false)}
 
     >
-      <div className="relative w-full">
-        <img
-          src={hover ? img2 : img1}
-          className="object-cover w-full md:h-[400px] h-auto"
-          alt={title}
-        />
+      <div className="relative w-full aspect-[4/5]">
+          <img
+    src={hover ? img2 : img1}
+    className="object-cover w-full h-full"
+    alt={title}
+  />
         <span className="absolute right-3 top-3 bg-green-400 rounded-sm text-xs font-light p-1 text-white">
           Solde
         </span>
