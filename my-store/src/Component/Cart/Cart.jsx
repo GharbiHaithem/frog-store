@@ -35,7 +35,7 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
   useEffect(() => {
     if (detailscart?.items?.length) {
       const totalQuantite = detailscart.items.reduce((sum, cur) => sum + cur.quantity, 0)
-      const totalprix = detailscart.items.reduce((sum, cur) => sum + cur.product.prix * cur.quantity, 0)
+      const totalprix = detailscart.items.reduce((sum, cur) => sum + (cur.product.prix - ((cur.product.prix * cur.product.promotion)/100)) * cur.quantity, 0)
       setTotalQuantity(totalQuantite)
       setTotalPrice(totalprix.toLocaleString())
       setTT((totalprix + 7).toLocaleString())
@@ -57,7 +57,7 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
         <div className="flex flex-col md:flex-row gap-8">
 
           {/* 🛒 Liste des produits */}
-          <div className="md:w-3/4 w-full bg-white rounded-xl shadow-lg p-6">
+          <div className="md:w-3/4 w-full bg-white rounded-xl mt-15 shadow-lg p-6">
             <h1 className="text-2xl font-bold border-b pb-3 mb-6">Panier</h1>
 
             {!detailscart || detailscart.items?.length === 0 ? (
@@ -76,7 +76,22 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
                       />
                       <div className="flex flex-col gap-1">
                         <span className="uppercase font-semibold text-sm">{cart.product.titre}</span>
-                        <span className="text-red-600 font-bold">{cart.product.prix} TND</span>
+                      <div className="flex justify-between items-center mt-2">
+  {/* Ancien prix */}
+  <span
+    className={`text-gray-500 text-sm ${cart?.product?.promotion > 0 ? 'line-through' : ''}`}
+  >
+    {cart.product.prix} TND
+  </span>
+
+  {/* Nouveau prix */}
+  <span className="text-sm font-medium text-green-600">
+    {cart.product.prix - (cart.product.prix * cart?.product?.promotion) / 100} TND
+  </span>
+ {cart?.product?.promotion >0} <span className='bg-green-200 p-2 text-green-600'>-{cart?.product?.promotion} %</span>
+</div>
+
+                        
                       </div>
                     </div>
 
@@ -112,33 +127,34 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
           </div>
 
           {/* 🧾 Résumé de commande */}
-          {detailscart?.items?.length > 0 && (
-            <div className="md:w-1/4 w-full bg-white rounded-xl shadow-lg p-6 flex flex-col gap-4">
-              <h2 className="text-lg font-semibold border-b pb-2 mb-3">Résumé</h2>
+      {detailscart?.items?.length > 0 && (
+  <div className="md:w-1/4 w-full bg-white rounded-2xl mt-15 shadow-xl p-6 flex flex-col gap-5">
+    <h2 className="text-lg font-semibold border-b pb-3 text-gray-800">Résumé</h2>
 
-              <div className="flex justify-between">
-                <span>Articles ({totalQuantity})</span>
-                <span className="text-red-600 font-semibold">{totalPrice} TND</span>
-              </div>
+    <div className="flex justify-between text-sm">
+      <span className="text-gray-600">Articles ({totalQuantity})</span>
+      <span className="font-semibold text-gray-800">{totalPrice} TND</span>
+    </div>
 
-              <div className="flex justify-between">
-                <span>Livraison</span>
-                <span className="text-red-600 font-semibold">7 TND</span>
-              </div>
+    <div className="flex justify-between text-sm">
+      <span className="text-gray-600">Livraison</span>
+      <span className="font-semibold text-gray-800">7 TND</span>
+    </div>
 
-              <div className="flex justify-between font-bold text-lg border-t pt-2">
-                <span>Total TTC</span>
-                <span className="text-red-600">{tt} TND</span>
-              </div>
+    <div className="flex justify-between items-center font-bold text-lg border-t pt-4">
+      <span className="text-gray-900">Total TTC</span>
+      <span className="text-emerald-600">{tt} TND</span>
+    </div>
 
-              <button
-                className="mt-5 w-full bg-green-600 text-white py-3 uppercase font-medium rounded-lg hover:bg-green-700 transition"
-                onClick={() => navigate('/commande')}
-              >
-                Commander
-              </button>
-            </div>
-          )}
+    <button
+      className="mt-6 w-full bg-emerald-600 text-white py-3 uppercase font-medium rounded-lg hover:bg-emerald-700 transition shadow-md"
+      onClick={() => navigate('/commande')}
+    >
+      Commander
+    </button>
+  </div>
+)}
+
         </div>
       </div>
     </>

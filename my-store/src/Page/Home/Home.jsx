@@ -53,9 +53,10 @@ console.log(groupedProducts)
           img1={p.images_product?.[0]?.url}
           img2={p.images_product?.[1] ? p.images_product?.[1]?.url : p.images_product?.[0]?.url}
           title={p?.titre}
-          oldPrice="84.000 DT"
-          newPrice={p.prix}
+          oldPrice={p?.prix}
+          newPrice={(p.prix)-((p?.prix * p?.promotion)/100)}
           onClick={()=>{setTimeout(()=>{navigate(`/productSingle/${p?._id}`)},200)}}
+          solde={p?.promotion}
         />
             ))}
           </div>
