@@ -6,7 +6,7 @@ import axios from 'axios';
 import { FaWhatsapp } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'; // Icon spinner
 
-const GeneratePDF = ({ sendMessage2, commande, sendMessage, user, pdfUrl, setPdfUrl }) => {
+const GeneratePDF = ({ sendMessage2, commande, sendMessage,setShowPdfModal, user, pdfUrl, setPdfUrl }) => {
   const [load, setLoad] = useState(false);
 
 const handleSendToWhatsApp = (pdfUrl) => {
@@ -24,7 +24,7 @@ const handleSendToWhatsApp = (pdfUrl) => {
     document.body.appendChild(element);
     const root = createRoot(element);
     root.render(<Invoice commande={commande} user={user} />);
-
+ setShowPdfModal(true)
     const opt = {
       margin: 1,
       filename: 'facture.pdf',
@@ -36,6 +36,7 @@ const handleSendToWhatsApp = (pdfUrl) => {
     const pdfBlob = await html2pdf().set(opt).from(element).toPdf().output('blob');
     document.body.removeChild(element);
     return new File([pdfBlob], 'facture.pdf', { type: 'application/pdf' });
+   
   };
 
   const uploadPDF = async (file) => {
@@ -65,30 +66,45 @@ const handleSendToWhatsApp = (pdfUrl) => {
       console.error('Erreur lors du traitement:', error);
     } finally {
       setLoad(false); // STOP loader
+      setShowPdfModal(false)
+
     }
   };
 
   return (
-    <div>
+    <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/40">
       <button
         onClick={handleGenerateAndUpload}
         disabled={load}
-        className={`bg-[#25d366] p-4 w-[80%] mx-auto fixed bottom-0 text-white flex items-center gap-3 justify-center rounded-md ${
-          load ? 'opacity-70 cursor-not-allowed' : 'hover:bg-green-700 transition'
-        }`}
+        className={`w-full h-[80px] rounded-xl text-white flex items-center justify-center gap-3 shadow-lg transition 
+          ${load ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#25d366] hover:bg-green-700 animate-shake'}`}
       >
         {load ? (
           <>
             <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
-            Préparation du PDF...
+            <span className="text-lg font-semibold">Préparation du PDF...</span>
           </>
         ) : (
           <>
             <FaWhatsapp className="text-3xl" />
-            Commandez avec WhatsApp
+            <span className="text-lg font-semibold">Commandez avec WhatsApp</span>
           </>
         )}
       </button>
+
+      {/* ✅ Animation vibration */}
+      <style>{`
+        @keyframes shake {
+          0% { transform: translateX(0); }
+          25% { transform: translateX(-4px); }
+          50% { transform: translateX(4px); }
+          75% { transform: translateX(-4px); }
+          100% { transform: translateX(0); }
+        }
+        .animate-shake {
+          animation: shake 0.4s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };

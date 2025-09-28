@@ -30,7 +30,7 @@ const ConfirmationCommande = () => {
       const totalQuantite = commande?.commande?.cart?.items.reduce((sum, current) => sum + current.quantity, 0)
       setTotalQuantity(totalQuantite)
 
-      const totalprix = commande?.commande?.cart?.items.reduce((sum, current) => sum + current.product.prix * current.quantity, 0)
+      const totalprix = commande?.commande?.cart?.items.reduce((sum, current) => sum + (current.product.prix - ((current.product.prix*current.product.promotion)/100)) * current.quantity, 0)
       const ttt = totalprix + 7
 
       const formattedPrice = totalprix.toLocaleString()
@@ -42,7 +42,7 @@ const ConfirmationCommande = () => {
       setTotalQuantity(0)
     }
   }, [detailscart?.items, commande])
-
+const [showPdfModal, setShowPdfModal] = useState(false)
   return (
     <>
       
@@ -80,9 +80,9 @@ const ConfirmationCommande = () => {
                       <span className="text-sm font-medium">{prod?.product?.titre}</span>
                     </div>
                     <div className="flex items-center justify-between gap-6 text-sm w-1/2">
-                      <span>{prod?.product?.prix},00 TND</span>
+                      <span>{(prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))},00 TND</span>
                       <span>x {prod?.quantity}</span>
-                      <span className="font-semibold">{prod?.quantity * prod?.product?.prix},00 TND</span>
+                      <span className="font-semibold">{prod?.quantity * (prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))},00 TND</span>
                     </div>
                   </div>
                 ))}
@@ -126,6 +126,7 @@ const ConfirmationCommande = () => {
             commande={commande?.commande}
             pdfUrl={pdfUrl}
             setPdfUrl={setPdfUrl}
+            setShowPdfModal={setShowPdfModal}
           />
         </div>
       ) : (
@@ -134,6 +135,19 @@ const ConfirmationCommande = () => {
           <span className="text-gray-500 text-sm">Chargement de votre commande...</span>
         </div>
       )}
+
+      {showPdfModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-xl ">
+    <div className="bg-white rounded-xl shadow-xl p-8 w-[90%] max-w-md text-center">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4">
+        Génération de votre facture PDF
+      </h2>
+      <img src={i} alt="loading" className="w-12 h-12 mx-auto mb-4 animate-spin" />
+      <p className="text-sm text-gray-600">Veuillez patienter...</p>
+    </div>
+  </div>
+)}
+
     </>
   )
 }
