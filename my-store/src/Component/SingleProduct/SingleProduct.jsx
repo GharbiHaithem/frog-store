@@ -144,15 +144,15 @@ const SingleProduct = ({ setQuantity, quantity }) => {
               <InputQuantity setQuantity={setQuantity} />
             </div>
             <div className='mt-3 flex flex-col gap-4'>
-              <button className='bg-white text-black text-sm font-light rounded-lg border p-4' onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
+              <button className='bg-white text-black text-sm font-light cursor-pointer  rounded-lg border p-4' onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
             setTimeout(()=>{ dispatch(cartDetails(cartUuid))},3000)
-            }}>Add To Cart</button>
-              <button className='bg-black text-white text-sm font-light border rounded-lg p-4' onClick={() =>{
+            }}>Ajouter au panier</button>
+              <button className='bg-black cursor-pointer text-white text-sm font-light border rounded-lg p-4' onClick={() =>{
                 dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
                    setTimeout(()=>{ dispatch(cartDetails(cartUuid))
                     setTimeout(()=>{   navigate('/checkout')},2000)
                    },5000)
-             }}>Buy It Now</button>
+             }}>Acheter maintenant</button>
             </div>
           </div>
 

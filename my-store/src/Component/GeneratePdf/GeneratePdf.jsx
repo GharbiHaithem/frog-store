@@ -5,10 +5,11 @@ import { createRoot } from 'react-dom/client';
 import axios from 'axios';
 import { FaWhatsapp } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'; // Icon spinner
+import { useNavigate } from 'react-router-dom';
 
 const GeneratePDF = ({ sendMessage2, commande, sendMessage,setShowPdfModal, user, pdfUrl, setPdfUrl }) => {
   const [load, setLoad] = useState(false);
-
+const navigate = useNavigate()
 const handleSendToWhatsApp = (pdfUrl) => {
   const phoneNumber = "21622013583";
   const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=Voici%20le%20lien%20:%20${encodeURIComponent(
@@ -67,7 +68,7 @@ const handleSendToWhatsApp = (pdfUrl) => {
     } finally {
       setLoad(false); // STOP loader
       setShowPdfModal(false)
-
+setTimeout(()=>{navigate('/')},2000)
     }
   };
 

@@ -14,7 +14,7 @@ const ProductCard = ({ img1, img2, title, oldPrice, newPrice ,onClick,solde}) =>
       <div className="relative w-full aspect-[4/5]">
           <img
     src={hover ? img2 : img1}
-    className="object-cover w-full h-full"
+    className="object-contain w-full h-full"
     alt={title}
   />
         {solde>0 &&<span className="absolute right-3 top-3 bg-red-400 font-medium rounded-sm text-xs  p-1 flex items-center gap-2 text-white">
