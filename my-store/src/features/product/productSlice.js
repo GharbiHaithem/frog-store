@@ -45,6 +45,14 @@ export const searchproduct = createAsyncThunk('product-search',async(titre,thunk
         return thunkAPI.rejectWithValue(error)
     }
 })
+
+export const productsByCat = createAsyncThunk('products-cat',async(id,thunkAPI)=>{
+    try {
+        return  await productService.productsCat(id)
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 export const resetState = createAction('/clearstateproduct')
 export const productSlice = createSlice({
     name:'product',
@@ -54,6 +62,7 @@ export const productSlice = createSlice({
         builder.addCase(createproduct.pending,(state)=>{
             state.isLoading = true
         })
+
         .addCase(createproduct.fulfilled,(state,action)=>{
             state.isLoading = false
             state.isSuccess = true
@@ -63,6 +72,25 @@ export const productSlice = createSlice({
             toast.success('product creer avec succees')
         })
         .addCase(createproduct.rejected,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = false
+            state.isError = true
+            state.message = action.payload.response.data.message
+            toast.error(action.payload.response.data.message)
+        })
+        .addCase(productsByCat.pending,(state)=>{
+            state.isLoading = true
+        })
+        
+        .addCase(productsByCat.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = true
+            state.products = action.payload;
+            console.log(action.payload)
+            state.isError = false
+          
+        })
+        .addCase(productsByCat.rejected,(state,action)=>{
             state.isLoading = false
             state.isSuccess = false
             state.isError = true

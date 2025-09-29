@@ -35,7 +35,7 @@ console.log(groupedProducts)
        <>
        <Helmet>
          <title>Checkout</title>
-         <meta name="Page de checkout"  content="page a propos des commande a payer"></meta>
+         <meta name="Home Page"  content="page a propos des commande a payer"></meta>
        </Helmet>
      <div className=" md:w-[80%] mt-[80px] w-[97%] mx-auto">
      <div className='flex flex-col gap-5'>

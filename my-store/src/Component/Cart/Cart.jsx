@@ -72,11 +72,11 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
                       <img
                         src={cart.product.images_product[0]?.url}
                         alt={cart.product.titre}
-                        className="w-[80px] h-[80px] object-cover rounded-lg border"
+                        className="w-[100px] h-[100px] object-cover rounded-lg border"
                       />
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col w-full gap-1">
                         <span className="uppercase font-semibold text-sm">{cart.product.titre}</span>
-                      <div className="flex justify-between items-center mt-2">
+                      <div className="flex justify-between gap-3 w-[100%] items-center mt-2">
   {/* Ancien prix */}
   <span
     className={`text-gray-500 text-sm ${cart?.product?.promotion > 0 ? 'line-through' : ''}`}

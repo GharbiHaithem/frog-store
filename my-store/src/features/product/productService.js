@@ -60,9 +60,15 @@ export const getproductsById = async(id)=>{
 // console.log(response.data)
 // return await response.data
 // }
+export const productsCat= async(id)=>{
+  const response = await axios.get(`${base_url2}/products/${id}`)
+  console.log(id)
+  console.log(response.data)
+  return await response.data
+}
 const productServices = {
 
-      createproduct,getAllproducts,getproductsByCatParent,getproductsById,searchproducts}
+      createproduct,getAllproducts,getproductsByCatParent,getproductsById,searchproducts,productsCat}
 export default productServices
 
   

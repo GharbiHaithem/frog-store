@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import NavBar from './Component/NavBar/NavBar'
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
 import Layout from './Component/Layout/Layout';
 import EmptyCart from './Component/EmptyCart/EmptyCart';
 import Checkout from './Component/Checkout/Checkout';
@@ -16,9 +16,11 @@ import ConfirmationCommande from './Component/ConfirmationCommande/ConfirmationC
 import LoginForm from './Component/LoginForm/LoginForm';
 import { CiUser } from "react-icons/ci";
 import Register from './Component/Register/Register';
-import CommandeUser  from './Component/CommandeUser/CommandeUser';
-import DetailsCommande from './Component/DetailsCommande/DetailsCommande'
-import {HelmetProvider} from 'react-helmet-async'
+import CommandeUser from './Component/CommandeUser/CommandeUser';
+import DetailsCommande from '../../DetailsCommande/DetailsCommande'
+import { HelmetProvider } from 'react-helmet-async'
+import { getcategories } from './features/category/categorySlice';
+import ProductsByCategory from './Component/ProductsByCategory/ProductsByCategory';
 function App() {
   const [openMenu, setOpenMenu] = useState(false)
   const userfromstorage = JSON.parse(localStorage.getItem('user'))
@@ -68,6 +70,10 @@ function App() {
 
 
   console.log(userRecover?.connected)
+  useEffect(() => {
+    dispatch(getcategories())
+  }, [dispatch])
+  const { categories } = useSelector(state => state?.category)
   return (
     <HelmetProvider>
       <div>
@@ -78,31 +84,40 @@ function App() {
             <Route path='/carts' element={<EmptyCart />} />
             <Route path='/productSingle/:id' element={<SingleProduct setQuantity={setQuantity} quantity={quantity} />} />
             <Route path='/cart' element={<Cart setQuantity={setQuantity} quantity={quantity} />} />
-            <Route path='/checkout' element={<Checkout  userfromstorage={userfromstorage} setUserRecover={setUserRecover} userRecover={userRecover} />} />
+            <Route path='/checkout' element={<Checkout userfromstorage={userfromstorage} setUserRecover={setUserRecover} userRecover={userRecover} />} />
             <Route path='/commande' element={<Commande userfromstorage={userfromstorage} setUserRecover={setUserRecover} userRecover={userRecover} disconnect={disconnect} setDisconnect={setDisconnect} />} />
             <Route path='/ConfirmationCommande' element={<ConfirmationCommande />} />
             <Route path='/login' element={<LoginForm />} />
             <Route path='/register' element={<Register />} />
-  <Route path='/commandeuser' element={ <CommandeUser  />} />
-   <Route path='/detailscommande/:id' element={ <DetailsCommande  />} />
+            <Route path='/commandeuser' element={<CommandeUser />} />
+            <Route path='/detailscommande/:id' element={<DetailsCommande />} />
+            <Route path='/produtscategory/:id' element={<ProductsByCategory />} />
           </Route>
         </Routes>
 
 
 
       </div>
-      {openMenu && <div className='fixed mt-[82px] w-full h-full  left-0 top-0'>
+      {openMenu && <div className='fixed mt-[82px] z-50 w-full h-screen  left-0 top-0'>
         <div className='flex flex-col justify-between bg-white'>
-          <div className='flex flex-col h-[300px] gap-5 my-10  mx-5  '>
-            <span className='text-sm' onClick={() => {
-              navigate('/')
-              setOpenMenu(false)
-            }}>Home</span>
-            <span className='text-sm'>Contact</span>
+          <div className='flex flex-col h-[400px] gap-5 my-10  mx-5  '>
+            {categories?.map((cat) => (
+              <span onClick={() => {
+
+                navigate(`/produtscategory/${cat?._id}`)
+                setTimeout(() => {
+                  setOpenMenu(false)
+                }, 200)
+              }
+
+              } className='p-4 shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]'>{cat?.name}</span>
+
+            ))}
+
           </div>
-          <div className='bg-gray-100 h-screen px-5  py-5 '>
+          <div className='bg-gray-100 z-50 h-screen px-5  py-5 '>
             <div className='flex gap-1 items-center' onClick={() => {
-             !userRecover?.connected ? navigate('/login') : navigate('/commandeuser')
+              !userRecover?.connected ? navigate('/login') : navigate('/commandeuser')
               setOpenMenu(false)
             }}> <CiUser className='text-2xl' /> <span className=''>{userRecover?.connected ? 'Account' : 'Log in'} </span></div>
           </div>
