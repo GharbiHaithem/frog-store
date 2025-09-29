@@ -17,7 +17,7 @@ import LoginForm from './Component/LoginForm/LoginForm';
 import { CiUser } from "react-icons/ci";
 import Register from './Component/Register/Register';
 import CommandeUser from './Component/CommandeUser/CommandeUser';
-import DetailsCommande from '../../DetailsCommande/DetailsCommande'
+import DetailsCommande from './Component/DetailsCommande/DetailsCommande'
 import { HelmetProvider } from 'react-helmet-async'
 import { getcategories } from './features/category/categorySlice';
 import ProductsByCategory from './Component/ProductsByCategory/ProductsByCategory';

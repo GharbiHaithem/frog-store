@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from "react";
+
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { commandebyid as fn } from '../my-store/src/features/commande/commandeSlice'
+import { commandebyid as fn } from '../../features/commande/commandeSlice'
 import { CiEdit } from 'react-icons/ci'
 import html2pdf from 'html2pdf.js';
 import { Helmet } from 'react-helmet-async'
+
 const DetailsCommande = () => {
       const {id} = useParams()
       const dispatch = useDispatch()
