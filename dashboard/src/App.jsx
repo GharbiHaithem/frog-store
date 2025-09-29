@@ -16,7 +16,7 @@ function App() {
   const[openMenu,setOpenMenu]= useState(false)
 
   return (
-    <HelmetProvider>
+    <>
   
     <BrowserRouter>
       <Routes>
