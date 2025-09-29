@@ -11,11 +11,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import AddProduct from './Component/AddProduct/AddProduct'
 import ListProduct from './Component/ListProduct/ListProduct'
 import AddBrand from './Component/AddBrand/AddBrand'
+
 function App() {
   const[openMenu,setOpenMenu]= useState(false)
 
   return (
-    <>
+    <HelmetProvider>
   
     <BrowserRouter>
       <Routes>
