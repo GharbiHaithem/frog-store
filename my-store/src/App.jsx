@@ -21,6 +21,7 @@ import DetailsCommande from './Component/DetailsCommande/DetailsCommande'
 import { HelmetProvider } from 'react-helmet-async'
 import { getcategories } from './features/category/categorySlice';
 import ProductsByCategory from './Component/ProductsByCategory/ProductsByCategory';
+import { searchproduct } from './features/product/productSlice';
 function App() {
   const [openMenu, setOpenMenu] = useState(false)
   const userfromstorage = JSON.parse(localStorage.getItem('user'))
@@ -74,6 +75,20 @@ function App() {
     dispatch(getcategories())
   }, [dispatch])
   const { categories } = useSelector(state => state?.category)
+       const [search, setSearch] = useState(null)
+   
+        const handleChange = (e) => {
+              setSearch(e.target.value)
+  
+        }
+        useEffect(()=>{
+              if(search !== null){
+                dispatch(searchproduct({titre:search}))
+              }
+             
+            },[search,dispatch])
+       
+        const{productsearched}=useSelector(state=>state?.product)
   return (
     <HelmetProvider>
       <div>
@@ -127,22 +142,30 @@ function App() {
       {openSearch && (
         <div className="fixed top-0 left-0 w-full h-full z-50 bg-[#2f2e2e51]">
           <div className="w-full h-[100px] bg-white z-50 flex items-center justify-center">
-            <form onSubmit={submit} className="w-[75%] mx-auto">
+            <form onSubmit={submit} className="w-[95%] mx-auto">
               <label htmlFor="search" className="sr-only">Rechercher</label>
 
               <div className="relative flex items-center">
                 {/* input */}
-                <input
-                  id="search"
-                  type="text"
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="Rechercher..."
-                  aria-label="Rechercher"
-                  className="block w-full pr-20 pl-4 py-2 border-2 border-black 
+                   <div className='relative w-full'>
+                        <input type='text' name='titre' onChange={handleChange} value={search} placeholder='Recherche' className=' block w-full pr-20 pl-4 py-2 border-2 border-black 
                        focus:outline-none focus:ring-2 focus:ring-indigo-400 
-                       focus:border-indigo-400"
-                />
+                       focus:border-indigo-400  p-2 outline-none' />
+                        {productsearched && productsearched?.length>0 && search?.length>0 && <span className='absolute w-full z-[1000] h-[200px] overflow-y-scroll top-10 left-0 bg-gray-50 p-2'>
+     {productsearched && productsearched?.map((data)=>(
+ <div key={data?._id} onClick={()=>{navigate(`/productSingle/${data?._id}`)
+ setSearch('')
+ setOpenSearch(!openSearch)  
+ }} className='flex items-start gap-2 mt-2'>
+<div  className='w-1/4'>
+   <img  src={data?.images_product[0]?.url} className='w-[70px] h-[70px] object-cover' />
+</div>
+ <p className='w-3/4'>{data?.titre}</p>
+</div>
+     ))}
+       </span>}
+                  </div>
+               
 
                 {/* bouton loupe */}
                 <button

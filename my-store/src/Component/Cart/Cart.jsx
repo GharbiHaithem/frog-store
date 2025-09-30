@@ -78,17 +78,17 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
                         <span className="uppercase font-semibold text-sm">{cart.product.titre}</span>
                       <div className="flex justify-between gap-3 w-[100%] items-center mt-2">
   {/* Ancien prix */}
-  <span
+  {cart?.product?.promotion > 0 &&<span
     className={`text-gray-500 text-sm ${cart?.product?.promotion > 0 ? 'line-through' : ''}`}
   >
     {cart.product.prix} TND
-  </span>
+  </span>}
 
   {/* Nouveau prix */}
   <span className="text-sm font-medium text-green-600">
     {cart.product.prix - (cart.product.prix * cart?.product?.promotion) / 100} TND
   </span>
- {cart?.product?.promotion >0} <span className='bg-green-200 p-2 text-green-600'>-{cart?.product?.promotion} %</span>
+ {cart?.product?.promotion >0 &&<span className='bg-green-200 p-2 text-green-600'>-{cart?.product?.promotion} %</span>} 
 </div>
 
                         
@@ -128,7 +128,7 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
 
           {/* 🧾 Résumé de commande */}
       {detailscart?.items?.length > 0 && (
-  <div className="md:w-1/4 w-full bg-white rounded-2xl mt-15 shadow-xl p-6 flex flex-col gap-5">
+  <div className="md:w-1/4 w-full bg-white rounded-2xl mt-2 shadow-xl p-6 flex flex-col gap-5">
     <h2 className="text-lg font-semibold border-b pb-3 text-gray-800">Résumé</h2>
 
     <div className="flex justify-between text-sm">

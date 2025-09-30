@@ -49,8 +49,8 @@ const SingleProduct = ({ setQuantity, quantity }) => {
          <meta name={productbyid?.titre}  content={productbyid?.titre}></meta>
        </Helmet>
   <div className='md:w-[80%] mt-[80px] w-[95%] mx-auto bg-white p-4 relative'>
-      {isLoadingCart&& <div className='absolute w-full h-full top-0 left-0 bg-[#dbdbdb9f]'>
-        <div class="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
+      {isLoadingCart&& <div className='absolute w-full h-full top-0 left-0 backdrop-blur-xs'>
+        <div class="grid h-full w-full place-items-center z-50 overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
           <svg class="text-gray-300 animate-spin" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
             width="24" height="24">
             <path
@@ -120,7 +120,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
           </div>
           <div className='flex flex-col gap-1 mt-5 '>
             <span className='uppercase text-xs font-extralight'>Size</span>
-       <div className="flex flex-wrap gap-3 z-10 mt-4">
+       <div className="flex flex-wrap gap-3 z-0 mt-4">
   {sizes.map((s) => (
     <button
       key={s}
