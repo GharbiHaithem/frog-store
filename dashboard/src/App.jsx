@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AddProduct from './Component/AddProduct/AddProduct'
 import ListProduct from './Component/ListProduct/ListProduct'
 import AddBrand from './Component/AddBrand/AddBrand'
+import AddBanner from './Component/AddBanner/AddBanner'
 
 function App() {
   const[openMenu,setOpenMenu]= useState(false)
@@ -26,6 +27,7 @@ function App() {
         <Route  path='/addproduct' element={<AddProduct openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
         <Route  path='/listProduct' element={<ListProduct openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
         <Route  path='/addbrand' element={<AddBrand openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
+            <Route  path='/addbanner' element={<AddBanner openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
         </Route>
 
       </Routes>

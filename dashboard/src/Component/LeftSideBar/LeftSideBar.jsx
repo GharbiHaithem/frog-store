@@ -6,13 +6,31 @@ import { TiFolderAdd } from "react-icons/ti";
 import { MdOutlineChecklistRtl } from "react-icons/md";
 import { useNavigate } from 'react-router';
 import { TbBrandApple } from "react-icons/tb";
+import { AiTwotoneSkin } from "react-icons/ai";
 const LeftSideBar = ({openMenu,setOpenMenu}) => {
      
       const navigate = useNavigate()
   return (
     <div  onMouseEnter={()=>setOpenMenu(true)}  onMouseLeave={()=>setOpenMenu(false)} className={` ${openMenu ? 'w-[250px]' : 'w-[60px]'}  h-full fixed top-0 shadow-xl left-0 bg-white px-3 py-3 `}>
     <div  className="flex flex-col gap-5 items-start">  <AiOutlineDashboard style={{ strokeWidth: 2 }}   className='text-4xl font-extrabold mb-10 shadow-sm text-gray-400' />
+  
+     <div className='flex  flex-col '>
+ 
+   <span className='flex gap-3 cursor-pointer items-center'> <AiTwotoneSkin  className='text-3xl text-gray-500 cursor-pointer'/> {openMenu && <span  className='text-sm  font-extrabold text-gray-500 tracking-wider'>BANNER</span>}</span>
+{openMenu && <div className='flex  '>
+ <span className=' border-l ml-3 mt-2 h-[70px]'>&nbsp;</span>
+<>
+<div className='flex flex-col '>
+<div onClick={()=>navigate("/addbanner")} className='flex items-center'><span className='border-b-2 -translate-y-3 w-[10px]'>&nbsp;</span><span className='py-2 p-2 px-2 flex items-center gap-2'><TiFolderAdd/>Creer Banner</span></div>
+
+</div>
+</>
+ 
+ </div>}
+
+   </div>
    <div className='flex  flex-col '>
+ 
    <span className='flex gap-3 cursor-pointer items-center'> <TbCategoryPlus  className='text-3xl text-gray-500 cursor-pointer'/> {openMenu && <span  className='text-sm  font-extrabold text-gray-500 tracking-wider'>CATEGORY</span>}</span>
 {openMenu && <div className='flex  '>
  <span className=' border-l ml-3 mt-2 h-[70px]'>&nbsp;</span>
@@ -24,7 +42,9 @@ const LeftSideBar = ({openMenu,setOpenMenu}) => {
 </>
  
  </div>}
+
    </div>
+   
   <div>
   <span  className='flex gap-3 cursor-pointer items-center'> <IoLogoGooglePlaystore  className='text-3xl text-gray-500 cursor-pointer'/> {openMenu && <span  className='text-sm  font-extrabold text-gray-500 tracking-wider'>PRODUCTS</span>}</span>
   {openMenu && <div className='flex  '>
