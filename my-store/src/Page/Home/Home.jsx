@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import i from '../../assets/acccc-removebg-preview.png'
 import { allproduct } from '../../features/product/productSlice'
 import { Helmet } from 'react-helmet-async'
+import BandePub from '../../Component/BandePub/BandePub'
 const Home = () => {
 const navigate=useNavigate()
 const dispatch = useDispatch()
@@ -38,6 +39,7 @@ console.log(groupedProducts)
          <meta name="Home Page"  content="page a propos des commande a payer"></meta>
        </Helmet>
      <div className=" md:w-[80%] mt-[80px] w-[97%] mx-auto">
+      <BandePub/>
      <div className='flex flex-col gap-5'>
      <div className='mt-5'>
   {Object.entries(groupedProducts).map(([category, products]) => (
