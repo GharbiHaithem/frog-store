@@ -146,7 +146,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
             <div className='my-3 flex flex-col gap-1'>
               <span className='uppercase text-xs font-extralight'>Quantity</span>
 
-              <InputQuantity setQuantity={setQuantity} />
+              <InputQuantity setQuantity={setQuantity} qtyStk={productbyid?.quantityStq}/>
             </div>
             <div className='mt-3 flex flex-col gap-4'>
               <button className='bg-white text-black text-sm font-light cursor-pointer  rounded-lg border p-4' onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
