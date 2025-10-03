@@ -48,10 +48,7 @@ const NavBar = ({ setOpenMenu, openMenu, setOpenSearch, cartitem }) => {
               className="w-10 h-10 cursor-pointer hover:text-black transition"
               onClick={() => setOpenSearch(true)}
             />
-            <CiUser
-              className="w-10 h-10 cursor-pointer hover:text-black transition"
-              onClick={() => navigate("/login")}
-            />
+     
             <div className="relative">
               <CiShop
                 onClick={() => navigate("/cart")}

@@ -34,15 +34,11 @@ const{detailscart} = useSelector(state=>state?.cart)
   const [formData, setFormData] = useState({
     firstname:userfromstorage ? userfromstorage.firstname : '',
     lastname:userfromstorage ?userfromstorage.lastname  : '',
-    email:userfromstorage ?userfromstorage.email : '',
-    password: '',
+  
     adress:userfromstorage && userfromstorage.adress ?userfromstorage.adress : '',
-    entreprise: '',
-    gender:selectedOption,
-    codepostal:userfromstorage ? userfromstorage.codepostal : '',
+  
     numtel:userfromstorage ?userfromstorage.numtel :   '',
-    ville:userfromstorage ? userfromstorage.ville : '',
-    pays:userfromstorage ? userfromstorage.pays : '',
+ 
     payementMethode:selectedOption1
   });
  
@@ -177,17 +173,11 @@ const newStep = {
     newErreur.firstname = "Le prénom est obligatoire";
   }
 
-  if (!formData.email) {
-    newErreur.email = "L'email est obligatoire";
-  }
-
-  if (!formData.password) {
-    newErreur.password = "Le mot de passe est obligatoire";
-  }
 
   setErreur(newErreur); // on met à jour l'état avec toutes les erreurs
     if (Object.keys(newErreur).length === 0) {
     // submit form
+   
     dispatch(createuser(formData));
   }
     if(isSuccess){
@@ -202,7 +192,7 @@ const newStep = {
     
    
       localStorage.setItem('disconnect', JSON.stringify(false) ); 
-      localStorage.setItem('user', JSON.stringify(user) ); 
+     
  
       setEdit((prev)=>({
         ...prev,
@@ -213,15 +203,21 @@ const newStep = {
     
     }
    };
-    console.log(userfromstorage?._id)
+   const idUserfromDB= useSelector(state=>state?.auth)
+    console.log(idUserfromDB?.user?._id)
+    useEffect(()=>{
+      if(isSuccess){
+   localStorage.setItem('user', JSON.stringify(idUserfromDB?.user) ); 
+      }
+     
+ 
+    },[isSuccess,idUserfromDB])
   const handleSubmit1 = (e) => {
     e.preventDefault();
    
     const data={
-      id:userfromstorage?._id,
-      pays:formData.pays,
-      codepostal:formData.codepostal,
-      ville:formData.ville,
+      id:JSON.parse(localStorage.getItem('user'))?._id,
+    
       adress:formData.adress,
       numtel:formData.numtel
     }
@@ -231,18 +227,11 @@ const newStep = {
     if(!formData.adress){
       newErreur.adress = "adress et required"
     }
-    if(!formData.codepostal){
-      newErreur.codepostal ="codepostal et required"
-    }
+ 
     if(!formData.numtel){
       newErreur.numtel ="numéro teléphone et required"
     }
-       if(!formData.pays){
-      newErreur.pays ="pays et required"
-    }
-       if(!formData.ville){
-      newErreur.ville ="ville  et required"
-    }
+
       setErreur(newErreur); 
        if (Object.keys(newErreur).length === 0) {
     // submit form
@@ -250,8 +239,10 @@ const newStep = {
     const newStep1 = {
     step1: true,
     step2: true,
-    step3: false
+    step3: true
   };
+
+
   setStep(newStep1);
 
   }
@@ -273,7 +264,7 @@ const newStep = {
   const navigate = useNavigate()
   const handleSubmit3 = (e) => {
     e.preventDefault();
-    dispatch(createcommande({user:userfromstorage?._id , cart:detailscart?._id,ville:formData.ville,pays:formData.pays,payementMethode:formData.payementMethode,codepostal:formData.codepostal,adress:formData.adress,numtel:formData.numtel}))
+    dispatch(createcommande({user:userfromstorage?._id , cart:detailscart?._id,payementMethode:formData.payementMethode,adress:formData.adress,numtel:formData.numtel}))
    setTimeout(()=>{
     navigate('/ConfirmationCommande')
     dispatch(deletecart(detailscart?._id))
@@ -364,35 +355,9 @@ console.log(erreur)
                  {erreur.firstname && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.firstname}</span>}
               </div>
             
-              <div className='w-full px-4'>
-                <input
-                  type='email'
- className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                  name='email'
-                  value={formData.email}
-                    required
-                  onChange={handleChange}
-                  placeholder='Exemple@live.domaine'
-                />
-                    {erreur.email && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.email}</span>}
-              </div>
+       
             <span  className='text-xs font-semibold text-red-500 p-1   px-5'>   {message}</span>
-             <div className='flex flex-col gap-1'>
-               <div className='w-full flex items-center gap-5 px-4'>
-                <input
-                  type='password'
-                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                  name='password'
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder='Password'
-                />
-               
           
-              
-              </div>
-                {erreur.password && <span className='text-xs mt-1 px-4 text-red-600 font-light'>{erreur.password}</span>}
-             </div>
               <div className='flex justify-end w-full'>
                 <button onClick={handleSubmit} className="bg-black p-2 text-white uppercase text-sm font-light" type="submit">
                   Continuer
@@ -440,36 +405,9 @@ console.log(erreur)
                 onChange={handleChange}
               ></textarea>
                  {erreur.adress && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.adress}</span>}
-              <input
-                type='text'
-                name="codepostal"
-                  required
-                value={formData.codepostal}
-                onChange={handleChange}
-                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                placeholder='code postal'
-              />
-                       {erreur.codepostal && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.codepostal}</span>}
-              <input
-                type='text'
-                  required
-                name="ville"
-                value={formData.ville}
-                onChange={handleChange}
-    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                placeholder='ville'
-              />
-                {erreur.ville && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.ville}</span>}
-              <input
-                required
-                type='text'
-                name="pays"
-                value={formData.pays}
-                onChange={handleChange}
-                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                placeholder='pays'
-              />
-                   {erreur.pays && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.pays}</span>}
+       
+           
+         
               <input
                 required
                 type='text'
@@ -489,28 +427,7 @@ console.log(erreur)
           </div>
 
           {/* Section 3: Mode de livraison */}
-          <div className='flex flex-col gap-5'>
-          <div className='flex justify-between border-b items-center'>
-                     <h1 className="px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide bg-gray-100 border-l-4 border-blue-600 rounded-md text-gray-800">
-3 Mode de livraison
-</h1>
-           
-           
-            </div>
       
-        {step.step2===true && step.step1===true && step.step3===false  && <div  className='mb-5 h-[max-content] w-full'>
-          <h1 className='bg-gray-100 p-2  flex text-xs font-mono justify-between h-[40px]'><span>PhoneStoreTn Delivery</span><span>Livraison 24h à 48h</span>7,00 TND TTC</h1>
-          <p className='py-5 px-5 text-xs '>Si vous voulez nous laisser un message à propos de votre commande, merci de bien vouloir le renseigner dans le champ ci-contre </p>
-        <textarea className='outline-none border w-full'></textarea>  
-        <div className='flex justify-end w-full'>
-                <button onClick={handleSubmit2}  className="bg-black p-2 text-white uppercase text-sm font-light" type="submit">
-                  Continuer
-                </button>
-              </div>
-        </div>
-        }
-         
-          </div>
           
           <div className='w-full h-[300px] mb-20'>
           <div className='flex justify-between border-b items-center'>
@@ -520,7 +437,7 @@ console.log(erreur)
           
            
             </div>
-            {step&&step.step3==true &&<div className='mt-10'>
+            {step&&step.step3==false &&<div className='mt-10'>
               <div className='flex flex-col gap-4   items-start py-4 px-4'>
               
                {options1.map((option, index) => (

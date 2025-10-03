@@ -41,6 +41,11 @@ const SingleProduct = ({ setQuantity, quantity }) => {
   const sizes = ["S", "M", "L", "XL", "XXL"];
   const navigate = useNavigate()
   const { productbyid,isLoading } = useSelector(state => state?.product)
+
+  const [imageSelected,setImageSelected]= useState( productbyid?.images_product[0]?.url)
+  useEffect(()=>{
+    setImageSelected(productbyid?.images_product[0]?.url)
+  },[productbyid])
   return (
      <>
       
@@ -75,7 +80,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
   {/* Grande image */}
   <div className="w-full h-auto  rounded-2xl overflow-hidden shadow-sm">
     <img
-      src={productbyid &&productbyid?.images_product[0]?.url}
+      src={productbyid &&imageSelected}
       className='w-full md:h-full h-[350px] object-cover hover:scale-105 transition-transform duration-300'
       alt="product"
     />
@@ -83,21 +88,21 @@ const SingleProduct = ({ setQuantity, quantity }) => {
 
   {/* 3 petites images en ligne */}
   <div className='grid grid-cols-3 gap-3'>
-    <div className="w-full h-[110px]  rounded-xl overflow-hidden">
+    <div className="w-full h-[110px]  rounded-xl overflow-hidden"  onClick={()=>setImageSelected(productbyid?.images_product[0]?.url)}>
       <img
         src={productbyid?.images_product?.length > 0 && productbyid?.images_product[0]?.url}
         className='w-full h-full object-cover hover:scale-110 transition-transform duration-300'
         alt="product-thumbnail"
       />
     </div>
-    <div className="w-full h-[110px]  rounded-xl overflow-hidden">
+    <div className="w-full h-[110px]  rounded-xl overflow-hidden" onClick={()=>setImageSelected(productbyid?.images_product[1]?.url)}>
       <img
         src={productbyid?.images_product?.length > 0 && productbyid?.images_product[1] ? productbyid?.images_product[1]?.url : productbyid?.images_product[0]?.url}
         className='w-full h-full object-cover hover:scale-110 transition-transform duration-300'
         alt="product-thumbnail"
       />
     </div>
-   {productbyid?.images_product[2] && <div className="w-full h-[110px]  rounded-xl overflow-hidden">
+   {productbyid?.images_product[2] && <div className="w-full h-[110px]  rounded-xl overflow-hidden" onClick={()=>setImageSelected(productbyid?.images_product[2]?.url)}>
       <img
         src={productbyid?.images_product?.length > 0 && productbyid?.images_product[2] ? productbyid?.images_product[2]?.url : productbyid?.images_product[1]?.url}
         className='w-full h-full object-cover hover:scale-110 transition-transform duration-300'

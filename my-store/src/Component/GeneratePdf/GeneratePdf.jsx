@@ -69,6 +69,11 @@ const handleSendToWhatsApp = (pdfUrl) => {
       setLoad(false); // STOP loader
       setShowPdfModal(false)
 setTimeout(()=>{navigate('/')},2000)
+localStorage.removeItem('user')
+localStorage.removeItem('step')
+localStorage.removeItem('disconnect')
+
+
     }
   };
 

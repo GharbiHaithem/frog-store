@@ -24,7 +24,7 @@ import ProductsByCategory from './Component/ProductsByCategory/ProductsByCategor
 import { searchproduct } from './features/product/productSlice';
 function App() {
   const [openMenu, setOpenMenu] = useState(false)
-  const userfromstorage = JSON.parse(localStorage.getItem('user'))
+  const userfromstorage = JSON.parse(localStorage.getItem('user'))|| undefined
   const navigate = useNavigate()
   const [openSearch, setOpenSearch] = useState(false)
   const [q, setQ] = useState("");
