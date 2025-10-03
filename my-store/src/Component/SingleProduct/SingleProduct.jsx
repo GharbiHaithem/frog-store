@@ -116,7 +116,10 @@ const SingleProduct = ({ setQuantity, quantity }) => {
         {/* Colonne droite */}
         <div className='md:w-1/2 w-full'>
           <h6 className='uppercase mt-3 text-xs font-extralight'>Frog store</h6>
-          <h5 className='my-5 text-base font-semibold'>{productbyid?.titre}</h5>
+        <div className='flex items-center gap-5'>
+            <h5 className='my-5 text-base font-semibold'>{productbyid?.titre}</h5>
+           {productbyid?.quantityStq==0 && <span className='uppercase italic text-red-600 font-semibold'> Repture de Stock</span>}
+        </div>
           <div className='flex gap-3  items-center'>
 
              {productbyid?.promotion>0 && <span className=' uppercase md:text-xl  text-xs md:font-extralight font-light line-through '>{productbyid?.prix} DT</span>}
@@ -149,7 +152,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
               <InputQuantity setQuantity={setQuantity} qtyStk={productbyid?.quantityStq}/>
             </div>
             <div className='mt-3 flex flex-col gap-4'>
-              <button className='bg-white text-black text-sm font-light cursor-pointer  rounded-lg border p-4' onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
+              <button  disabled={productbyid?.quantityStq==0} className={`${productbyid?.quantityStq==0 ? 'bg-gray-300  text-white' : 'bg-white text-black'} text-sm font-light cursor-pointer  rounded-lg border p-4`} onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
             setTimeout(()=>{ dispatch(cartDetails(cartUuid))},1000)
             }}>Ajouter au panier</button>
               <button className='bg-black cursor-pointer text-white text-sm font-light border rounded-lg p-4' onClick={() =>{
@@ -157,7 +160,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
                    setTimeout(()=>{ dispatch(cartDetails(cartUuid))
                     setTimeout(()=>{   navigate('/checkout')},2000)
                    },5000)
-             }}>Acheter maintenant</button>
+             }}  disabled={productbyid?.quantityStq==0}>Acheter maintenant</button>
             </div>
           </div>
 

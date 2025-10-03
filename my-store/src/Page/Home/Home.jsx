@@ -59,6 +59,7 @@ console.log(groupedProducts)
           newPrice={(p.prix)-((p?.prix * p?.promotion)/100)}
           onClick={()=>{setTimeout(()=>{navigate(`/productSingle/${p?._id}`)},200)}}
           solde={p?.promotion}
+          qtystk={p?.quantityStq}
          key={i}
         />
             ))}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IoPricetagsOutline } from "react-icons/io5";
-const ProductCard = ({ img1, img2, title, oldPrice, newPrice ,onClick,solde}) => {
+const ProductCard = ({ img1, img2, title, oldPrice, newPrice ,onClick,solde,qtystk}) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -20,9 +20,10 @@ const ProductCard = ({ img1, img2, title, oldPrice, newPrice ,onClick,solde}) =>
         {solde>0 &&<span className="absolute right-3 top-3 bg-red-400 font-medium rounded-sm text-xs  p-1 flex items-center gap-2 text-white">
         <IoPricetagsOutline  className='text-2xl'/>  -{solde}%
         </span>}
+    {qtystk==0 &&    <span className='absolute bottom-[-10px] right-5 bg-red-400 p-3 text-white font-light italic uppercase'>Repture de stock</span>}
       </div>
 
-      <p className={`mt-2 text-sm font-mono px-1 ${hover ? 'underline' :''}`}>{title}</p>
+      <p className={`mt-5 text-sm font-mono px-1 ${hover ? 'underline' :''}`}>{title}</p>
 
      <div className="flex gap-3 items-center mt-2">
   <span className="uppercase text-xl font-light line-through text-gray-500">
