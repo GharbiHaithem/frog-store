@@ -5,7 +5,7 @@ import cartReducer from '../features/cart/cartSlice'
 import authReducer from '../features/auth/authSlice'
 import commandeReducer from '../features/commande/commandeSlice'
 import brandReducer from '../features/Brand/brandSlice'
-
+import bannerReducer from '../features/banner/bannerSlice'
 export const store = configureStore({
       reducer: {
       category: categoryReducer,
@@ -13,7 +13,8 @@ export const store = configureStore({
       cart:cartReducer,
       auth:authReducer,
       commande:commandeReducer,
-      brand:brandReducer
+      brand:brandReducer,
+      banner:bannerReducer
       },
     
     });

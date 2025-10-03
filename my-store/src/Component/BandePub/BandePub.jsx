@@ -4,11 +4,15 @@ import ab from '../../assets/aA1.jpg'
 import ac from '../../assets/aaaaaa.jpg'
 import ad from '../../assets/mother.jpg'
 import { RiArrowRightSLine } from "react-icons/ri";
-
+import { useDispatch, useSelector } from "react-redux";
+import { banner } from '../../features/banner/bannerSlice'
 const BandePub = () => {
   const images = [ab, ac, ad];
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const  dispatch = useDispatch()
+     useEffect(()=>{
+                      dispatch(banner())
+                   },[dispatch])
   const txt1 = `Nouvelle collection oversize ✨
 T-shirts 100% coton –
 Livraison à domicile 🏡
