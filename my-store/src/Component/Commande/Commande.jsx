@@ -304,185 +304,154 @@ console.log(erreur)
       
      
       <div className='flex md:flex-row bg-white flex-col gap-3 justify-between'>
-        <div className='md:w-[60%] w-full h-full mx-auto  p-2 my-5'>
-          {/* Section 1: Informations personnelles */}
-          <div className='flex justify-between items-center'>
-            <h1 className={`px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide ${step?.step1 ? 'bg-blue-600 text-white' : ' text-gray-800  bg-gray-100' }  border-l-4 border-blue-600 rounded-md`}>
- 1. Informations personnelles
-</h1>
-        
-        
-          </div>
-        {!isLoading ? <div>
-        {step&& edit.edit1===true  ||  ( userfromstorage &&Object.keys(userfromstorage).length>0 && !isLoading )&& <div className='flex flex-col gap-5 text-xs  font-light'>
-         {( userfromstorage&& Object.keys(userfromstorage)?.length > 0 && step.step1===true ) &&<span className='text-xs font-light'>Connecté en tant que {(userfromstorage?.firstname + userfromstorage?.lastname)}</span>}  
-            
-         { userfromstorage&&Object.keys(userfromstorage).length >0 &&  step.step1===true&& <span>Ce n'est pas vous ?<b  className='hover:text-red-500 font-semibold cursor-pointer' onClick={()=>{
-         localStorage.setItem('disconnect', JSON.stringify(true));
-         setDisconnection(true)
-         
-              setTimeout(()=>{
-              
-                setUserRecover({})
-              },2000)
-                }}> Se déconnecter</b></span>} 
-           { step.step1===true&&  <span className='text-xs font-extralight'>Si vous vous déconnectez maintenant, votre panier sera vidé.</span>  } 
-            </div>}
-            {( !step.step1  )   && <form className='w-full flex flex-col mb-5 border-b gap-3'>
-            
-              <div className='w-full px-4'>
+          <div className="bg-gray-50  py-3">
+        <div className="md:w-[80%] w-[95%] mx-auto">
+          {/* --- Étape 1 : Informations personnelles --- */}
+          <div className="bg-white shadow-md rounded-xl p-5 mb-6 border border-gray-100">
+            <div className="flex items-center justify-between mb-4">
+              <h2
+                className={`flex items-center gap-2 text-sm font-semibold uppercase tracking-wide px-4 py-2 rounded-md ${
+                  step?.step1 ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                <i className="fa-solid fa-user"></i>
+                1. Informations personnelles
+              </h2>
+            </div>
+      
+            {!isLoading && !step.step1 && (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-4">
                 <input
-                  type='text'
-                  name='lastname'
+                  name="lastname"
                   value={formData.lastname}
                   onChange={handleChange}
- className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                  placeholder='Prénom'
-                    required
+                  placeholder="Prénom"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition"
                 />
-                {erreur.lastname && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.lastname}</span>}
-              </div>
-              <div className='w-full px-4'>
                 <input
-                  type='text'
-               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                  name='firstname'
+                  name="firstname"
                   value={formData.firstname}
                   onChange={handleChange}
-                  placeholder='Nom de famille :'
-                    required
+                  placeholder="Nom de famille"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition"
                 />
-                 {erreur.firstname && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.firstname}</span>}
-              </div>
-            
-       
-            <span  className='text-xs font-semibold text-red-500 p-1   px-5'>   {message}</span>
-          
-              <div className='flex justify-end w-full'>
-                <button onClick={handleSubmit} className="bg-black p-2 text-white uppercase text-sm font-light" type="submit">
-                  Continuer
-                </button>
-              </div>
-            </form>}
-          </div >: <div className='flex items-center justify-center h-[50px] w-full'><img src={i} className='w-[20px] h-[20px] ' /></div>}
-
-          {/* Section 2: Adresses */}
-          
-          <div className='w-full mb-10 h-full'>
-            <div className='flex justify-between items-center'>
-     <h1 className={`px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide ${step?.step2 ? 'bg-blue-600 text-white' : ' text-gray-800  bg-gray-100' }  border-l-4 border-blue-600 rounded-md`}>
-  2. Adresses
-</h1>
-
-            
-             
-            </div>
-           {(step.step1 && !step.step2 ) && <form className='flex flex-col gap-2 mt-5 mb-20 p-2 h-full'>
-              <input
-                type='text'
-                name="firstname"
-                  required
-                value={formData.firstname}
-                onChange={handleChange}
-                disabled
-               className="w-full px-4 py-2  bg-gray-200 text-gray-400 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              />
-              <input
-                type='text'
-                name="lastname"
-                  required
-                    disabled
-                value={formData.lastname}
-                onChange={handleChange}
-                   className="w-full px-4 bg-gray-200 py-2 text-gray-400  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              />
-              <textarea
-                name="adress"
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                placeholder='Address'
-                  required
-                value={formData.adress}
-                onChange={handleChange}
-              ></textarea>
-                 {erreur.adress && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.adress}</span>}
-       
-           
-         
-              <input
-                required
-                type='text'
-                name="numtel"
-                value={formData.numtel}
-                onChange={handleChange}
-    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                placeholder='Téléphone'
-              />
-                {erreur.numtel && <span className='text-xs mt-1 text-red-600 font-light'>{erreur.numtel}</span>}
-              <div className='flex justify-end w-full'>
-                <button onClick={handleSubmit1}  className="bg-black p-2 text-white uppercase text-sm font-light" type="submit">
-                  Continuer
-                </button>
-              </div>
-            </form>}
+                {message && (
+                  <span className="text-xs text-red-500 font-medium">{message}</span>
+                )}
+                <div className="flex justify-end mt-3">
+                  <button
+                    type="submit"
+                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition"
+                  >
+                    Continuer
+                    <i className="fa-solid fa-arrow-right"></i>
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
-
-          {/* Section 3: Mode de livraison */}
       
-          
-          <div className='w-full h-[300px] mb-20'>
-          <div className='flex justify-between border-b items-center'>
-                                <h1 className={`px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide ${step?.step3 ? 'bg-blue-600 text-white' : ' text-gray-800  bg-gray-100' }  border-l-4 border-blue-600 rounded-md`}>
- 4 Paiement
-</h1>
-          
-           
-            </div>
-            {step&&step.step3==false &&<div className='mt-10'>
-              <div className='flex flex-col gap-4   items-start py-4 px-4'>
-              
-               {options1.map((option, index) => (
-  <label
-    key={option.value1}
-    className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition 
-      ${selectedOption1 === option.value1 ? "border-blue-600 bg-blue-50" : "border-gray-300"}
-    `}
-  >
-    <input
-      type="radio"
-      value={option.value1}
-      checked={selectedOption1 === option.value1}
-      onChange={handleOptionChange1}
-      className="hidden"
-    />
-    <span
-      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center 
-        ${selectedOption1 === option.value1 ? "border-blue-600" : "border-gray-400"}
-      `}
-    >
-      {selectedOption1 === option.value1 && (
-        <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-      )}
-    </span>
-
-    <span className="text-gray-700 text-sm font-medium">
-      {index === 1 ? <img src={option.label} alt="" /> : option.label}
-    </span>
-  </label>
-))}
-
-                 <div className='flex justify-end w-full'>
-                <button onClick={handleSubmit3}  className="bg-black p-2 text-white uppercase text-sm font-light" type="submit">
-                  Continuer
-                </button>
+          {/* --- Étape 2 : Adresse --- */}
+          <div className="bg-white shadow-md rounded-xl p-5 mb-6 border border-gray-100">
+            <h2
+              className={`flex items-center gap-2 text-sm font-semibold uppercase tracking-wide px-4 py-2 rounded-md ${
+                step?.step2 ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700"
+              }`}
+            >
+              <i className="fa-solid fa-location-dot"></i>
+              2. Adresse
+            </h2>
+      
+            {step.step1 && !step.step2 && (
+              <form onSubmit={handleSubmit1} className="flex flex-col gap-4 px-4 mt-3">
+                <textarea
+                  name="adress"
+                  value={formData.adress}
+                  onChange={handleChange}
+                  placeholder={`${erreur.adress ? erreur.adress : 'Adresse complète' }`}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition"
+                />
+                <input
+                  name="numtel"
+                  value={formData.numtel}
+                  onChange={handleChange}
+                  placeholder={`${erreur.numtel ? erreur.numtel  : 'Téléphone'}  `}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition"
+                />
+                <div className="flex justify-end mt-3">
+                  <button
+                    type="submit"
+                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition"
+                  >
+                    Suivant
+                    <i className="fa-solid fa-arrow-right"></i>
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+      
+          {/* --- Étape 3 : Paiement --- */}
+          <div className="bg-white shadow-md rounded-xl p-5  border border-gray-100">
+            <h2
+              className={`flex items-center gap-2 text-sm font-semibold uppercase tracking-wide px-4 py-2 rounded-md ${
+                step?.step3 ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700"
+              }`}
+            >
+              <i className="fa-solid fa-credit-card"></i>
+              3. Paiement
+            </h2>
+      
+            {step.step2 && (
+              <div className="flex flex-col gap-3 mt-3 px-4">
+                {options1.map((option) => (
+                  <label
+                    key={option.value1}
+                    className={`flex items-center gap-3 p-3 rounded-lg border transition cursor-pointer ${
+                      selectedOption1 === option.value1
+                        ? "border-blue-600 bg-blue-50"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      className="hidden"
+                      value={option.value1}
+                      checked={selectedOption1 === option.value1}
+                      onChange={handleOptionChange1}
+                    />
+                    <span
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        selectedOption1 === option.value1
+                          ? "border-blue-600"
+                          : "border-gray-400"
+                      }`}
+                    >
+                      {selectedOption1 === option.value1 && (
+                        <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                      )}
+                    </span>
+                    <span className="text-sm text-gray-700 font-medium">
+                      {option.label}
+                    </span>
+                  </label>
+                ))}
+      
+                <div className="flex justify-end mt-3">
+                  <button
+                    onClick={handleSubmit3}
+                    type="submit"
+                    className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition"
+                  >
+                    Finaliser
+                    <i className="fa-solid fa-check"></i>
+                  </button>
+                </div>
               </div>
-              </div>
-             
-              </div>
-              
-              } 
-             
+            )}
           </div>
         </div>
+      </div>
        
       </div>
     </div>

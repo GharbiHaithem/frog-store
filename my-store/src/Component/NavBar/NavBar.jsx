@@ -54,9 +54,9 @@ const NavBar = ({ setOpenMenu, openMenu, setOpenSearch, cartitem }) => {
                 onClick={() => navigate("/cart")}
                 className="w-10 h-10 cursor-pointer hover:text-black transition"
               />
-              <span className="absolute -bottom-2 -right-2 bg-black text-white text-xs w-6 h-6 flex items-center justify-center rounded-full border-2 border-white">
-                {cartitem ? cartitem : 0}
-              </span>
+           {cartitem>0&&   <span className="absolute -bottom-2 -right-2 bg-black text-white text-xs w-6 h-6 flex items-center justify-center rounded-full border-2 border-white">
+                {cartitem && cartitem }
+              </span>}
             </div>
           </div>
         </div>

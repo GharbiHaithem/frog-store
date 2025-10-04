@@ -136,14 +136,34 @@ const [showPdfModal, setShowPdfModal] = useState(false)
         </div>
       )}
 
-      {showPdfModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-xl ">
-    <div className="bg-white rounded-xl shadow-xl p-8 w-[90%] max-w-md text-center">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">
-        Génération de votre facture PDF
-      </h2>
-      <img src={i} alt="loading" className="w-12 h-12 mx-auto mb-4 animate-spin" />
-      <p className="text-sm text-gray-600">Veuillez patienter...</p>
+ {showPdfModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md">
+    {/* Container principal avec effet glass */}
+    <div className="relative bg-white/80 backdrop-blur-2xl shadow-2xl rounded-2xl border border-white/30 p-8 w-[90%] max-w-md text-center transition-all duration-500">
+      {/* Glow animé */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/30 to-white/10 opacity-50 blur-2xl"></div>
+
+      <div className="relative z-10">
+        <h2 className="text-xl font-semibold text-gray-800 mb-3">
+          📄 Génération de votre facture
+        </h2>
+
+        <div className="flex justify-center items-center mb-4">
+          <img
+            src={i}
+            alt="loading"
+            className="w-14 h-14 animate-spin-slow drop-shadow-lg"
+          />
+        </div>
+
+        <p className="text-sm text-gray-600 mb-4">
+          Veuillez patienter quelques secondes...
+        </p>
+
+        <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+          <div className="w-2/3 h-full bg-gradient-to-r from-blue-500 to-indigo-600 animate-pulse"></div>
+        </div>
+      </div>
     </div>
   </div>
 )}

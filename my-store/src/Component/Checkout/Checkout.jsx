@@ -449,7 +449,7 @@ const Checkout = ({userfromstorage,setUserRecover}) => {
         3. Paiement
       </h2>
 
-      {!step.step3 && (
+      {step.step2 && (
         <div className="flex flex-col gap-3 mt-3 px-4">
           {options1.map((option) => (
             <label

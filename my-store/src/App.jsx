@@ -28,7 +28,7 @@ function App() {
   const navigate = useNavigate()
   const [openSearch, setOpenSearch] = useState(false)
   const [q, setQ] = useState("");
-
+ const { detailscart } = useSelector(state => state?.cart)
   const submit = (e) => {
     e?.preventDefault();
 
@@ -38,10 +38,13 @@ function App() {
   const cartUuid = localStorage.getItem('cartUuid')
 
   useEffect(() => {
-    dispatch(cartDetails(cartUuid))
-  }, [dispatch, cartUuid])
+    if(detailscart?.items?.length){
+dispatch(cartDetails(cartUuid))
+    }
+    
+  }, [dispatch, cartUuid,detailscart?.items?.length])
 
-  const { detailscart } = useSelector(state => state?.cart)
+ 
   console.log(detailscart?.items?.length)
   const [disconnect, setDisconnect] = useState(JSON.parse(localStorage.getItem('disconnect')) || false)
   useEffect(() => {
