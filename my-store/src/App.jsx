@@ -113,8 +113,8 @@ function App() {
 
 
       </div>
-      {openMenu && <div className='fixed mt-[82px] z-50 w-full h-screen  left-0 top-0'>
-        <div className='flex flex-col justify-between bg-white'>
+      {openMenu && <div className='fixed mt-[82px] z-50  backdrop-blur-xs w-full h-[120vh]  left-0 top-0'>
+        <div className='flex flex-col justify-between w-1/2 h-full bg-white'>
           <div className='flex flex-col h-[400px] gap-5 my-10  mx-5  '>
             {categories?.map((cat) => (
               <span onClick={() => {
@@ -130,17 +130,12 @@ function App() {
             ))}
 
           </div>
-          <div className='bg-gray-100 z-50 h-screen px-5  py-5 '>
-            <div className='flex gap-1 items-center' onClick={() => {
-              !userRecover?.connected ? navigate('/login') : navigate('/commandeuser')
-              setOpenMenu(false)
-            }}> <CiUser className='text-2xl' /> <span className=''>{userRecover?.connected ? 'Account' : 'Log in'} </span></div>
-          </div>
+        
         </div>
 
       </div>}
       {openSearch && (
-        <div className="fixed top-0 left-0 w-full h-full z-50 bg-[#2f2e2e51]">
+        <div className="fixed top-0 left-0 w-full h-full z-50  backdrop-blur-xs">
           <div className="w-full h-[100px] bg-white z-50 flex items-center justify-center">
             <form onSubmit={submit} className="w-[95%] mx-auto">
               <label htmlFor="search" className="sr-only">Rechercher</label>

@@ -118,7 +118,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
           <h6 className='uppercase mt-3 text-xs font-extralight'>Frog store</h6>
         <div className='flex items-center gap-5'>
             <h5 className='my-5 text-base font-semibold'>{productbyid?.titre}</h5>
-           {productbyid?.quantityStq==0 && <span className='uppercase italic text-red-600 font-semibold'> Repture de Stock</span>}
+           {productbyid?.quantityStq==0 && <span className='uppercase italic text-red-500 bg-red-200 p-2 text-xs  font-bold'>Sold out </span>}
         </div>
           <div className='flex gap-3  items-center'>
 
@@ -127,23 +127,29 @@ const SingleProduct = ({ setQuantity, quantity }) => {
           {productbyid?.promotion>0 &&   <span className='bg-green-400 text-white uppercase p-1 text-xs font-semibold'>Economisée {(productbyid?.prix * productbyid?.promotion) / 100} DT</span>}
           </div>
           <div className='flex flex-col gap-1 mt-5 '>
-            <span className='uppercase text-xs font-extralight'>Size</span>
-       <div className="flex flex-wrap gap-3 z-0 mt-4">
+            <span className='uppercase text-xs font-extralight'>Available Sizes</span>
+       <div className="flex flex-wrap gap-3 z-0 mt-1">
+<div className="flex flex-wrap gap-3 mt-4 bg-white/70 backdrop-blur-md p-3 rounded-2xl border border-gray-200 shadow-sm">
   {sizes.map((s) => (
     <button
       key={s}
       onClick={() => setSize(s)}
-      className={`w-12 h-12 rounded-lg text-sm font-medium z-0 uppercase
-        flex items-center justify-center border transition-all duration-200
+      className={`relative w-12 h-12 rounded-xl text-sm font-semibold uppercase tracking-wide
+        flex items-center justify-center transition-all duration-300
         ${
           size === s
-            ? "bg-black text-white border-black shadow-md scale-105"
-            : "bg-white text-gray-800 border-gray-300 hover:border-black hover:bg-gray-100"
+            ? "bg-black text-white shadow-lg scale-110 border border-black ring-2 ring-offset-2 ring-black"
+            : "bg-white text-gray-800 border border-gray-300 hover:border-black hover:bg-gray-100 hover:scale-105"
         }`}
     >
       {s}
+      {size === s && (
+        <span className="absolute -top-1 -right-1 bg-green-500 rounded-full w-3 h-3 shadow-sm"></span>
+      )}
     </button>
   ))}
+</div>
+
 </div>
 
             <div className='my-3 flex flex-col gap-1'>

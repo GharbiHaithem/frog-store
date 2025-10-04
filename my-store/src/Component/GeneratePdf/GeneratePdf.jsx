@@ -74,6 +74,8 @@ setTimeout(()=>{navigate('/')},2000)
 localStorage.removeItem('user')
 localStorage.removeItem('step')
 localStorage.removeItem('disconnect')
+localStorage.removeItem('cartUuid')
+
 dispatch(resetState())
 
     }

@@ -76,10 +76,10 @@ const Invoice = ({ user, commande }) => {
                       <td className="px-4 py-2 border" style={{ borderColor: "#d1d5db" }}>{prod?.product?.titre}</td>
                       <td className="px-4 py-2 border text-center" style={{ borderColor: "#d1d5db" }}>{prod?.quantity}</td>
                       <td className="px-4 py-2 border text-right" style={{ borderColor: "#d1d5db" }}>
-                        {prod?.product?.prix},00 TND
+                        {(prod?.product?.prix - ((prod?.product?.prix * prod?.product?.promotion/100) ))} TND
                       </td>
                       <td className="px-4 py-2 border text-right" style={{ borderColor: "#d1d5db" }}>
-                        {prod?.quantity * prod?.product?.prix},00 TND
+                        {prod?.quantity * (prod?.product?.prix - ((prod?.product?.prix * prod?.product?.promotion/100) ))} TND
                       </td>
                     </tr>
                   ))}
@@ -91,10 +91,10 @@ const Invoice = ({ user, commande }) => {
                   </td>
                   <td className="px-4 py-2 text-right">
                     {commande?.cart?.items.reduce(
-                      (sum, current) => sum + current.product.prix * current.quantity,
+                      (sum, current) => sum +(current?.product?.prix - ((current?.product?.prix * current?.product?.promotion/100) )) * current.quantity,
                       0
                     )}
-                    ,00 TND
+                    TND
                   </td>
                 </tr>
 
@@ -103,7 +103,7 @@ const Invoice = ({ user, commande }) => {
                   <td colSpan="3" className="px-4 py-2 border text-right font-bold" style={{ borderColor: "#d1d5db" }}>
                     Frais de livraison
                   </td>
-                  <td className="px-4 py-2 text-right">7,00 TND</td>
+                  <td className="px-4 py-2 text-right">8,00 TND</td>
                 </tr>
 
                 {/* Total */}
@@ -113,10 +113,10 @@ const Invoice = ({ user, commande }) => {
                   </td>
                   <td className="px-4 py-2 text-right">
                     {commande?.cart?.items.reduce(
-                      (sum, current) => sum + current.product.prix * current.quantity,
+                      (sum, current) => sum + (current?.product?.prix - ((current?.product?.prix * current?.product?.promotion/100) )) * current.quantity,
                       0
-                    ) + 7}
-                    ,00 TND
+                    ) + 8}
+                    TND
                   </td>
                 </tr>
               </tbody>

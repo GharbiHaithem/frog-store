@@ -20,7 +20,7 @@ const ProductCard = ({ img1, img2, title, oldPrice, newPrice ,onClick,solde,qtys
         {solde>0 &&<span className="absolute right-3 top-3 bg-red-400 font-medium rounded-sm text-xs  p-1 flex items-center gap-2 text-white">
         <IoPricetagsOutline  className='text-2xl'/>  -{solde}%
         </span>}
-    {qtystk==0 &&    <span className='absolute bottom-[-10px] right-5 bg-red-400 p-3 text-white font-light italic uppercase'>Repture de stock</span>}
+    {qtystk==0 &&    <span className='absolute bottom-[-10px] right-5 bg-red-400 p-2 text-white font-mono italic uppercase'>Sold out</span>}
       </div>
 
       <p className={`mt-5 text-sm font-mono px-1 ${hover ? 'underline' :''}`}>{title}</p>
