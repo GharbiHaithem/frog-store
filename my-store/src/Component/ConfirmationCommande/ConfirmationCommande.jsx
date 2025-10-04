@@ -31,7 +31,7 @@ const ConfirmationCommande = () => {
       setTotalQuantity(totalQuantite)
 
       const totalprix = commande?.commande?.cart?.items.reduce((sum, current) => sum + (current.product.prix - ((current.product.prix*current.product.promotion)/100)) * current.quantity, 0)
-      const ttt = totalprix + 7
+      const ttt = totalprix + 8
 
       const formattedPrice = totalprix.toLocaleString()
       const formattedPricett = ttt.toLocaleString()
@@ -80,9 +80,9 @@ const [showPdfModal, setShowPdfModal] = useState(false)
                       <span className="text-sm font-medium">{prod?.product?.titre}</span>
                     </div>
                     <div className="flex items-center justify-between gap-6 text-sm w-1/2">
-                      <span>{(prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))},00 TND</span>
+                      <span>{(prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))} TND</span>
                       <span>x {prod?.quantity}</span>
-                      <span className="font-semibold">{prod?.quantity * (prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))},00 TND</span>
+                      <span className="font-semibold">{prod?.quantity * (prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))} TND</span>
                     </div>
                   </div>
                 ))}
@@ -91,15 +91,15 @@ const [showPdfModal, setShowPdfModal] = useState(false)
                 <div className="mt-5 border-t pt-4 text-sm">
                   <div className="flex justify-between py-1">
                     <span className="text-gray-600">Sous-total</span>
-                    <span className="font-medium">{totalPrice},00 TND</span>
+                    <span className="font-medium">{totalPrice} TND</span>
                   </div>
                   <div className="flex justify-between py-1">
                     <span className="text-gray-600">Frais de livraison</span>
-                    <span>7,00 TND</span>
+                    <span>8,00 TND</span>
                   </div>
                   <div className="flex justify-between font-bold text-lg mt-2">
                     <span>Total TTC</span>
-                    <span>{tt},00 TND</span>
+                    <span>{tt} TND</span>
                   </div>
                 </div>
               </div>

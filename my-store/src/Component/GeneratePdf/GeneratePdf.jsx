@@ -6,6 +6,8 @@ import axios from 'axios';
 import { FaWhatsapp } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'; // Icon spinner
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { resetState } from '../../features/auth/authSlice';
 
 const GeneratePDF = ({ sendMessage2, commande, sendMessage,setShowPdfModal, user, pdfUrl, setPdfUrl }) => {
   const [load, setLoad] = useState(false);
@@ -39,7 +41,7 @@ const handleSendToWhatsApp = (pdfUrl) => {
     return new File([pdfBlob], 'facture.pdf', { type: 'application/pdf' });
    
   };
-
+const dispatch = useDispatch()
   const uploadPDF = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
@@ -72,7 +74,7 @@ setTimeout(()=>{navigate('/')},2000)
 localStorage.removeItem('user')
 localStorage.removeItem('step')
 localStorage.removeItem('disconnect')
-
+dispatch(resetState())
 
     }
   };

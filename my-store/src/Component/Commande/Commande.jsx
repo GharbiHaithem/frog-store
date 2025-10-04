@@ -307,7 +307,7 @@ console.log(erreur)
         <div className='md:w-[60%] w-full h-full mx-auto  p-2 my-5'>
           {/* Section 1: Informations personnelles */}
           <div className='flex justify-between items-center'>
-            <h1 className="px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide bg-gray-100 border-l-4 border-blue-600 rounded-md text-gray-800">
+            <h1 className={`px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide ${step?.step1 ? 'bg-blue-600 text-white' : ' text-gray-800  bg-gray-100' }  border-l-4 border-blue-600 rounded-md`}>
  1. Informations personnelles
 </h1>
         
@@ -370,7 +370,7 @@ console.log(erreur)
           
           <div className='w-full mb-10 h-full'>
             <div className='flex justify-between items-center'>
-    <h1 className="px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide bg-gray-100 border-l-4 border-blue-600 rounded-md text-gray-800">
+     <h1 className={`px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide ${step?.step2 ? 'bg-blue-600 text-white' : ' text-gray-800  bg-gray-100' }  border-l-4 border-blue-600 rounded-md`}>
   2. Adresses
 </h1>
 
@@ -431,7 +431,7 @@ console.log(erreur)
           
           <div className='w-full h-[300px] mb-20'>
           <div className='flex justify-between border-b items-center'>
-                                <h1 className="px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide bg-gray-100 border-l-4 border-blue-600 rounded-md text-gray-800">
+                                <h1 className={`px-4 py-2 my-5 text-xs font-medium uppercase tracking-wide ${step?.step3 ? 'bg-blue-600 text-white' : ' text-gray-800  bg-gray-100' }  border-l-4 border-blue-600 rounded-md`}>
  4 Paiement
 </h1>
           

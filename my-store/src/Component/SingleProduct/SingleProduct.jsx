@@ -150,7 +150,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
             </div>
             <div className='mt-3 flex flex-col gap-4'>
               <button className='bg-white text-black text-sm font-light cursor-pointer  rounded-lg border p-4' onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
-            setTimeout(()=>{ dispatch(cartDetails(cartUuid))},3000)
+            setTimeout(()=>{ dispatch(cartDetails(cartUuid))},1000)
             }}>Ajouter au panier</button>
               <button className='bg-black cursor-pointer text-white text-sm font-light border rounded-lg p-4' onClick={() =>{
                 dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
