@@ -33,7 +33,13 @@ const SingleProduct = ({ setQuantity, quantity }) => {
 
   }, [cart?.cartUuid])
 
-
+useEffect(()=>{
+  if(isSuccess){
+    console.log('success add to cart')
+     dispatch(cartDetails(cartUuid))
+      console.log(detailscart?.items?.length)
+  }
+},[isSuccess,dispatch])
 
 
   console.log(detailscart?.items?.length)

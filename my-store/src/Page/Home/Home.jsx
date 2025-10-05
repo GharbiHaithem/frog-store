@@ -10,7 +10,12 @@ import i from '../../assets/acccc-removebg-preview.png'
 import { allproduct } from '../../features/product/productSlice'
 import { Helmet } from 'react-helmet-async'
 import BandePub from '../../Component/BandePub/BandePub'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 const Home = () => {
+  useEffect(()=>{
+    Aos.init()
+  },[])
 const navigate=useNavigate()
 const dispatch = useDispatch()
 const products = useSelector((state)=>state?.product?.products)

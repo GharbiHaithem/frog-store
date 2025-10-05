@@ -364,13 +364,26 @@ console.log(erreur)
       
             {step.step1 && !step.step2 && (
               <form onSubmit={handleSubmit1} className="flex flex-col gap-4 px-4 mt-3">
+               <div className="flex items-center mb-1">
+          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+          <label className="text-sm font-medium text-gray-700">
+            Adresse Exacte *
+          </label>
+        </div>
                 <textarea
                   name="adress"
                   value={formData.adress}
                   onChange={handleChange}
                   placeholder={`${erreur.adress ? erreur.adress : 'Adresse complète' }`}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
+              
+        <div className="flex items-center mb-1">
+          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+          <label className="text-sm font-medium text-gray-700">
+            Numéroo Télephone  *
+          </label>
+        </div>
                 <input
                   name="numtel"
                   value={formData.numtel}

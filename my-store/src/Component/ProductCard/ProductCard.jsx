@@ -9,7 +9,7 @@ const ProductCard = ({ img1, img2, title, oldPrice, newPrice ,onClick,solde,qtys
       className=" mt-3 border border-gray-100 cursor-pointer"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-
+data-aos="zoom-in-down"
     >
       <div className="relative w-full aspect-[4/5]">
           <img
