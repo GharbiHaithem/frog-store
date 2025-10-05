@@ -502,48 +502,50 @@ const Checkout = ({userfromstorage,setUserRecover}) => {
 
       <div className="md:bg-[#f9fafb] bg-white border-l px-6 py-6 h-screen border-gray-200 overflow-y-auto">
   {/* Liste des produits */}
-  <div className="flex flex-col gap-4 mb-8">
-    {detailscart?.items?.map((item, index) => (
-      <div
-        key={index}
-        className="flex justify-between items-center bg-white shadow-sm hover:shadow-md transition rounded-2xl p-3 border border-gray-100"
-      >
-        {/* Image */}
-        <div className="relative rounded-xl  border border-gray-100 shadow-sm">
-          <span className="absolute -top-2 -right-2 text-xs font-bold text-white border-2 border-white rounded-lg w-7 h-7 flex items-center justify-center bg-black shadow-md">
-            {item?.quantity}
-          </span>
-          <img
-            src={item?.product?.images_product[0]?.url}
-            alt={item?.product?.titre}
-            className="w-20 h-20 object-cover rounded-lg"
-          />
-        </div>
+<div className="flex flex-col gap-4 mb-8">
+  {detailscart?.items?.map((item, index) => (
+    <div
+      key={index}
+      className="flex justify-between items-center bg-white shadow-sm hover:shadow-md transition rounded-2xl p-4 border border-gray-100 h-[110px]" 
+      // 👆 taille fixe du bloc
+    >
+      {/* Image */}
+      <div className="relative w-[85px] h-[85px] flex items-center justify-center border border-gray-100 rounded-xl shadow-sm ">
+        <span className="absolute -top-2 -right-2 text-xs font-bold text-white border-2 border-white rounded-lg w-7 h-7 flex items-center justify-center bg-black shadow-md">
+          {item?.quantity}
+        </span>
+        <img
+          src={item?.product?.images_product[0]?.url}
+          alt={item?.product?.titre}
+          className="w-full h-full object-cover rounded-lg"
+        />
+      </div>
 
-        {/* Infos produit */}
-        <div className="flex flex-col flex-1 px-4">
-          <span className="font-semibold text-sm text-gray-800 truncate">
-            {item?.product?.titre}
+      {/* Infos produit */}
+      <div className="flex flex-col flex-1 px-4 overflow-hidden">
+        <span className="font-mono text-sm text-gray-800 truncate">
+          {item?.product?.titre}
+        </span>
+        <span className="mt-1 text-xs text-gray-500 flex items-center gap-2">
+          Size :{" "}
+          <span className="bg-gray-900 text-white font-light text-xs px-2 py-0.5 rounded-md border border-gray-200">
+            {item?.size}
           </span>
-          <span className="mt-1 text-xs text-gray-500 flex items-center gap-2">
-            Size :{" "}
-            <span className="bg-gray-900 text-white font-light text-xs px-2 py-0.5 rounded-md border border-gray-200">
-              {item?.size}
-            </span>
-          </span>
-        </div>
-
-        {/* Prix */}
-        <span className="text-sm font-semibold text-gray-800">
-          {(
-            item?.product?.prix -
-            (item?.product?.prix * item?.product?.promotion) / 100
-          ).toFixed(3)}{" "}
-          <span className="text-gray-500 text-xs">TND</span>
         </span>
       </div>
-    ))}
-  </div>
+
+      {/* Prix */}
+      <span className="text-sm font-semibold text-gray-800 whitespace-nowrap">
+        {(
+          item?.product?.prix -
+          (item?.product?.prix * item?.product?.promotion) / 100
+        ).toFixed(3)}{" "}
+        <span className="text-gray-500 text-xs">TND</span>
+      </span>
+    </div>
+  ))}
+</div>
+
 
   {/* Résumé panier */}
   <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-4">
