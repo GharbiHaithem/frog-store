@@ -23,12 +23,12 @@ const ProductCard = ({ img1, img2, title, oldPrice, newPrice ,onClick,solde,qtys
     {qtystk==0 &&    <span className='absolute bottom-[-10px] right-5 bg-red-400 p-2 text-white font-mono italic uppercase'>Sold out</span>}
       </div>
 
-      <p className={`mt-5 text-sm font-mono px-1 ${hover ? 'underline' :''}`}>{title}</p>
+      <p className={`mt-5 text-sm font-mono text-gray-500 px-5 ${hover ? 'underline' :''}`}>{title}</p>
 
-     <div className="flex gap-3 items-center mt-2">
-  <span className="uppercase text-xl font-light line-through text-gray-500">
+     <div className="flex gap-3 items-center px-5 mt-2">
+ {oldPrice != newPrice && <span className="uppercase text-xl font-light line-through text-gray-500">
     {oldPrice} TND
-  </span>
+  </span>}
   <span className="uppercase text-2xl font-semibold text-green-600">
     {newPrice} TND
   </span>
