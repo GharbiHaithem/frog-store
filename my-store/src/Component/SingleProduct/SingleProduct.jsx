@@ -44,14 +44,22 @@ useEffect(()=>{
 
   console.log(detailscart?.items?.length)
   const [size, setSize] = useState('S')
-  const sizes = ["S", "M", "L", "XL", "XXL"];
+
   const navigate = useNavigate()
-  const { productbyid,isLoading } = useSelector(state => state?.product)
+  const { productbyid,isLoading ,sizes} = useSelector(state => state?.product)
 
   const [imageSelected,setImageSelected]= useState( productbyid?.images_product[0]?.url)
   useEffect(()=>{
     setImageSelected(productbyid?.images_product[0]?.url)
   },[productbyid])
+  const [qtyStock, setQtyStock] = useState(0);
+useEffect(() => {
+  if (productbyid?.sizes && size) {
+    const selected = productbyid.sizes.find(s => s.size === size);
+    setQtyStock(selected ? selected.quantity : 0);
+  }
+}, [size, productbyid]);
+
   return (
      <>
       
@@ -135,38 +143,63 @@ useEffect(()=>{
           <div className='flex flex-col gap-1 mt-5 '>
             <span className='uppercase text-xs font-extralight'>Available Sizes</span>
        <div className="flex flex-wrap gap-3 z-0 mt-1">
-<div className="flex flex-wrap gap-3 mt-4 bg-white/70 backdrop-blur-md p-3 rounded-2xl border border-gray-200 shadow-sm">
-  {sizes.map((s) => (
+<div className="flex flex-wrap gap-3 mt-4 bg-white p-3 rounded-2xl border border-gray-200 shadow-sm">
+  {productbyid?.sizes?.map((item, index) => (
     <button
-      key={s}
-      onClick={() => setSize(s)}
-      className={`relative w-12 h-12 rounded-xl text-sm font-semibold uppercase tracking-wide
+      key={index}
+      onClick={() => item.quantity > 0 && setSize(item.size)}
+      disabled={item.quantity === 0}
+      className={`relative w-12 h-12 rounded-lg text-sm font-semibold uppercase
         flex items-center justify-center transition-all duration-300
         ${
-          size === s
-            ? "bg-black text-white shadow-lg scale-110 border border-black ring-2 ring-offset-2 ring-black"
-            : "bg-white text-gray-800 border border-gray-300 hover:border-black hover:bg-gray-100 hover:scale-105"
+          item.quantity === 0
+            ? "bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed opacity-70"
+            : size === item.size
+            ? "bg-black text-white border border-black shadow-lg scale-105"
+            : "bg-white text-black border border-gray-300 hover:border-black hover:scale-105"
         }`}
     >
-      {s}
-      {size === s && (
+      {item.size}
+      {size === item.size && item.quantity > 0 && (
         <span className="absolute -top-1 -right-1 bg-green-500 rounded-full w-3 h-3 shadow-sm"></span>
       )}
     </button>
   ))}
 </div>
 
+
+
+
+
 </div>
 
             <div className='my-3 flex flex-col gap-1'>
               <span className='uppercase text-xs font-extralight'>Quantity</span>
 
-              <InputQuantity setQuantity={setQuantity} qtyStk={productbyid?.quantityStq}/>
+           <InputQuantity  setQuantity={setQuantity} qtyStk={qtyStock}/>
+
             </div>
             <div className='mt-3 flex flex-col gap-4'>
-              <button  disabled={productbyid?.quantityStq==0} className={`${productbyid?.quantityStq==0 ? 'bg-gray-300  text-white' : 'bg-white text-black'} text-sm font-light cursor-pointer  rounded-lg border p-4`} onClick={() => { dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
-            setTimeout(()=>{ dispatch(cartDetails(cartUuid))},1000)
-            }}>Ajouter au panier</button>
+          <button
+  disabled={qtyStock === 0}
+  className={`${qtyStock === 0 ? 'bg-gray-300 text-white' : 'bg-white text-black'} text-sm font-light cursor-pointer rounded-lg border p-4`}
+  onClick={() => {
+    dispatch(createcart({
+      cartUuid: uuidCart,
+      productId: productbyid?._id,
+      quantity,
+      size
+    }));
+    setTimeout(() => { dispatch(cartDetails(cartUuid))
+       
+         dispatch(productByid(id))
+         setQuantity(1);
+     }, 3000);
+  }}
+>
+  Ajouter au panier
+</button>
+
               <button className='bg-black cursor-pointer text-white text-sm font-light border rounded-lg p-4' onClick={() =>{
                 dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
                    setTimeout(()=>{ dispatch(cartDetails(cartUuid))

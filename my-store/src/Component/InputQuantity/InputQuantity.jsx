@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
-const InputQuantity = ({ setQuantity, quantity, qtyStk }) => {
+const InputQuantity = ({ setQuantity,quantity, qtyStk }) => {
   const [value, setValue] = useState(1);
   const location = useLocation();
-
+   useEffect(() => {
+    setValue(quantity || 1);
+  }, [quantity]);
   const increase = () => {
     if (value < qtyStk) {
       setValue((prev) => prev + 1);

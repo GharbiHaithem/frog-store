@@ -300,7 +300,7 @@ console.log(erreur)
          <meta name="Order"  content="Order Page"></meta>
        </Helmet>
  <div className='bg-white mt-[60px]'>
-     <div className='md:w-[80%]  w-full h-[max-content] mt-5 p-2 mx-auto'>
+     <div className='md:w-[80%]  w-full h-screen mt-5 p-2 mx-auto'>
       
      
       <div className='flex md:flex-row bg-white flex-col gap-3 justify-between'>
