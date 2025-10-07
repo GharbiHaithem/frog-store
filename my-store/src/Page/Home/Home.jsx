@@ -12,9 +12,12 @@ import { Helmet } from 'react-helmet-async'
 import BandePub from '../../Component/BandePub/BandePub'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
+import FilterSize from '../../Component/FilterSize/FilterSize'
 const Home = () => {
+  const [loaded,setLoaded]=useState(false)
   useEffect(()=>{
-    Aos.init()
+    Aos.init({duration:800})
+    setLoaded(true)
   },[])
 const navigate=useNavigate()
 const dispatch = useDispatch()
@@ -44,6 +47,7 @@ console.log(groupedProducts)
          <meta name="Home Page"  content="page a propos des commande a payer"></meta>
        </Helmet>
      <div className=" md:w-[80%] mt-[80px] w-[97%] mx-auto">
+      <FilterSize/>
       <BandePub/>
      <div className='flex flex-col gap-5'>
      <div className='mt-5'>
@@ -54,7 +58,7 @@ console.log(groupedProducts)
 
           {/* Liste des produits */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {products.map((p, i) => (
+            {products.map((p, index) => (
        
                 <ProductCard
           img1={p.images_product?.[0]?.url}
@@ -65,7 +69,10 @@ console.log(groupedProducts)
           onClick={()=>{setTimeout(()=>{navigate(`/productSingle/${p?._id}`)},200)}}
           solde={p?.promotion}
           qtystk={p?.quantityStq}
-         key={i}
+         key={index}
+         index={index}
+         p={p}
+
         />
             ))}
           </div>
