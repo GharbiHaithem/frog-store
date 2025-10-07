@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-const FilterSize = () => {
-  const [sizes, setSizes] = useState(['S','M','L','XL','XXL']);
-  const [selectedSize, setSelectedSize] = useState('');
-
+const FilterSize = ({setSelectedSize,selectedSize}) => {
+  const [sizes, setSizes] = useState(['ALL','S','M','L','XL','XXL']);
+  
+ 
   return (
     <div className='mt-20 p-4 flex flex-col items-center gap-6'>
       <p className='text-xl font-mono text-gray-500 text-center'>

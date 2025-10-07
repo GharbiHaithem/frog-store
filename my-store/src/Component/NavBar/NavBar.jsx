@@ -20,12 +20,19 @@ const NavBar = ({ setOpenMenu, openMenu, setOpenSearch, cartitem }) => {
          
 
           {/* Burger / Close */}
-          <div className="md:hidden flex items-center justify-center">
+          <div className="md:hidden flex items-center gap-10 justify-center">
             {!openMenu ? (
+            <>
               <CiMenuBurger
                 className="w-10 h-10 text-gray-700 cursor-pointer hover:text-black transition"
                 onClick={() => setOpenMenu(true)}
               />
+               <img
+            src={x}
+            alt="Logo"
+            className="h-[85px] md:hidden block w-[85px] object-contain cursor-pointer"
+            onClick={() => navigate("/")}
+          /></>
             ) : (
               <TfiClose
                 className="w-10 h-10 text-gray-700 cursor-pointer hover:text-black transition"
@@ -35,10 +42,10 @@ const NavBar = ({ setOpenMenu, openMenu, setOpenSearch, cartitem }) => {
           </div>
 
           {/* Logo */}
-          <img
+            <img
             src={x}
             alt="Logo"
-            className="h-[85px] w-[85px] object-contain cursor-pointer"
+            className="h-[85px] hidden md:block w-[85px] object-contain cursor-pointer"
             onClick={() => navigate("/")}
           />
 

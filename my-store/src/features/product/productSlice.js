@@ -53,6 +53,14 @@ export const productsByCat = createAsyncThunk('products-cat',async(id,thunkAPI)=
         return thunkAPI.rejectWithValue(error)
     }
 })
+
+export const filterProd = createAsyncThunk('products-filter',async(size,thunkAPI)=>{
+    try {
+        return  await productService.filterproducts(size)
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 export const resetState = createAction('/clearstateproduct')
 export const productSlice = createSlice({
     name:'product',
@@ -172,6 +180,24 @@ export const productSlice = createSlice({
            
         })
         .addCase(searchproduct.rejected,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = false
+            state.isError = true
+            state.message = action.payload.response.data.message
+           
+        })
+             .addCase(filterProd.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(filterProd.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = true
+            state.products = action.payload;
+            console.log(action.payload)
+            state.isError = false
+           
+        })
+        .addCase(filterProd.rejected,(state,action)=>{
             state.isLoading = false
             state.isSuccess = false
             state.isError = true

@@ -37,7 +37,7 @@ const ProductCard = ({ img1, img2, title, oldPrice, newPrice, onClick, solde, qt
         )}
 
         {isSoldOut && (
-          <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white font-mono px-4 py-2 rounded-lg text-sm uppercase flex items-center gap-2 shadow-lg">
+          <span className="absolute bottom-2 left-2  bg-red-500 text-white font-mono px-4 py-2 rounded-lg text-xs  flex items-center gap-2 shadow-lg">
             <MdRemoveShoppingCart className="text-xl" /> Sold out
           </span>
         )}

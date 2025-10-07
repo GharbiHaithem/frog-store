@@ -7,25 +7,34 @@ import { useDispatch, useSelector } from 'react-redux'
 import ProductCard from '../../Component/ProductCard/ProductCard'
 import { useNavigate } from 'react-router-dom'
 import i from '../../assets/acccc-removebg-preview.png'
-import { allproduct } from '../../features/product/productSlice'
+import { allproduct, filterProd } from '../../features/product/productSlice'
 import { Helmet } from 'react-helmet-async'
 import BandePub from '../../Component/BandePub/BandePub'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 import FilterSize from '../../Component/FilterSize/FilterSize'
 const Home = () => {
+   const [selectedSize, setSelectedSize] = useState('');
+   const dispatch = useDispatch()
   const [loaded,setLoaded]=useState(false)
+  useEffect(()=>{
+    if(selectedSize && selectedSize !== 'ALL'){
+      dispatch(filterProd(selectedSize))
+    }else{
+  dispatch(allproduct ())
+    }
+  },[dispatch,selectedSize])
   useEffect(()=>{
     Aos.init({duration:800})
     setLoaded(true)
   },[])
 const navigate=useNavigate()
-const dispatch = useDispatch()
+
 const products = useSelector((state)=>state?.product?.products)
   const [groupedProducts, setGroupedProducts] = useState({});
 console.log(products)
 useEffect(()=>{
-  dispatch(allproduct ())
+
 },[dispatch])
 useEffect(()=>{
    const grouped= products&& products?.length>0 && products.reduce((acc, product) => {
@@ -47,7 +56,7 @@ console.log(groupedProducts)
          <meta name="Home Page"  content="page a propos des commande a payer"></meta>
        </Helmet>
      <div className=" md:w-[80%] mt-[80px] w-[97%] mx-auto">
-      <FilterSize/>
+      <FilterSize selectedSize={selectedSize}  setSelectedSize={setSelectedSize}/>
       <BandePub/>
      <div className='flex flex-col gap-5'>
      <div className='mt-5'>

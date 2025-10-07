@@ -47,6 +47,24 @@ export const getproductsById = async(id)=>{
   console.log(response.data)
   return await response.data
 }
+export const filterproducts = async (size) => {
+  try {
+    console.log("Taille sélectionnée :", size);
+
+    // Construction de l'URL avec le paramètre query (ex: ?size=XL)
+    const response = await axios.get(`${base_url2}/filter/product`, {
+      params: { size },
+    });
+
+    console.log("Produits filtrés :", response.data);
+    return response.data;
+
+  } catch (error) {
+    console.error("Erreur lors du filtrage des produits :", error);
+    throw error;
+  }
+};
+
 // export const addSousCategory = async(data)=>{
 //   console.log(data)
 //   const response = await axios.post(`${base_url2}/categories/${data.catId}/subcategories`, data)
@@ -68,7 +86,7 @@ export const productsCat= async(id)=>{
 }
 const productServices = {
 
-      createproduct,getAllproducts,getproductsByCatParent,getproductsById,searchproducts,productsCat}
+      createproduct,getAllproducts,getproductsByCatParent,getproductsById,searchproducts,productsCat,filterproducts}
 export default productServices
 
   
