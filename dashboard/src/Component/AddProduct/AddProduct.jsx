@@ -5,21 +5,28 @@ import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { createproduct } from '../../features/product/productSlice';
+import { createproduct, productByid } from '../../features/product/productSlice';
 import { getcategories } from '../../features/category/categorySlice';
 import { resetState, upload } from '../../features/upload/uploadSlice';
-
+import { useNavigate, useParams } from 'react-router-dom'
 const AddProduct = () => {
   const dispatch = useDispatch();
   const [localImageUrls, setLocalImageUrls] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [_images, set_Images] = useState([]);
-
+ const{id} = useParams()
+ console.log(id)
+  useEffect(()=>{
+  if(id){
+    dispatch(productByid(id))
+  }
+ },[id,dispatch])
+   const { productbyid,isLoading ,sizes} = useSelector(state => state?.product)
   // 👉 état pour la modale taille
   const [showSizeModal, setShowSizeModal] = useState(false);
   const [currentSize, setCurrentSize] = useState("");
   const [sizeQuantity, setSizeQuantity] = useState("");
-
+ 
   useEffect(() => {
     dispatch(getcategories());
   }, [dispatch]);
@@ -33,15 +40,16 @@ const AddProduct = () => {
 
   const formik = useFormik({
     initialValues: {
-      titre: '',
-      description: '',
-      category: '',
-      images_product: [],
-      prix: null,
-      promotion: null,
-      sizes: [], // { size: "M", quantity: 5 }
+      titre: !id ?'' : productbyid?.titre,
+      description:!id ? '' : productbyid?.description,
+      category: productbyid?.category?._id,
+      images_product:!id ? [] : productbyid?.images_product?.map((img)=>img?.url),
+      prix:!id ? null : productbyid?.prix,
+      promotion:!id ? null : productbyid?.promotion ,
+      sizes: !id ? [] : productbyid?.sizes , // { size: "M", quantity: 5 }
     },
     validationSchema: schema,
+    enableReinitialize:true,
     onSubmit: (values) => {
       dispatch(createproduct(values));
       formik.resetForm();
@@ -188,7 +196,7 @@ const AddProduct = () => {
 
           {/* Liste des tailles ajoutées */}
           <div className="mt-3 space-y-1">
-            {formik.values.sizes.map((s, i) => (
+            {formik.values.sizes?.map((s, i) => (
               <p key={i} className="text-sm text-gray-700">
                 <span className="font-semibold">{s.size}</span> → {s.quantity} en stock
               </p>

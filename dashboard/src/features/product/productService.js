@@ -29,6 +29,20 @@ export const createproduct = async(data)=>{
   console.log(response.data)
   return await response.data
 }
+ export const deleteProduct = async(id)=>{
+  console.log(id)
+  
+    const response = await axios.delete(`${base_url2}/${id}`)
+  console.log(response.data)
+  return await response.data
+}
+export const getproductsById = async(id)=>{
+  console.log(id)
+  
+    const response = await axios.get(`${base_url2}/${id}`)
+  console.log(response.data)
+  return await response.data
+}
 // export const addSousCategory = async(data)=>{
 //   console.log(data)
 //   const response = await axios.post(`${base_url2}/categories/${data.catId}/subcategories`, data)
@@ -43,5 +57,5 @@ export const createproduct = async(data)=>{
 // return await response.data
 // }
 const productServices = {
-      createproduct,getAllproducts,getproductsByCatParent}
+      createproduct,getAllproducts,getproductsByCatParent,deleteProduct,getproductsById}
 export default productServices

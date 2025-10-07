@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { IoMdArchive } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
-import { allproduct, productByParentCategory } from '../../features/product/productSlice';
+import { allproduct, deleteProduct, productByParentCategory } from '../../features/product/productSlice';
 import { MdLabelImportant } from 'react-icons/md';
 import { getcategories } from '../../features/category/categorySlice';
 import './style.css'
+import { GrTrash } from "react-icons/gr";
+import { FaRegEdit } from "react-icons/fa";
+import { useNavigate } from 'react-router';
 const columns = [
   {
     title: 'Key',
@@ -35,19 +38,18 @@ const ListProduct = () => {
   useEffect(() => {
     dispatch(allproduct());
   }, [dispatch]);
-  
+  const navigate= useNavigate()
   const { products } = useSelector(state => state?.product);
   const _data = products?.map((product, i) => ({
     key: i + 1,
-    images_product:<img  src={product?.images_product[0]?.url} />,
+    images_product:<img  src={product?.images_product[0]?.url} className='object-cover w-[100px] h-[100px] rounded-lg'/>,
     titre: product?.titre,
     description: product?.description, // Stocke la chaîne HTML directement
     Actions: (
-      <div className='d-flex gap-20'>
-        <button style={{ padding: '10px' }} className='bg-warning'></button>
-        <button style={{ padding: '10px' }} className='bg-dark'>
-          <IoMdArchive className='fs-5' />
-        </button>
+      <div className='flex gap-2'>
+        <button onClick={()=>dispatch(deleteProduct(product?._id))} style={{ padding: '10px' , fontSize :'20px'}} className='bg-red-500 text-white rounded-full hover:text-red-500 hover:bg-white border border-transparent hover:border-red-500'><GrTrash/></button>
+         <button  onClick={()=>navigate(`/editcategory/${product?._id}`)} style={{ padding: '10px' , fontSize :'20px'}} className='bg-yellow-500 text-white rounded-full hover:text-yellow-500 hover:bg-white border border-transparent hover:border-yellow-500'><FaRegEdit/></button>
+        
       </div>
     ),
   })) || [];
@@ -77,37 +79,7 @@ const ListProduct = () => {
        },[selectedCategoryId,dispatch])
      return (
     <div className='container mt-5 h-[100vh]'>
-      <div className='qqq d-flex justify-content-between align-items-center p-3 bg-primary text-light' style={{ width: '100%' }}>
-        <div>
-          <h2>LIST PRODUCTS</h2>
-        </div>
-        <div className='input-container mt-1'>
-        <select className='text-black'  onChange={handleCategoryChange} value={selectedCategoryId}>
-  <option  selected value="">Select Category</option>
- 
-  {
-  mainCategories && mainCategories.map((category) => (
-    <React.Fragment key={category?._id}>
-      <option onClick={()=>{
-        alert('rrr')
-        setTimeout(()=>{
-         
-        },2000)
-      }} className='text-sm uppercase font-extrabold' value={category?._id}>{category?.name}</option>
-      {category?.subCategories && category?.subCategories.length > 0 && (
-        category.subCategories.map((subCategory) => (
-          <option  className='text-xs uppercase font-extralight' key={subCategory?._id} value={subCategory?._id}>
-            ---- {subCategory?.name} {/* Ajouter un tiret pour indiquer qu'il s'agit d'une sous-catégorie */}
-          </option>
-        ))
-      )}
-    </React.Fragment>
-  ))
-}
 
-</select>
-        </div>
-      </div>
       <Table columns={columns} dataSource={_data} />
     </div>
   );

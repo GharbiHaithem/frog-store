@@ -28,6 +28,9 @@ function App() {
         <Route  path='/listProduct' element={<ListProduct openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
         <Route  path='/addbrand' element={<AddBrand openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
             <Route  path='/addbanner' element={<AddBanner openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
+<Route  path='/editcategory/:id' element={<AddProduct openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
+
+
         </Route>
 
       </Routes>
