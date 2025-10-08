@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet-async'
 const SingleProduct = ({ setQuantity, quantity }) => {
   const { id } = useParams()
   const dispatch = useDispatch()
-  const { cart, detailscart, isLoadingCart, isSuccess } = useSelector(state => state?.cart)
+  const { cart, detailscart, isLoadingCart, isSuccess ,message} = useSelector(state => state?.cart)
   const [uuidCart, setUuidCart] = useState(cart?.cartUuid)
   const cartUuid = localStorage.getItem('cartUuid')
   useEffect(() => {
@@ -177,6 +177,14 @@ useEffect(() => {
               <span className='uppercase text-xs font-extralight'>Quantity</span>
 
            <InputQuantity  setQuantity={setQuantity} qtyStk={qtyStock}/>
+{message && (
+  <div className="mt-3 flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 shadow-sm animate-pulse">
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M12 2a10 10 0 1010 10A10 10 0 0012 2z" />
+    </svg>
+    <span className="text-sm font-medium">{message}</span>
+  </div>
+)}
 
             </div>
             <div className='mt-3 flex flex-col gap-4'>

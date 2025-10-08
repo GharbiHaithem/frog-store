@@ -70,7 +70,7 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
                     {/* Image et titre */}
                     <div className="flex items-center gap-4 w-full md:w-1/2">
                       <img
-                        src={cart.product.images_product[0]?.url}
+                        src={cart?.product?.images_product[0]?.url}
                         alt={cart.product.titre}
                         className="w-[100px] h-[100px] object-cover rounded-lg border"
                       />

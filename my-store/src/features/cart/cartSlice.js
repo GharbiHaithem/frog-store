@@ -62,7 +62,7 @@ export const cartSlice = createSlice({
             state.isLoading = false
             state.isSuccess = false
             state.isError = true
-            state.message = action.payload.error
+            state.message = action.payload.response.data.error
          
         })
         .addCase(cartDetails.pending,(state)=>{

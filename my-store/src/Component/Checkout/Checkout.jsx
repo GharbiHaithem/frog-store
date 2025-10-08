@@ -316,7 +316,7 @@ const Checkout = ({userfromstorage,setUserRecover}) => {
       const totalQuantite = detailscart?.items.reduce((sum, current) => sum + current.quantity, 0)
       setTotalQuantity(totalQuantite)
 
-      const totalprix = detailscart?.items.reduce((sum, current) => sum + (current.product.prix - ((current.product.prix*current.product.promotion)/100)) * current.quantity, 0)
+      const totalprix = detailscart?.items.reduce((sum, current) => sum + (current.product?.prix - ((current.product?.prix*current.product.promotion)/100)) * current.quantity, 0)
       const ttt = totalprix + 8
 
       const formattedPrice = totalprix.toLocaleString()
