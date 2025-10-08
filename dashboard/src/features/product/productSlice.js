@@ -44,6 +44,21 @@ export const productByid = createAsyncThunk('product-id',async(id,thunkAPI)=>{
         return thunkAPI.rejectWithValue(error)
     }
 })
+
+export const updateproduct = createAsyncThunk('product-edit',async(data,thunkAPI)=>{
+    try {
+        return  await productService.updateproduct(data)
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
+export const deleteimg = createAsyncThunk('img-delete',async(data,thunkAPI)=>{
+    try {
+        return  await productService.deleteimageProduct(data)
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 export const productSlice = createSlice({
     name:'product',
     reducers:{},
@@ -141,7 +156,42 @@ export const productSlice = createSlice({
                     state.message = action.payload
                 
                 })
-     
+                     .addCase(updateproduct.pending,(state)=>{
+                    state.isLoading = true
+                })
+                .addCase(updateproduct.fulfilled,(state,action)=>{
+                    state.isLoading = false
+                    state.isSuccess = true
+                    state.productbyid = action.payload.product;
+                    console.log(action.payload)
+                    state.isError = false
+                   
+                })
+                .addCase(updateproduct.rejected,(state,action)=>{
+                    state.isLoading = false
+                    state.isSuccess = false
+                    state.isError = true
+                    state.message = action.payload
+                
+                })
+               .addCase(deleteimg.pending,(state)=>{
+                    state.isLoading = true
+                })
+                .addCase(deleteimg.fulfilled,(state,action)=>{
+                    state.isLoading = false
+                    state.isSuccess = true
+                    state.products = action.payload.product;
+                    console.log(action.payload)
+                    state.isError = false
+                   
+                })
+                .addCase(deleteimg.rejected,(state,action)=>{
+                    state.isLoading = false
+                    state.isSuccess = false
+                    state.isError = true
+                    state.message = action.payload
+                
+                })
     }
 })
 export default productSlice.reducer 

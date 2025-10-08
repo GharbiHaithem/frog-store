@@ -43,6 +43,20 @@ export const getproductsById = async(id)=>{
   console.log(response.data)
   return await response.data
 }
+export const updateproduct = async(data)=>{
+  console.log(data)
+  
+    const response = await axios.put(`${base_url2}/${data.id}`,data.values)
+  console.log(response.data)
+  return await response.data
+}
+export const deleteimageProduct = async(data)=>{
+  console.log(data)
+  
+    const response = await axios.delete(`${base_url2}/img/${data.id}`,data.values)
+  console.log(response.data)
+  return await response.data
+}
 // export const addSousCategory = async(data)=>{
 //   console.log(data)
 //   const response = await axios.post(`${base_url2}/categories/${data.catId}/subcategories`, data)
@@ -57,5 +71,5 @@ export const getproductsById = async(id)=>{
 // return await response.data
 // }
 const productServices = {
-      createproduct,getAllproducts,getproductsByCatParent,deleteProduct,getproductsById}
+      createproduct,getAllproducts,getproductsByCatParent,deleteProduct,getproductsById,updateproduct,deleteimageProduct}
 export default productServices

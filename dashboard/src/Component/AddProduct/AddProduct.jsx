@@ -5,7 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { createproduct, productByid } from '../../features/product/productSlice';
+import { createproduct, productByid, updateproduct } from '../../features/product/productSlice';
 import { getcategories } from '../../features/category/categorySlice';
 import { resetState, upload } from '../../features/upload/uploadSlice';
 import { useNavigate, useParams } from 'react-router-dom'
@@ -51,12 +51,26 @@ const AddProduct = () => {
     validationSchema: schema,
     enableReinitialize:true,
     onSubmit: (values) => {
-      dispatch(createproduct(values));
-      formik.resetForm();
+      if(id){
+        const data ={
+          id,
+          values
+        }
+        resetState()
+           setTimeout(() => {
+      dispatch(updateproduct(data));
+      }, 2000);      
+      
+      }else{
+dispatch(createproduct(values));
+formik.resetForm();
       setLocalImageUrls([]);
       setTimeout(() => {
         dispatch(resetState());
-      }, 2000);
+      }, 2000);      
+}
+      
+      
     },
   });
 
@@ -226,6 +240,20 @@ const AddProduct = () => {
             ))}
           </div>
         </div>
+<div className='flex items-center gap-3 flex-wrap w-full'>
+  {productbyid?.images_product?.map((img, i) => (
+    <div
+      key={i}
+      className="w-1/4 h-[120px] overflow-hidden rounded-lg shadow-sm border border-gray-200"
+    >
+      <img
+        src={img?.url}
+        alt={`image-${i}`}
+        className="w-full h-full object-cover"
+      />
+    </div>
+  ))}
+</div>
 
         {/* Description */}
         <div>
