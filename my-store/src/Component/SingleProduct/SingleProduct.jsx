@@ -187,6 +187,16 @@ useEffect(() => {
 )}
 
             </div>
+            {/* --- Description Bande --- */}
+<div className="mt-8 bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300">
+  <h4 className="text-lg font-semibold text-gray-800 mb-2 border-b border-gray-300 pb-2">
+    Description du produit
+  </h4>
+  <p className="text-gray-600 leading-relaxed text-sm md:text-base"   dangerouslySetInnerHTML={{ __html: productbyid?.description || "<p>Aucune description disponible</p>" }}>
+   
+  </p>
+</div>
+
             <div className='mt-3 flex flex-col gap-4'>
           <button
   disabled={qtyStock === 0}

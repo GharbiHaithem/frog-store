@@ -3,17 +3,20 @@ import x from "../../assets/aqw-removebg-preview.png";
 import { CiSearch, CiUser, CiShop, CiMenuBurger } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
+import RotatingText from '../RotatingText/RotatingText'
+import { useMediaQuery } from "react-responsive";
 const NavBar = ({ setOpenMenu, openMenu, setOpenSearch, cartitem }) => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const isSmall = useMediaQuery({ maxWidth: 640 });
+  const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
   return (
     <>
+    <RotatingText/>
       <div
         className={`${
           location.pathname === "/checkout" ? "hidden" : ""
-        } fixed top-0 left-1/2 -translate-x-1/2 w-full md:w-[80%] z-20`}
+        } fixed ${isMedium ? 'top-0' : 'top-[60px]'} left-1/2 -translate-x-1/2 w-full md:w-[80%] z-20`}
       >
         <div className="w-full h-[80px] px-6 bg-white  flex items-center justify-between ">
           {/* Menu desktop */}

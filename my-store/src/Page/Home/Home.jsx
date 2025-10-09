@@ -55,7 +55,7 @@ console.log(groupedProducts)
          <title>Checkout</title>
          <meta name="Home Page"  content="page a propos des commande a payer"></meta>
        </Helmet>
-     <div className=" md:w-[80%] mt-[80px] w-[97%] mx-auto">
+     <div className=" md:w-[80%] mt-[120px] w-[97%] mx-auto">
       <FilterSize selectedSize={selectedSize}  setSelectedSize={setSelectedSize}/>
       <BandePub/>
      <div className='flex flex-col gap-5'>
