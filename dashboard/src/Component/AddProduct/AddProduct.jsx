@@ -271,6 +271,7 @@ formik.resetForm();
         {/* Submit */}
         <button
           type="submit"
+          disabled={formik.values.images_product.length ===0}
           className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
         >
           Ajouter le produit
@@ -279,7 +280,7 @@ formik.resetForm();
 
       {/* 🔵 Modal Taille */}
       {showSizeModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="absolute inset-0 bg-black  w-full h-screen  top-0 left-0 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-[300px] shadow-lg">
             <h3 className="text-lg font-semibold mb-4 text-gray-800">
               Quantité pour la taille {currentSize}
