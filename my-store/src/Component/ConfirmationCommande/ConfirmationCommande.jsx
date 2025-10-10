@@ -71,13 +71,16 @@ const [showPdfModal, setShowPdfModal] = useState(false)
                     key={prod?._id}
                     className="flex justify-between items-center border rounded-lg p-1 shadow-sm hover:shadow-md transition"
                   >
-                    <div className="flex items-center gap-2 w-1/2">
+                    <div className="flex items-center gap-2 w-[30%]">
                       <img
                         className="w-[70px] h-[70px] rounded-md object-cover border"
                         src={prod?.product?.images_product[0]?.url}
                         alt={prod?.product?.titre}
                       />
                       <span className="text-sm font-medium">{prod?.product?.titre}</span>
+                    </div>
+                    <div className='text-white bg-black p-2 rounded-full w-10 text-center text-xl font-semibold'>
+                      {prod?.size}
                     </div>
                     <div className="flex items-center justify-between gap-6 text-sm w-1/2">
                       <span>{(prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))} TND</span>

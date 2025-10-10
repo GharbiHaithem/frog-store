@@ -334,13 +334,13 @@ const Commande = ({userfromstorage,setUserRecover}) => {
       <title>Checkout</title>
       <meta name="Page de checkout"  content="page a propos des commande a payer"></meta>
     </Helmet>
-    <div className="md:w-[80%] mx-auto w-full">
+    <div className="md:w-[80%] mx-auto mt-[80px] w-full">
       <div className="flex items-center mt-2">
         <div className="mx-5 h-[60px]  flex flex-col  items-center text-lg font-semibold ">
          <img
                   src={x1}
                   alt="Logo"
-                  className="h-[65px] w-[65px] object-contain cursor-pointer"
+                  className="h-[65px] w-[65px] object-contain hidden cursor-pointer"
                   onClick={() => navigate("/")}
                 />
    
@@ -349,7 +349,7 @@ const Commande = ({userfromstorage,setUserRecover}) => {
 
       <hr className="border-b border-gray-200 shadow-sm" />
       <div className=" ">
-      <div className="grid md:grid-cols-2 grid-cols-1  md:gap-5 items-start">
+      <div className="grid md:grid-cols-2  grid-cols-1  md:gap-5 items-start">
 
     <div className="bg-gray-50  py-3">
   <div className="md:w-[80%] w-[95%] mx-auto">

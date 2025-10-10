@@ -22,6 +22,10 @@ import { HelmetProvider } from 'react-helmet-async'
 import { getcategories } from './features/category/categorySlice';
 import ProductsByCategory from './Component/ProductsByCategory/ProductsByCategory';
 import { searchproduct } from './features/product/productSlice';
+import { useMediaQuery } from 'react-responsive';
+import { CiFacebook } from "react-icons/ci";
+import { CiLinkedin } from "react-icons/ci";
+import { PiWhatsappLogoThin } from "react-icons/pi";
 function App() {
   const [openMenu, setOpenMenu] = useState(false)
   const userfromstorage = JSON.parse(localStorage.getItem('user'))|| undefined
@@ -92,6 +96,8 @@ dispatch(cartDetails(cartUuid))
             },[search,dispatch])
        
         const{productsearched}=useSelector(state=>state?.product)
+          const isSmall = useMediaQuery({ maxWidth: 640 });
+          const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
   return (
     <HelmetProvider>
       <div>
@@ -116,10 +122,11 @@ dispatch(cartDetails(cartUuid))
 
 
       </div>
-      {openMenu && <div className='fixed mt-[82px] z-50  backdrop-blur-xs w-full h-[120vh]  left-0 top-0'>
+      {openMenu && <div className={`fixed mt-[82px] ${isMedium ? 'top-0' : 'top-[60px]'} z-50  backdrop-blur-xs w-full h-[120vh]  left-0 `}>
         <div className='flex flex-col justify-between w-1/2 h-full bg-white'>
-          <div className='flex flex-col h-[400px] gap-5 my-10  mx-5  '>
-            {categories?.map((cat) => (
+          <div className='flex flex-col h-full   my-10  mx-5  '>
+          <div className='flex flex-col h-[50%] '>
+              {categories?.map((cat) => (
               <span onClick={() => {
 
                 navigate(`/produtscategory/${cat?._id}`)
@@ -133,12 +140,19 @@ dispatch(cartDetails(cartUuid))
             ))}
 
           </div>
+          <div  className='h-[10%] py-5 flex items-center justify-center px-5'>
+            <div className='flex items-center gap-2'>
+<CiFacebook  style={{fontSize:'25px'}}/>
+<CiLinkedin style={{fontSize:'25px'}}/>
+<PiWhatsappLogoThin style={{fontSize:'25px'}} />
+          </div></div>
+          </div>
         
         </div>
 
       </div>}
       {openSearch && (
-        <div className="fixed top-0 left-0 w-full h-full z-50  backdrop-blur-xs">
+        <div className={`fixed ${isMedium ? 'top-0' : 'top-[60px]'}  left-0 w-full h-full z-50  backdrop-blur-xs`}>
           <div className="w-full h-[100px] bg-white z-50 flex items-center justify-center">
             <form onSubmit={submit} className="w-[95%] mx-auto">
               <label htmlFor="search" className="sr-only">Rechercher</label>

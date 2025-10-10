@@ -13,6 +13,7 @@ import BandePub from '../../Component/BandePub/BandePub'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 import FilterSize from '../../Component/FilterSize/FilterSize'
+import Contact from '../../Component/Contact/Contact'
 const Home = () => {
    const [selectedSize, setSelectedSize] = useState('');
    const dispatch = useDispatch()
@@ -89,6 +90,7 @@ console.log(groupedProducts)
       ))}
       
       </div>
+      <Contact/>
      </div>
 
           <div>

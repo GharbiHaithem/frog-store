@@ -11,7 +11,7 @@ const Layout = ({openMenu,setOpenMenu,openSearch,setOpenSearch,cartitem}) => {
     <div className='flex  h-[max-content] flex-col '>
     <NavBar cartitem={cartitem} openMenu={openMenu} setOpenMenu={setOpenMenu}  openSearch={openSearch} setOpenSearch={setOpenSearch}/>
     <Outlet/>
-    <Contact/>
+    
 <Footer/>
     </div>
   )

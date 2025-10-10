@@ -1,129 +1,90 @@
-import React from 'react';
-import './Invoice.css'; // si tu veux ajouter des styles custom
+import React from "react";
+import "./Invoice.css";
 
 const Invoice = ({ user, commande }) => {
+  const subtotal =
+    commande?.cart?.items?.reduce(
+      (sum, item) =>
+        sum +
+        (item?.product?.prix -
+          (item?.product?.prix * item?.product?.promotion) / 100) *
+          item.quantity,
+      0
+    ) || 0;
+
+  const delivery = 8;
+  const total = subtotal + delivery;
+
   return (
-    <div className="md:w-[80%] w-full mx-auto mb-10 h-[100vh] my-10">
-      <h1
-        className="text-sm font-semibold text-center uppercase"
-        style={{ color: "#111827" }} // noir léger (équivalent text-gray-900)
-      >
-        Détails de la commande
-      </h1>
-
-      <div>
-        {/* Commande */}
-        <div
-          className="my-5 p-2 py-3 px-3"
-          style={{
-            backgroundColor: "#ffffff",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-          }}
-        >
-          Commande n°{" "}
-          <span className="text-lg font-bold">{commande?.refCommande}</span>
-        </div>
-
-        {/* Adresse */}
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-            marginTop: "1rem",
-          }}
-        >
-          <h1
-            className="text-center text-lg uppercase font-bold p-2 border-b"
-            style={{ borderColor: "#d1d5db" }} // équivalent gray-300
-          >
-            Adresse de livraison
-          </h1>
-
-          <div className="md:w-1/3 w-full text-xs px-5 flex flex-col gap-2 py-5 border-b" style={{ borderColor: "#d1d5db" }}>
-            <span className="uppercase">{user?.firstname + " " + user?.lastname}</span>
-            <span className="uppercase">{commande?.adress}</span>
-            <span className="uppercase">{user?.numtel}</span>
-            <span className="mb-2">{user?.email}</span>
-            <hr style={{ borderColor: "#d1d5db" }} />
-          </div>
-        </div>
-
-        {/* Tableau produits */}
-        <div
-          className="my-5 p-2 py-3 px-3"
-          style={{
-            backgroundColor: "#ffffff",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-          }}
-        >
-          <div className="flex justify-center w-full overflow-x-auto">
-            <table
-              className="min-w-full w-full border"
-              style={{ borderColor: "#d1d5db", backgroundColor: "#ffffff" }}
-            >
-              <thead style={{ backgroundColor: "#f3f4f6" /* gris clair */ }}>
-                <tr>
-                  <th className="px-4 py-2 border text-left" style={{ borderColor: "#d1d5db" }}>Produit</th>
-                  <th className="px-4 py-2 border text-center" style={{ borderColor: "#d1d5db" }}>Quantité</th>
-                  <th className="px-4 py-2 border text-right" style={{ borderColor: "#d1d5db" }}>Prix unitaire</th>
-                  <th className="px-4 py-2 border text-right" style={{ borderColor: "#d1d5db" }}>Prix total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {commande &&
-                  commande?.cart?.items?.map((prod) => (
-                    <tr className="border-b" style={{ borderColor: "#d1d5db" }} key={prod?._id}>
-                      <td className="px-4 py-2 border" style={{ borderColor: "#d1d5db" }}>{prod?.product?.titre}</td>
-                      <td className="px-4 py-2 border text-center" style={{ borderColor: "#d1d5db" }}>{prod?.quantity}</td>
-                      <td className="px-4 py-2 border text-right" style={{ borderColor: "#d1d5db" }}>
-                        {(prod?.product?.prix - ((prod?.product?.prix * prod?.product?.promotion/100) ))} TND
-                      </td>
-                      <td className="px-4 py-2 border text-right" style={{ borderColor: "#d1d5db" }}>
-                        {prod?.quantity * (prod?.product?.prix - ((prod?.product?.prix * prod?.product?.promotion/100) ))} TND
-                      </td>
-                    </tr>
-                  ))}
-
-                {/* Sous-total */}
-                <tr>
-                  <td colSpan="3" className="px-4 py-2 border text-right font-bold" style={{ borderColor: "#d1d5db" }}>
-                    Sous-total
-                  </td>
-                  <td className="px-4 py-2 text-right">
-                    {commande?.cart?.items.reduce(
-                      (sum, current) => sum +(current?.product?.prix - ((current?.product?.prix * current?.product?.promotion/100) )) * current.quantity,
-                      0
-                    )}
-                    TND
-                  </td>
-                </tr>
-
-                {/* Livraison */}
-                <tr>
-                  <td colSpan="3" className="px-4 py-2 border text-right font-bold" style={{ borderColor: "#d1d5db" }}>
-                    Frais de livraison
-                  </td>
-                  <td className="px-4 py-2 text-right">8,00 TND</td>
-                </tr>
-
-                {/* Total */}
-                <tr className="font-bold">
-                  <td colSpan="3" className="px-4 py-2 border text-right" style={{ borderColor: "#d1d5db" }}>
-                    Total
-                  </td>
-                  <td className="px-4 py-2 text-right">
-                    {commande?.cart?.items.reduce(
-                      (sum, current) => sum + (current?.product?.prix - ((current?.product?.prix * current?.product?.promotion/100) )) * current.quantity,
-                      0
-                    ) + 8}
-                    TND
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <div className="invoice-container">
+      <div className="invoice-header">
+        <h1>Détails de la commande</h1>
+        <p className="order-ref">
+          Commande n° <strong>{commande?.refCommande}</strong>
+        </p>
       </div>
+
+      <section className="invoice-section">
+        <h2>Adresse de livraison</h2>
+        <div className="invoice-address">
+          <p><strong>{user?.firstname} {user?.lastname}</strong></p>
+          <p>{commande?.adress}</p>
+          <p>{user?.numtel}</p>
+          <p>{user?.email}</p>
+        </div>
+      </section>
+
+      <section className="invoice-section">
+        <h2>Détails des produits</h2>
+        <div className="invoice-table-wrapper">
+          <table className="invoice-table">
+            <thead>
+              <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {commande?.cart?.items?.map((prod) => {
+                const prixUnitaire =
+                  prod?.product?.prix -
+                  (prod?.product?.prix * prod?.product?.promotion) / 100;
+                const prixTotal = prixUnitaire * prod?.quantity;
+
+                return (
+                  <tr key={prod?._id}>
+                    <td>{prod?.product?.titre}</td>
+                    <td>{prod?.quantity}</td>
+                    <td>{prixUnitaire.toFixed(2)} TND</td>
+                    <td>{prixTotal.toFixed(2)} TND</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan="3">Sous-total</td>
+                <td>{subtotal.toFixed(2)} TND</td>
+              </tr>
+              <tr>
+                <td colSpan="3">Frais de livraison</td>
+                <td>{delivery.toFixed(2)} TND</td>
+              </tr>
+              <tr className="invoice-total">
+                <td colSpan="3">Total</td>
+                <td>{total.toFixed(2)} TND</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <footer className="invoice-footer">
+        <p>Merci pour votre commande 🛍️</p>
+        <p>Ce document est généré automatiquement — aucune signature n’est requise.</p>
+      </footer>
     </div>
   );
 };

@@ -18,12 +18,12 @@ const NavBar = ({ setOpenMenu, openMenu, setOpenSearch, cartitem }) => {
           location.pathname === "/checkout" ? "hidden" : ""
         } fixed ${isMedium ? 'top-0' : 'top-[60px]'} left-1/2 -translate-x-1/2 w-full md:w-[80%] z-20`}
       >
-        <div className="w-full h-[80px] px-6 bg-white  flex items-center justify-between ">
+        <div className={`w-full h-[80px]  px-6 bg-white   flex items-center justify-between `}>
           {/* Menu desktop */}
          
 
           {/* Burger / Close */}
-          <div className="md:hidden flex items-center gap-10 justify-center">
+          <div className="md:hidden flex items-center  gap-10 justify-center">
             {!openMenu ? (
             <>
               <CiMenuBurger

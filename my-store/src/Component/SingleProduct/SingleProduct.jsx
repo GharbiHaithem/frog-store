@@ -9,6 +9,7 @@ import { productByid, resetState } from '../../features/product/productSlice'
 import InputQuantity from '../InputQuantity/InputQuantity'
 import { cartDetails, createcart } from '../../features/cart/cartSlice'
 import { Helmet } from 'react-helmet-async'
+import { useMediaQuery } from 'react-responsive'
 
 const SingleProduct = ({ setQuantity, quantity }) => {
   const { id } = useParams()
@@ -59,7 +60,11 @@ useEffect(() => {
     setQtyStock(selected ? selected.quantity : 0);
   }
 }, [size, productbyid]);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  }, []);
+    const isSmall = useMediaQuery({ maxWidth: 640 });
+    const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
   return (
      <>
       
@@ -67,7 +72,7 @@ useEffect(() => {
          <title>{productbyid?.titre}</title>
          <meta name={productbyid?.titre}  content={productbyid?.titre}></meta>
        </Helmet>
-  <div className='md:w-[80%] mt-[80px] w-[95%] mx-auto bg-white p-4 relative'>
+  <div className={`md:w-[80%] ${isMedium ? 'mt-[80px]' : 'mt-[120px]'}  w-[95%] mx-auto bg-white p-4 relative`}>
       {isLoadingCart&& <div className='absolute w-full h-full top-0 left-0 backdrop-blur-xs'>
         <div class="grid h-full w-full place-items-center z-50 overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
           <svg class="text-gray-300 animate-spin" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +146,7 @@ useEffect(() => {
           {productbyid?.promotion>0 &&   <span className='bg-green-400 text-white uppercase p-1 text-xs font-semibold'>Economisée {(productbyid?.prix * productbyid?.promotion) / 100} DT</span>}
           </div>
           <div className='flex flex-col gap-1 mt-5 '>
-            <span className='uppercase text-xs font-extralight'>Available Sizes</span>
+            <span className=' text-xl font-extralight'>Available Sizes</span>
        <div className="flex flex-wrap gap-3 z-0 mt-1">
 <div className="flex flex-wrap gap-3 mt-4 bg-white p-3 rounded-2xl border border-gray-200 shadow-sm">
   {productbyid?.sizes?.map((item, index) => (
@@ -174,7 +179,7 @@ useEffect(() => {
 </div>
 
             <div className='my-3 flex flex-col gap-1'>
-              <span className='uppercase text-xs font-extralight'>Quantity</span>
+              <span className=' text-xl font-extralight'>Quantity</span>
 
            <InputQuantity  setQuantity={setQuantity} qtyStk={qtyStock}/>
 {message && (
@@ -187,15 +192,7 @@ useEffect(() => {
 )}
 
             </div>
-            {/* --- Description Bande --- */}
-<div className="mt-8 bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300">
-  <h4 className="text-lg font-semibold text-gray-800 mb-2 border-b border-gray-300 pb-2">
-    Description du produit
-  </h4>
-  <p className="text-gray-600 leading-relaxed text-sm md:text-base"   dangerouslySetInnerHTML={{ __html: productbyid?.description || "<p>Aucune description disponible</p>" }}>
-   
-  </p>
-</div>
+    
 
             <div className='mt-3 flex flex-col gap-4'>
           <button
@@ -223,7 +220,16 @@ useEffect(() => {
                    setTimeout(()=>{ dispatch(cartDetails(cartUuid))
                     setTimeout(()=>{   navigate('/checkout')},2000)
                    },5000)
-             }}  disabled={productbyid?.quantityStq==0}>Acheter maintenant</button>
+             }}   disabled={qtyStock === 0}>Acheter maintenant</button>
+                     {/* --- Description Bande --- */}
+<div className="mt-8 bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300">
+  <h4 className="text-lg font-semibold text-gray-800 mb-2 border-b border-gray-300 pb-2">
+    Description du produit
+  </h4>
+  <p className="text-gray-600 leading-relaxed text-sm md:text-base"   dangerouslySetInnerHTML={{ __html: productbyid?.description || "<p>Aucune description disponible</p>" }}>
+   
+  </p>
+</div>
             </div>
           </div>
 
