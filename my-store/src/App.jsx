@@ -99,30 +99,7 @@ dispatch(cartDetails(cartUuid))
           const isSmall = useMediaQuery({ maxWidth: 640 });
           const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
 
-           useEffect(() => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isMessenger = /FBAN|FBAV|Messenger/i.test(userAgent);
-
-    if (isMessenger) {
-      // ✅ Sur Android → essayer d'ouvrir via Chrome
-      if (/Android/i.test(userAgent)) {
-        window.location.href = "googlechrome://frog-store.onrender.com";
-        setTimeout(() => {
-          window.location.href = "https://frog-store.onrender.com";
-        }, 1000);
-      }
-
-      // 🚫 Sur iPhone → Safari bloque googlechrome://
-      // mais on peut tenter une ouverture via un lien "fallback"
-      else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-        const a = document.createElement("a");
-        a.href = "https://frog-store.onrender.com";
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.click();
-      }
-    }
-  }, []);
+          
   return (
     <HelmetProvider>
       <div>

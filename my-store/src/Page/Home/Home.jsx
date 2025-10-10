@@ -53,7 +53,7 @@ console.log(groupedProducts)
   return (
        <>
        <Helmet>
-         <title>Checkout</title>
+         <title>Home</title>
          <meta name="Home Page"  content="page a propos des commande a payer"></meta>
        </Helmet>
      <div className=" md:w-[80%] mt-[120px] w-[97%] mx-auto">
