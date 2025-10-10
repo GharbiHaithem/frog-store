@@ -60,9 +60,11 @@ useEffect(() => {
     setQtyStock(selected ? selected.quantity : 0);
   }
 }, [size, productbyid]);
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-  }, []);
+useEffect(() => {
+  if (!isLoading && productbyid) {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }
+}, [isLoading, productbyid]);
     const isSmall = useMediaQuery({ maxWidth: 640 });
     const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
   return (
