@@ -22,6 +22,9 @@ const Invoice = ({ user, commande }) => {
         <p className="order-ref">
           Commande n° <strong>{commande?.refCommande}</strong>
         </p>
+         <p className="order-ref">
+          Commande date° <strong>{new Date(commande?.createdAt).toLocaleDateString()}</strong>
+        </p>
       </div>
 
       <section className="invoice-section">
@@ -42,6 +45,8 @@ const Invoice = ({ user, commande }) => {
               <tr>
                 <th>Produit</th>
                 <th>Quantité</th>
+                <th>Size</th>
+                
                 <th>Prix unitaire</th>
                 <th>Total</th>
               </tr>
@@ -57,6 +62,8 @@ const Invoice = ({ user, commande }) => {
                   <tr key={prod?._id}>
                     <td>{prod?.product?.titre}</td>
                     <td>{prod?.quantity}</td>
+                    <td>{prod?.size}</td>
+                    
                     <td>{prixUnitaire.toFixed(2)} TND</td>
                     <td>{prixTotal.toFixed(2)} TND</td>
                   </tr>

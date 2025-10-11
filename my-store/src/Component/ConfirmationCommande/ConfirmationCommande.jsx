@@ -43,6 +43,7 @@ const ConfirmationCommande = () => {
     }
   }, [detailscart?.items, commande])
 const [showPdfModal, setShowPdfModal] = useState(false)
+
   return (
     <>
       

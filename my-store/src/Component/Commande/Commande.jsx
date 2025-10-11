@@ -10,6 +10,7 @@ import x1 from "../../assets/aqw-removebg-preview.png";
 import { Helmet } from "react-helmet-async";
 import { commande as orderfn } from '../../features/commande/commandeSlice'
 import { cartDetails } from "../../features/cart/cartSlice";
+import axios from 'axios'
 const Commande = ({userfromstorage,setUserRecover}) => {
   
    const  dispatch = useDispatch()
@@ -266,6 +267,7 @@ const Commande = ({userfromstorage,setUserRecover}) => {
    };
    console.log(userfromstorage)
    const navigate = useNavigate()
+
    const handleSubmit3 = (e) => {
      e.preventDefault();
      dispatch(createcommande({user:userfromstorage?._id , cart:detailscart?._id,payementMethode:formData.payementMethode,adress:formData.adress,numtel:formData.numtel}))

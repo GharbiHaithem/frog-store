@@ -14,30 +14,13 @@ const GeneratePDF = ({ sendMessage2, commande, sendMessage,setShowPdfModal, user
 const navigate = useNavigate()
 const handleSendToWhatsApp = (pdfUrl) => {
   const phoneNumber = "21622013583";
-  const message = `Voici le lien de votre facture : ${pdfUrl}`;
+  const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=Voici%20le%20lien%20:%20${encodeURIComponent(
+    pdfUrl
+  )}`;
 
-  // Détection Messenger
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  const isMessenger = ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Messenger");
-
-  if (isMessenger) {
-    // Affiche un message pour informer l'utilisateur
-    alert("Pour envoyer la facture, veuillez ouvrir ce lien dans votre navigateur ou WhatsApp.");
-
-    // Ouvre le lien dans le navigateur système (Chrome/Safari)
-    window.open(
-      `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`,
-      '_blank'
-    );
-  } else {
-    // Cas normal : navigateur classique
-    window.open(
-      `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`,
-      '_blank'
-    );
-  }
+  // Ouvre dans un nouvel onglet/fenêtre
+  window.open(whatsappLink, '_blank');
 };
-
 
   const generatePDF = async () => {
     const element = document.createElement('div');
@@ -97,7 +80,27 @@ dispatch(resetState())
 
     }
   };
+   const sendPdfEmail = async (pdfUrl) => {
+  try {
+    await axios.post('https://frog-store-server.onrender.com/api/send-pdf-email', {
+      to: 'gharbi.haythem1988@gmail.com',
+      pdfUrl,
+      subject: 'Votre facture'
+    });
 
+ 
+  } catch (err) {
+    console.error(err);
+   
+  }
+};
+
+useEffect(()=>{
+  if(pdfUrl !== null){
+  
+sendPdfEmail(pdfUrl)
+  }
+},[pdfUrl])
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/40">
       <button
