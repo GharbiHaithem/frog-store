@@ -15,28 +15,26 @@ const navigate = useNavigate()
 const handleSendToWhatsApp = (pdfUrl) => {
   const phoneNumber = "21622013583";
   const message = `Voici le lien de votre facture : ${pdfUrl}`;
-  
-  // ✅ Détection Messenger
+
+  // Détection Messenger
   const ua = navigator.userAgent || navigator.vendor || window.opera;
   const isMessenger = ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Messenger");
 
-  // ✅ Si ouvert dans Messenger → forcer ouverture externe
   if (isMessenger) {
-    try {
-      // Tente d'ouvrir directement l'app WhatsApp (deep link)
-      window.location.href = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    // Affiche un message pour informer l'utilisateur
+    alert("Pour envoyer la facture, veuillez ouvrir ce lien dans votre navigateur ou WhatsApp.");
 
-      // Si le lien deep link échoue (après 2 sec) → redirige vers le navigateur normal
-      setTimeout(() => {
-        window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
-      }, 2000);
-    } catch (err) {
-      // Fallback si Messenger bloque le deep link
-      window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
-    }
+    // Ouvre le lien dans le navigateur système (Chrome/Safari)
+    window.open(
+      `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`,
+      '_blank'
+    );
   } else {
-    // ✅ Cas normal (navigateur classique)
-    window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`, '_blank');
+    // Cas normal : navigateur classique
+    window.open(
+      `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`,
+      '_blank'
+    );
   }
 };
 
