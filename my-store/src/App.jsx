@@ -99,28 +99,7 @@ dispatch(cartDetails(cartUuid))
           const isSmall = useMediaQuery({ maxWidth: 640 });
           const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
 
-      useEffect(() => {
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  const isMessenger = ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Messenger");
-
-  // 🔒 Vérifie qu'on n'a pas déjà tenté une redirection
-  const alreadyRedirected = sessionStorage.getItem("redirectedFromMessenger");
-
-  if (isMessenger && !alreadyRedirected) {
-    sessionStorage.setItem("redirectedFromMessenger", "true"); // Évite les boucles
-
-    const currentUrl = window.location.href;
-    const chromeUrl = `googlechrome://${currentUrl.replace(/^https?:\/\//, '')}`;
-
-    // 🔥 Essaie d'ouvrir dans Chrome (Android)
-    window.location.href = chromeUrl;
-
-    // ⏱️ Fallback au bout de 1,5s (iOS ou si Chrome pas installé)
-    setTimeout(() => {
-      alert("Veuillez ouvrir ce lien dans votre navigateur (Chrome ou Safari) pour finaliser votre commande.");
-    }, 1500);
-  }
-}, []);
+ 
     
   return (
     <HelmetProvider>
