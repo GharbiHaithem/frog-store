@@ -14,33 +14,13 @@ const GeneratePDF = ({ sendMessage2, commande, sendMessage,setShowPdfModal, user
 const navigate = useNavigate()
 const handleSendToWhatsApp = (pdfUrl) => {
   const phoneNumber = "21622013583";
-  const message = `Voici le lien de la facture : ${pdfUrl}`;
-  const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+  const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=Voici%20le%20lien%20:%20${encodeURIComponent(
+    pdfUrl
+  )}`;
 
-  // Détection du navigateur Messenger ou Instagram
-  const isInAppBrowser = /FBAN|FBAV|Messenger|Instagram/i.test(navigator.userAgent);
-
-  if (isInAppBrowser) {
-    // 🚀 Forcer l’ouverture dans le navigateur externe selon la plateforme
-    if (/Android/i.test(navigator.userAgent)) {
-      window.location.href = `googlechrome://${whatsappLink.replace(/^https?:\/\//, '')}`;
-    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      const a = document.createElement("a");
-      a.href = whatsappLink;
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } else {
-      window.open(whatsappLink, "_blank"); // fallback desktop
-    }
-  } else {
-    // 🌐 Si ce n’est pas Messenger → simple ouverture dans un nouvel onglet
-    window.open(whatsappLink, "_blank");
-  }
+  // Ouvre dans un nouvel onglet/fenêtre
+  window.open(whatsappLink, '_blank');
 };
-
 
   const generatePDF = async () => {
     const element = document.createElement('div');
