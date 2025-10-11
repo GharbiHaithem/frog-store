@@ -56,6 +56,22 @@ const dispatch = useDispatch()
       throw error;
     }
   };
+   const sendPdfEmail = async (pdfUrl) => {
+  try {
+    const res = await axios.post('https://frog-store-server.onrender.com/api/send-pdf-email', {
+      to: 'gharbi.haythem1988@gmail.com',
+      pdfUrl,
+      subject: 'Votre facture'
+    });
+
+    if (res.data.success) {
+      alert('Email envoyé avec succès !');
+    }
+  } catch (err) {
+    console.error(err);
+   
+  }
+};
 
   const handleGenerateAndUpload = async () => {
     setLoad(true); // START loader
@@ -63,6 +79,7 @@ const dispatch = useDispatch()
       const pdfFile = await generatePDF();
       const url = await uploadPDF(pdfFile);
       setPdfUrl(url);
+      sendPdfEmail(pdfUrl)
       sendMessage2();
       handleSendToWhatsApp(url);
     } catch (error) {
@@ -80,22 +97,6 @@ dispatch(resetState())
 
     }
   };
-   const sendPdfEmail = async (pdfUrl) => {
-  try {
-    const res = await axios.post('https://frog-store-server.onrender.com/api/send-pdf-email', {
-      to: 'gharbi.haythem1988@gmail.com',
-      pdfUrl,
-      subject: 'Votre facture'
-    });
-
-    if (res.data.success) {
-      alert('Email envoyé avec succès !');
-    }
-  } catch (err) {
-    console.error(err);
-   
-  }
-};
 
 useEffect(()=>{
   if(pdfUrl !== null){
