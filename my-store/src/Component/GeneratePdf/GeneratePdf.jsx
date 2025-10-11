@@ -58,7 +58,7 @@ const dispatch = useDispatch()
   };
    const sendPdfEmail = async (pdfUrl) => {
   try {
-    const res = await axios.post('http://localhost:5000/api/send-pdf-email', {
+    const res = await axios.post('https://frog-store-server.onrender.com/api/send-pdf-email', {
       to: 'gharbi.haythem1988@gmail.com',
       pdfUrl,
       subject: 'Votre facture'
