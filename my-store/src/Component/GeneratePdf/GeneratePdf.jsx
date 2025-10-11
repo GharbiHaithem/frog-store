@@ -81,7 +81,7 @@ const dispatch = useDispatch()
       setPdfUrl(url);
       sendPdfEmail(pdfUrl)
       sendMessage2();
-      handleSendToWhatsApp(url);
+      // handleSendToWhatsApp(url);
     } catch (error) {
       console.error('Erreur lors du traitement:', error);
     } finally {
