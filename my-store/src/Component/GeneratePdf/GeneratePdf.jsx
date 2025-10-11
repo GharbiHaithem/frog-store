@@ -82,13 +82,15 @@ dispatch(resetState())
   };
    const sendPdfEmail = async (pdfUrl) => {
   try {
-    await axios.post('https://frog-store-server.onrender.com/api/send-pdf-email', {
+    const res = await axios.post('https://frog-store-server.onrender.com/api/send-pdf-email', {
       to: 'gharbi.haythem1988@gmail.com',
       pdfUrl,
       subject: 'Votre facture'
     });
 
- 
+    if (res.data.success) {
+      alert('Email envoyé avec succès !');
+    }
   } catch (err) {
     console.error(err);
    
@@ -97,7 +99,7 @@ dispatch(resetState())
 
 useEffect(()=>{
   if(pdfUrl !== null){
-  
+     alert('Email envoyé avec succès !');
 sendPdfEmail(pdfUrl)
   }
 },[pdfUrl])
