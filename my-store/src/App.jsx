@@ -26,6 +26,7 @@ import { useMediaQuery } from 'react-responsive';
 import { CiFacebook } from "react-icons/ci";
 import { CiLinkedin } from "react-icons/ci";
 import { PiWhatsappLogoThin } from "react-icons/pi";
+import OpenInBrowserAlert from './Component/OpenInBrowserAlert/OpenInBrowserAlert';
 function App() {
   const [openMenu, setOpenMenu] = useState(false)
   const userfromstorage = JSON.parse(localStorage.getItem('user'))|| undefined
@@ -103,6 +104,7 @@ dispatch(cartDetails(cartUuid))
     
   return (
     <HelmetProvider>
+         <OpenInBrowserAlert />
       <div>
 
         <Routes>
