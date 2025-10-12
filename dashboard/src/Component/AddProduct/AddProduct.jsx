@@ -92,7 +92,7 @@ formik.resetForm();
   };
 
   useEffect(() => {
-    if (_images.length > 0) {
+    if (_images?.length > 0) {
       dispatch(upload(_images));
     }
   }, [_images, dispatch]);
@@ -271,7 +271,7 @@ formik.resetForm();
         {/* Submit */}
         <button
           type="submit"
-          disabled={formik.values.images_product.length ===0}
+          disabled={formik.values.images_product?.length ===0}
           className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
         >
           Ajouter le produit
