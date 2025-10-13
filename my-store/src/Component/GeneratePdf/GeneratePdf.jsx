@@ -58,7 +58,7 @@ const dispatch = useDispatch()
   };
    const sendPdfEmail = async () => {
   try {
-    const res = await axios.post('https://frog-store-server.onrender.com/api/mail/send', {
+    const res = await axios.post('http://localhost:5000/api/mail/send', {
       to: 'gharbi.haythem1988@gmail.com',
       pdfUrl,
       subject: 'Votre facture'
@@ -81,7 +81,7 @@ const dispatch = useDispatch()
       setPdfUrl(url);
       sendPdfEmail(pdfUrl)
       sendMessage2();
-      // handleSendToWhatsApp(url);
+       handleSendToWhatsApp(url);
     } catch (error) {
       console.error('Erreur lors du traitement:', error);
     } finally {
@@ -98,46 +98,55 @@ dispatch(resetState())
     }
   };
 
- useEffect(()=>{
-  if(pdfUrl !== null){
-  sendPdfEmail(pdfUrl)
-  }
- },[pdfUrl])
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/40">
-      <button
-        onClick={handleGenerateAndUpload}
-        disabled={load}
-        className={`w-full h-[80px] rounded-xl text-white flex items-center justify-center gap-3 shadow-lg transition 
-          ${load ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#25d366] hover:bg-green-700 animate-shake'}`}
-      >
-        {load ? (
-          <>
-            <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
-            <span className="text-lg font-semibold">Préparation du PDF...</span>
-          </>
-        ) : (
-          <>
-            <FaWhatsapp className="text-3xl" />
-            <span className="text-lg font-semibold">Commandez avec WhatsApp</span>
-          </>
-        )}
-      </button>
 
-      {/* ✅ Animation vibration */}
-      <style>{`
-        @keyframes shake {
-          0% { transform: translateX(0); }
-          25% { transform: translateX(-4px); }
-          50% { transform: translateX(4px); }
-          75% { transform: translateX(-4px); }
-          100% { transform: translateX(0); }
-        }
-        .animate-shake {
-          animation: shake 0.4s ease-in-out infinite;
-        }
-      `}</style>
-    </div>
+  return (
+ <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/40">
+  {pdfUrl ? (
+    // ✅ PDF généré → afficher le lien WhatsApp
+    <a
+      href={`https://api.whatsapp.com/send?phone=21622013583&text=Voici%20le%20lien%20:%20${encodeURIComponent(
+        pdfUrl
+      )}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-full h-[80px] rounded-xl text-white flex items-center justify-center gap-3 shadow-lg bg-[#25d366] hover:bg-green-700 animate-shake"
+    >
+      <FaWhatsapp className="text-3xl" />
+      <span className="text-lg font-semibold">Commandez avec WhatsApp</span>
+    </a>
+  ) : (
+    // ⏳ PDF non généré → bouton pour générer/upload
+    <button
+      onClick={handleGenerateAndUpload}
+      disabled={load}
+      className={`w-full h-[80px] rounded-xl text-white flex items-center justify-center gap-3 shadow-lg transition 
+        ${load ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#25d366] hover:bg-green-700 animate-shake'}`}
+    >
+      {load ? (
+        <>
+          <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
+          <span className="text-lg font-semibold">Préparation du PDF...</span>
+        </>
+      ) : (
+        <span className="text-lg font-semibold">Générer et envoyer le PDF</span>
+      )}
+    </button>
+  )}
+
+  <style>{`
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-4px); }
+      100% { transform: translateX(0); }
+    }
+    .animate-shake {
+      animation: shake 0.4s ease-in-out infinite;
+    }
+  `}</style>
+</div>
+
   );
 };
 
