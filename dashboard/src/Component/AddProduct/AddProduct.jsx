@@ -136,7 +136,7 @@ formik.resetForm();
 
   return (
     <div className="w-[90%] md:w-[60%] mx-auto bg-white shadow-lg rounded-xl p-6 space-y-6">
-      <h2 className="text-2xl font-bold text-center text-blue-700">Ajouter un produit</h2>
+      <h2 className={`text-2xl font-bold text-center   ${id ? 'text-yellow-400' : 'text-blue-700' } `}>   {id ? 'Update product': 'Add product'  } </h2>
 
       <form onSubmit={formik.handleSubmit} className="space-y-5">
         {/* Catégorie */}
@@ -272,9 +272,9 @@ formik.resetForm();
         <button
           type="submit"
           disabled={formik.values.images_product?.length ===0}
-          className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+          className={`w-full py-3 rounded-lg  ${id  ? 'bg-yellow-300  hover:bg-yellow-500' :  'bg-blue-600 hover:bg-blue-700'}  text-white font-semibold  transition`}
         >
-          Ajouter le produit
+        {id ? 'Update product': 'Add product'  }   
         </button>
       </form>
 
