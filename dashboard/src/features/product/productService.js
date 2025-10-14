@@ -53,7 +53,10 @@ export const updateproduct = async(data)=>{
 export const deleteimageProduct = async(data)=>{
   console.log(data)
   
-    const response = await axios.delete(`${base_url2}/img/${data.id}`,data.values)
+  const response = await axios.delete(`${base_url2}/img/${data.id}`, {
+    data: { imageUrl: data.imageUrl }
+  })
+
   console.log(response.data)
   return await response.data
 }

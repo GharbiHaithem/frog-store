@@ -5,10 +5,11 @@ import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { createproduct, productByid, updateproduct } from '../../features/product/productSlice';
+import { createproduct, deleteimg, productByid, updateproduct } from '../../features/product/productSlice';
 import { getcategories } from '../../features/category/categorySlice';
 import { resetState, upload } from '../../features/upload/uploadSlice';
 import { useNavigate, useParams } from 'react-router-dom'
+import { AiTwotoneDelete } from 'react-icons/ai';
 const AddProduct = () => {
   const dispatch = useDispatch();
   const [localImageUrls, setLocalImageUrls] = useState([]);
@@ -133,7 +134,10 @@ formik.resetForm();
     formik.setFieldValue("sizes", updatedSizes);
     setShowSizeModal(false);
   };
-
+const deleteimage=(data)=>{
+ console.log({data})
+ dispatch(deleteimg(data))
+}
   return (
     <div className="w-[90%] md:w-[60%] mx-auto bg-white shadow-lg rounded-xl p-6 space-y-6">
       <h2 className={`text-2xl font-bold text-center   ${id ? 'text-yellow-400' : 'text-blue-700' } `}>   {id ? 'Update product': 'Add product'  } </h2>
@@ -219,7 +223,7 @@ formik.resetForm();
         </div>
 
         {/* Upload Images */}
-        <div>
+        <div className=''>
           <label className="block text-sm font-medium text-gray-600 mb-1">Images du produit</label>
           <input
             type="file"
@@ -239,21 +243,34 @@ formik.resetForm();
               />
             ))}
           </div>
+        
         </div>
 <div className='flex items-center gap-3 flex-wrap w-full'>
   {productbyid?.images_product?.map((img, i) => (
     <div
       key={i}
-      className="w-1/4 h-[120px] overflow-hidden rounded-lg shadow-sm border border-gray-200"
+      className="group w-1/4 h-[120px] overflow-hidden relative rounded-lg shadow-sm border border-gray-200"
     >
       <img
         src={img?.url}
         alt={`image-${i}`}
         className="w-full h-full object-cover"
       />
+      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <button className="bg-red-600 text-white px-3 py-1 rounded-lg"
+        onClick={()=>{deleteimage({id:productbyid?._id,imageUrl:img?.url})
+      setTimeout(()=>{
+           dispatch(productByid(id))
+      },1000)
+      }}
+        >
+          <AiTwotoneDelete />
+        </button>
+      </div>
     </div>
   ))}
 </div>
+
 
         {/* Description */}
         <div>
