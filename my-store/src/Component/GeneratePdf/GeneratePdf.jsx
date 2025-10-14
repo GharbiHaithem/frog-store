@@ -1,25 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import html2pdf from 'html2pdf.js';
 import Invoice from '../Invoice/Invoice';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
 import { FaWhatsapp } from 'react-icons/fa';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'; // Icon spinner
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetState } from '../../features/auth/authSlice';
-
-const GeneratePDF = ({ sendMessage2, commande, sendMessage,setShowPdfModal, user, pdfUrl, setPdfUrl }) => {
+import React from 'react'
+const GeneratePDF = ({ sendMessage2, commande, sendMessage, setShowPdfModal, user, pdfUrl, setPdfUrl }) => {
   const [load, setLoad] = useState(false);
-const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 const handleSendToWhatsApp = (pdfUrl) => {
   const phoneNumber = "21622013583";
-  const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=Voici%20le%20lien%20:%20${encodeURIComponent(
-    pdfUrl
-  )}`;
+  const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=Voici%20le%20lien%20:%20${encodeURIComponent(pdfUrl)}`;
 
-  // Ouvre dans un nouvel onglet/fenêtre
-  window.open(whatsappLink, '_blank');
+  try {
+    // 🟢 Tentative d'ouverture dans un nouvel onglet
+    const newWindow = window.open(whatsappLink, '_blank');
+
+    // 🔴 Si l'ouverture a été bloquée, fallback sur redirection directe
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+      window.location.href = whatsappLink;
+    }
+  } catch (err) {
+    // ⚠️ Si l'environnement (ex: Messenger WebView) bloque window.open()
+    window.location.href = whatsappLink;
+  }
 };
 
   const generatePDF = async () => {
@@ -27,7 +37,8 @@ const handleSendToWhatsApp = (pdfUrl) => {
     document.body.appendChild(element);
     const root = createRoot(element);
     root.render(<Invoice commande={commande} user={user} />);
- setShowPdfModal(true)
+    setShowPdfModal(true);
+
     const opt = {
       margin: 1,
       filename: 'facture.pdf',
@@ -39,9 +50,8 @@ const handleSendToWhatsApp = (pdfUrl) => {
     const pdfBlob = await html2pdf().set(opt).from(element).toPdf().output('blob');
     document.body.removeChild(element);
     return new File([pdfBlob], 'facture.pdf', { type: 'application/pdf' });
-   
   };
-const dispatch = useDispatch()
+
   const uploadPDF = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
@@ -52,101 +62,98 @@ const dispatch = useDispatch()
       });
       return response.data.url;
     } catch (error) {
-      console.error('Erreur lors de l\'upload du PDF:', error);
+      console.error("Erreur lors de l'upload du PDF:", error);
       throw error;
     }
   };
-   const sendPdfEmail = async () => {
-  try {
-    const res = await axios.post('http://localhost:5000/api/mail/send', {
-      to: 'gharbi.haythem1988@gmail.com',
-      pdfUrl,
-      subject: 'Votre facture'
-    });
 
-    if (res.data.success) {
-      alert('Email envoyé avec succès !');
+  const sendPdfEmail = async (url) => {
+    try {
+      const res = await axios.post('http://localhost:5000/api/mail/send', {
+        to: 'gharbi.haythem1988@gmail.com',
+        pdfUrl: url,
+        subject: 'Votre facture'
+      });
+
+      if (res.data.success) {
+        alert('Email envoyé avec succès !');
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (err) {
-    console.error(err);
-   
-  }
-};
+  };
 
   const handleGenerateAndUpload = async () => {
-    setLoad(true); // START loader
+    setLoad(true);
     try {
       const pdfFile = await generatePDF();
       const url = await uploadPDF(pdfFile);
       setPdfUrl(url);
-      sendPdfEmail(pdfUrl)
+
+      await sendPdfEmail(url);
       sendMessage2();
-       handleSendToWhatsApp(url);
+      handleSendToWhatsApp(url);
     } catch (error) {
       console.error('Erreur lors du traitement:', error);
     } finally {
-      setLoad(false); // STOP loader
-      setShowPdfModal(false)
-setTimeout(()=>{navigate('/')},2000)
-localStorage.removeItem('user')
-localStorage.removeItem('step')
-localStorage.removeItem('disconnect')
-localStorage.removeItem('cartUuid')
+      setLoad(false);
+      setShowPdfModal(false);
 
-dispatch(resetState())
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
 
+      localStorage.removeItem('user');
+      localStorage.removeItem('step');
+      localStorage.removeItem('disconnect');
+      localStorage.removeItem('cartUuid');
+      dispatch(resetState());
     }
   };
 
-
   return (
- <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/40">
-  {pdfUrl ? (
-    // ✅ PDF généré → afficher le lien WhatsApp
-    <a
-      href={`https://api.whatsapp.com/send?phone=21622013583&text=Voici%20le%20lien%20:%20${encodeURIComponent(
-        pdfUrl
-      )}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-full h-[80px] rounded-xl text-white flex items-center justify-center gap-3 shadow-lg bg-[#25d366] hover:bg-green-700 animate-shake"
-    >
-      <FaWhatsapp className="text-3xl" />
-      <span className="text-lg font-semibold">Commandez avec WhatsApp</span>
-    </a>
-  ) : (
-    // ⏳ PDF non généré → bouton pour générer/upload
-    <button
-      onClick={handleGenerateAndUpload}
-      disabled={load}
-      className={`w-full h-[80px] rounded-xl text-white flex items-center justify-center gap-3 shadow-lg transition 
-        ${load ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#25d366] hover:bg-green-700 animate-shake'}`}
-    >
-      {load ? (
-        <>
-          <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
-          <span className="text-lg font-semibold">Préparation du PDF...</span>
-        </>
+    <div className="fixed inset-0 z-50 flex items-end justify-end bg-black/40">
+      {pdfUrl ? (
+        <a
+          href={`https://wa.me/21622013583?text=Voici%20le%20lien%20:%20${encodeURIComponent(pdfUrl)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full h-[80px] rounded-xl text-white flex items-center justify-center gap-3 shadow-lg bg-[#25d366] hover:bg-green-700 animate-shake"
+        >
+          <FaWhatsapp className="text-3xl" />
+          <span className="text-lg font-semibold">Commandez avec WhatsApp</span>
+        </a>
       ) : (
-        <span className="text-lg font-semibold">Générer et envoyer le PDF</span>
+        <button
+          onClick={handleGenerateAndUpload}
+          disabled={load}
+          className={`w-full h-[80px] rounded-xl text-white flex items-center justify-center gap-3 shadow-lg transition 
+            ${load ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#25d366] hover:bg-green-700 animate-shake'}`}
+        >
+          {load ? (
+            <>
+              <AiOutlineLoading3Quarters className="animate-spin text-3xl" />
+              <span className="text-lg font-semibold">Préparation du PDF...</span>
+            </>
+          ) : (
+            <span className="text-lg font-semibold">Générer et envoyer le PDF</span>
+          )}
+        </button>
       )}
-    </button>
-  )}
 
-  <style>{`
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-4px); }
-      50% { transform: translateX(4px); }
-      75% { transform: translateX(-4px); }
-      100% { transform: translateX(0); }
-    }
-    .animate-shake {
-      animation: shake 0.4s ease-in-out infinite;
-    }
-  `}</style>
-</div>
-
+      <style>{`
+        @keyframes shake {
+          0% { transform: translateX(0); }
+          25% { transform: translateX(-4px); }
+          50% { transform: translateX(4px); }
+          75% { transform: translateX(-4px); }
+          100% { transform: translateX(0); }
+        }
+        .animate-shake {
+          animation: shake 0.4s ease-in-out infinite;
+        }
+      `}</style>
+    </div>
   );
 };
 
