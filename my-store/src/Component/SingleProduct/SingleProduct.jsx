@@ -67,6 +67,11 @@ useEffect(() => {
 }, [isLoading, productbyid]);
     const isSmall = useMediaQuery({ maxWidth: 640 });
     const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
+    const totalQuantity = productbyid?.sizes?.reduce(
+  (acc, item) => acc + (item.quantity || 0),
+  0
+);
+console.log(totalQuantity)
   return (
      <>
       
@@ -138,13 +143,13 @@ useEffect(() => {
         <div className='md:w-1/2 w-full'>
           <h6 className='uppercase mt-3 text-xs font-extralight'>Frog store</h6>
         <div className='flex items-center gap-5'>
-            <h5 className='my-5 text-base font-semibold'>{productbyid?.titre}</h5>
-           {productbyid?.quantityStq==0 && <span className='uppercase italic text-red-500 bg-red-200 p-2 text-xs  font-bold'>Sold out </span>}
+            <h5   className='text-black my-5 font-extrabold text-4xl leading-none' style={{fontSize:'25px'}}>{productbyid?.titre}</h5>
+           {totalQuantity==0 && <span className='uppercase italic text-red-500 bg-red-200 p-2 text-xs  font-mono'>Sold out </span>}
         </div>
           <div className='flex gap-3  items-center'>
 
-             {productbyid?.promotion>0 && <span className=' uppercase md:text-xl  text-xs md:font-extralight font-light line-through '>{productbyid?.prix} DT</span>}
-            <span className=' uppercase md:text-xl  text-xs md:font-extralight font-bold'>{productbyid?.prix - ((productbyid?.prix * productbyid?.promotion) / 100)} DT</span>
+             {productbyid?.promotion>0 && <span  className='text-red-600 font-extrabold text-4xl leading-none line-through' style={{fontSize:'25px'}}>{productbyid?.prix} DT</span>}
+            <span className='text-red-600 font-extrabold text-4xl leading-none' style={{fontSize:'25px'}}  >{productbyid?.prix - ((productbyid?.prix * productbyid?.promotion) / 100)} DT</span>
           {productbyid?.promotion>0 &&   <span className='bg-green-400 text-white uppercase p-1 text-xs font-semibold'>Economisée {(productbyid?.prix * productbyid?.promotion) / 100} DT</span>}
           </div>
           <div className='flex flex-col gap-1 mt-5 '>

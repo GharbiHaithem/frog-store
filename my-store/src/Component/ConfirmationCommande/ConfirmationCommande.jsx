@@ -141,36 +141,53 @@ const [showPdfModal, setShowPdfModal] = useState(false)
       )}
 
  {showPdfModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md">
-    {/* Container principal avec effet glass */}
-    <div className="relative bg-white/80 backdrop-blur-2xl shadow-2xl rounded-2xl border border-white/30 p-8 w-[90%] max-w-md text-center transition-all duration-500">
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    {/* Container glass premium */}
+    <div className="relative bg-white/20 backdrop-blur-3xl shadow-2xl rounded-3xl border border-white/20 p-8 w-[90%] max-w-md text-center animate-fadeIn">
+      
       {/* Glow animé */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/30 to-white/10 opacity-50 blur-2xl"></div>
-
-      <div className="relative z-10">
-        <h2 className="text-xl font-semibold text-gray-800 mb-3">
+      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 to-white/5 opacity-50 blur-3xl"></div>
+      
+      <div className="relative z-10 flex flex-col items-center">
+        <h2 className="text-2xl font-bold text-gray-100 mb-5 drop-shadow-md">
           📄 Génération de votre facture
         </h2>
 
-        <div className="flex justify-center items-center mb-4">
-          <img
-            src={i}
-            alt="loading"
-            className="w-14 h-14 animate-spin-slow drop-shadow-lg"
-          />
+        {/* Spinner circulaire premium */}
+        <div className="relative w-16 h-16 mb-6">
+          <div className="absolute top-0 left-0 w-full h-full border-4 border-white border-t-transparent rounded-full animate-spin"></div>
         </div>
 
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-gray-200 text-sm mb-6">
           Veuillez patienter quelques secondes...
         </p>
 
-        <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
-          <div className="w-2/3 h-full bg-gradient-to-r from-blue-500 to-indigo-600 animate-pulse"></div>
+        {/* Barre de progression animée */}
+        <div className="w-full h-2 bg-white/30 rounded-full overflow-hidden">
+          <div className="w-2/3 h-full bg-gradient-to-r from-blue-400 to-indigo-500 animate-pulse"></div>
         </div>
       </div>
     </div>
+
+    <style>{`
+      @keyframes fadeIn {
+        0% { opacity: 0; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.4s ease-out forwards;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .animate-spin {
+        animation: spin 1s linear infinite;
+      }
+    `}</style>
   </div>
 )}
+
 
     </>
   )
