@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import './App.css'
-import Navbar from './Component/Navbar/Navbar'
+import Order from './Component/Order/Order'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from './Component/Layout/Layout'
 import Dashboard from './Component/Dashboard/Dashboard'
@@ -12,10 +12,18 @@ import AddProduct from './Component/AddProduct/AddProduct'
 import ListProduct from './Component/ListProduct/ListProduct'
 import AddBrand from './Component/AddBrand/AddBrand'
 import AddBanner from './Component/AddBanner/AddBanner'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { commande, commandes } from './features/commande/commandeSlice'
 
 function App() {
-  const[openMenu,setOpenMenu]= useState(false)
-
+  const[
+    
+    openMenu,setOpenMenu]= useState(false)
+  const dispatch = useDispatch()
+ useEffect(()=>{
+dispatch(commandes())
+ },[dispatch])
   return (
     <>
   
@@ -28,6 +36,7 @@ function App() {
         <Route  path='/listProduct' element={<ListProduct openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
         <Route  path='/addbrand' element={<AddBrand openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
             <Route  path='/addbanner' element={<AddBanner openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
+               <Route  path='/listcommand' element={<Order openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
 <Route  path='/editcategory/:id' element={<AddProduct openMenu={openMenu} setOpenMenu={setOpenMenu} />} />
 
 
