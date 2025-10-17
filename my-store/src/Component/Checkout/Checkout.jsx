@@ -328,6 +328,11 @@ const Checkout = ({userfromstorage,setUserRecover}) => {
       setTotalQuantity(0)
     }
   }, [detailscart?.items, commande])
+  useEffect(() => {
+    if (!isLoading ) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+  }, [isLoading]);
   return (
     <>
     <Helmet>
@@ -335,7 +340,7 @@ const Checkout = ({userfromstorage,setUserRecover}) => {
       <meta name="Page de checkout"  content="page a propos des commande a payer"></meta>
     </Helmet>
     <div className="md:w-[80%] mx-auto w-full">
-      <div className="flex items-center mt-2">
+      <div className="flex items-center mt-[60px] md:mt-2">
         <div className="mx-5 h-[60px]  flex flex-col  items-center text-lg font-semibold ">
          <img
                   src={x1}

@@ -330,6 +330,11 @@ const Commande = ({userfromstorage,setUserRecover}) => {
       setTotalQuantity(0)
     }
   }, [detailscart?.items, commande])
+    useEffect(() => {
+      if (!isLoading ) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }
+    }, [isLoading]);
   return (
     <>
     <Helmet>

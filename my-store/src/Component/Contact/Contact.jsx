@@ -37,9 +37,9 @@ const Contact = () => {
               key={idx}
               className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-transform duration-300 hover:scale-105"
             >
-              <div className="text-6xl mb-5">{item.icon}</div>
+              <div  style={{fontSize:'60px !important'}} className="text-6xl mb-5">{item.icon}</div>
               <h3 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h3>
-              <p className="text-gray-600 text-sm">{item.desc}</p>
+              <p className="text-gray-600 font-sans text-sm">{item.desc}</p>
             </div>
           ))}
         </div>

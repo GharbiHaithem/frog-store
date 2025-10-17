@@ -148,9 +148,9 @@ console.log(totalQuantity)
         </div>
           <div className='flex gap-3  items-center'>
 
-             {productbyid?.promotion>0 && <span  className='text-red-600 font-extrabold text-4xl leading-none line-through' style={{fontSize:'25px'}}>{productbyid?.prix} DT</span>}
-            <span className='text-red-600 font-extrabold text-4xl leading-none' style={{fontSize:'25px'}}  >{productbyid?.prix - ((productbyid?.prix * productbyid?.promotion) / 100)} DT</span>
-          {productbyid?.promotion>0 &&   <span className='bg-green-400 text-white uppercase p-1 text-xs font-semibold'>Economisée {(productbyid?.prix * productbyid?.promotion) / 100} DT</span>}
+             {productbyid?.promotion>0 && <span  className='text-black md:font-extrabold font-mono md:text-xl  text-shadow-xs  leading-none line-through' style={{fontSize:'25px'}}>{productbyid?.prix.toFixed(2)} DT</span>}
+            <span className='text-red-600 font-extrabold text-4xl leading-none' style={{fontSize:'25px'}}  >{productbyid?.prix - ((productbyid?.prix * productbyid?.promotion) / 100).toFixed(2)} DT</span>
+          {productbyid?.promotion>0 &&   <span className='bg-green-400 text-white uppercase p-1 text-xs font-semibold'>Economisée {((productbyid?.prix * productbyid?.promotion) / 100).toFixed(2)} DT</span>}
           </div>
           <div className='flex flex-col gap-1 mt-5 '>
             <span className=' text-xl font-extralight'>Available Sizes</span>

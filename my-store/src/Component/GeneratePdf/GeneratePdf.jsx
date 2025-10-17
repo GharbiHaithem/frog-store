@@ -59,7 +59,7 @@ const GeneratePDF = ({ sendMessage2, commande, sendMessage, setShowPdfModal, use
 
     try {
       const response = await axios.post(
-        'https://phone-store-node-server.onrender.com/upload',
+        'http://localhost:5000/upload',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -101,7 +101,7 @@ const GeneratePDF = ({ sendMessage2, commande, sendMessage, setShowPdfModal, use
 
       await sendPdfEmail(url);  // email après upload
       sendMessage2();
-      handleSendToWhatsApp(url); // ouvrir WhatsApp
+      // handleSendToWhatsApp(url); // ouvrir WhatsApp
     } catch (error) {
       console.error('Erreur lors du traitement:', error);
     } finally {

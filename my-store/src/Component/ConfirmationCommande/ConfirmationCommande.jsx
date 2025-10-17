@@ -6,6 +6,8 @@ import GeneratePDF from '../GeneratePdf/GeneratePdf'
 import i from '../../assets/spinner-icon-12071.gif'
 import axios from 'axios'
 import { Helmet } from 'react-helmet-async'
+import { resetState } from '../../features/auth/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 const ConfirmationCommande = () => {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -24,7 +26,7 @@ const ConfirmationCommande = () => {
     dispatch(orderfn(user?._id))
     dispatch(cartDetails(uuid))
   }, [dispatch])
-
+const navigate = useNavigate()
   useEffect(() => {
     if (commande && commande?.commande?.cart?.items?.length) {
       const totalQuantite = commande?.commande?.cart?.items.reduce((sum, current) => sum + current.quantity, 0)
@@ -38,8 +40,17 @@ const ConfirmationCommande = () => {
 
       setTotalPrice(formattedPrice)
       setTT(formattedPricett)
+       setTimeout(()=>{
+            // Nettoyage localStorage + Redux
+            localStorage.removeItem('user');
+            localStorage.removeItem('step');
+            localStorage.removeItem('disconnect');
+            localStorage.removeItem('cartUuid');
+            dispatch(resetState());
+       },3500)
     } else {
       setTotalQuantity(0)
+   
     }
   }, [detailscart?.items, commande])
 const [showPdfModal, setShowPdfModal] = useState(false)
@@ -51,8 +62,8 @@ const [showPdfModal, setShowPdfModal] = useState(false)
          <title>Confirmation commande</title>
          <meta name="Confirmation commande"  content="page Confirmation commande"></meta>
        </Helmet>
-      {!isLoading ? (
-        <div className="md:w-[80%] w-full mb-20 mt-12 h-auto mx-auto">
+ 
+        <div className="md:w-[80%] w-full mb-20 mt-[60px] h-auto mx-auto">
           {/* ✅ Confirmation Message */}
           <div className="bg-green-50 border border-green-200 rounded-lg mt-[70px]  p-5 shadow-sm">
             <h1 className="text-2xl font-semibold text-green-800">✅ Votre commande est confirmée</h1>
@@ -122,7 +133,7 @@ const [showPdfModal, setShowPdfModal] = useState(false)
             </div>
           </div>
 
-          {/* ✅ Génération PDF */}
+          {/* ✅ Génération PDF
           <GeneratePDF
             user={user}
             sendMessage2={() => console.log('sendMessage2')}
@@ -131,62 +142,11 @@ const [showPdfModal, setShowPdfModal] = useState(false)
             pdfUrl={pdfUrl}
             setPdfUrl={setPdfUrl}
             setShowPdfModal={setShowPdfModal}
-          />
+          /> */}
         </div>
-      ) : (
-        <div className="w-full h-[70vh] flex flex-col gap-3 items-center justify-center">
-          <img src={i} className="w-[40px] h-[40px]" alt="Loading..." />
-          <span className="text-gray-500 text-sm">Chargement de votre commande...</span>
-        </div>
-      )}
+     
 
- {showPdfModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-    {/* Container glass premium */}
-    <div className="relative bg-white/20 backdrop-blur-3xl shadow-2xl rounded-3xl border border-white/20 p-8 w-[90%] max-w-md text-center animate-fadeIn">
-      
-      {/* Glow animé */}
-      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 to-white/5 opacity-50 blur-3xl"></div>
-      
-      <div className="relative z-10 flex flex-col items-center">
-        <h2 className="text-2xl font-bold text-gray-100 mb-5 drop-shadow-md">
-          📄 Génération de votre facture
-        </h2>
 
-        {/* Spinner circulaire premium */}
-        <div className="relative w-16 h-16 mb-6">
-          <div className="absolute top-0 left-0 w-full h-full border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-        </div>
-
-        <p className="text-gray-200 text-sm mb-6">
-          Veuillez patienter quelques secondes...
-        </p>
-
-        {/* Barre de progression animée */}
-        <div className="w-full h-2 bg-white/30 rounded-full overflow-hidden">
-          <div className="w-2/3 h-full bg-gradient-to-r from-blue-400 to-indigo-500 animate-pulse"></div>
-        </div>
-      </div>
-    </div>
-
-    <style>{`
-      @keyframes fadeIn {
-        0% { opacity: 0; transform: scale(0.95); }
-        100% { opacity: 1; transform: scale(1); }
-      }
-      .animate-fadeIn {
-        animation: fadeIn 0.4s ease-out forwards;
-      }
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      .animate-spin {
-        animation: spin 1s linear infinite;
-      }
-    `}</style>
-  </div>
-)}
 
 
     </>

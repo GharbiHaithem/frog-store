@@ -13,10 +13,15 @@ const ProductsByCategory = () => {
       useEffect(()=>{
           dispatch(productsByCat(id))
       },[dispatch,id])
+      useEffect(() => {
+        
+          window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        
+      }, []);
     const{products} = useSelector(state=>state?.product)
   return (
-      <div className=" md:w-[80%] mt-[80px] w-[97%] mx-auto">
-   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className=" md:w-[80%] mt-[80px] h-[120vh] w-[97%] mx-auto">
+   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-[60px] md:mt-[2]">
 {products?.map((prod)=>(
       <ProductCard
       newPrice={prod?.prix-((prod?.prix*prod?.promotion)/100)}
