@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const base_url2 ="https://frog-store-server.onrender.com/api"
+const base_url2 ="http://localhost:5000/api"
 const API = axios.create({baseURL:base_url2});
 API.interceptors.request.use((req)=>{
    if(localStorage.getItem('customer')){
