@@ -88,7 +88,8 @@ const ListProduct = () => {
   useEffect(() => {
     // Recevoir une nouvelle commande
     socket.on('newCommande', (commande) => {
-      setCommandess(prev => [commande, ...prev]); // Ajouter la commande en tête de liste
+      console.log(commande)
+      setCommandess(prev => [...prev,commande]); // Ajouter la commande en tête de liste
     });
 
     return () => {
