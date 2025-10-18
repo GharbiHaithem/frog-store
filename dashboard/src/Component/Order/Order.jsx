@@ -86,19 +86,18 @@ const ListProduct = () => {
  const [commandess, setCommandess] = useState([]);
 
   useEffect(() => {
-    // Recevoir une nouvelle commande
-    socket.on('newCommande', (commande) => {
-      console.log(commande)
-      setCommandess(prev => [...prev,commande]); // Ajouter la commande en tête de liste
-    });
+  socket.on('newCommande', (newCommande) => {
+    console.log('🆕 Nouvelle commande reçue :', newCommande);
+    setCommandess((prev) => [newCommande, ...prev]); // ✅ ajoute en haut de la liste
+  });
 
-    return () => {
-      socket.off('newCommande');
-    };
-  }, []);
-  console.log(commandess)
+  return () => socket.off('newCommande');
+}, []);
+
+ 
   useEffect(() => {
     dispatch(commandes());
+
     dispatch(allproduct());
     dispatch(getcategories());
   }, [dispatch]);
@@ -109,20 +108,23 @@ const ListProduct = () => {
     }
   }, [selectedCategoryId, dispatch]);
 
-  const _data =commande?.length>0&& commande?.map((c, i) => ({
-    key: i + 1,
-    user: c?.user,
-    items: c?.cart?.items?.map(
-      art => `${art?.product?.titre || 'Produit inconnu'} - ${art?.product?.prix || 0} DT * ${art?.quantity}`
-    ) || [],
-    size: c?.cart?.items?.map(art => art?.size) || [],
-    priceTotal: c?.cart?.items?.reduce(
-      (sum, current) =>
-        sum + ((current.product.prix - ((current.product.prix * current.product.promotion) / 100)) * current.quantity),
-      0
-    ) + ' DT',
-    date: c?.createdAt,
-  })) || [];
+ const allCommandes = [...commandess, ...commande]; // ✅ nouvelles en haut
+
+const _data = allCommandes?.map((c, i) => ({
+  key: i + 1,
+  user: c?.user,
+  items: c?.cart?.items?.map(
+    art => `${art?.product?.titre || 'Produit inconnu'} - ${art?.product?.prix || 0} DT * ${art?.quantity}`
+  ) || [],
+  size: c?.cart?.items?.map(art => art?.size) || [],
+  priceTotal: c?.cart?.items?.reduce(
+    (sum, current) =>
+      sum + ((current.product.prix - ((current.product.prix * current.product.promotion) / 100)) * current.quantity),
+    0
+  ) + ' DT',
+  date: c?.createdAt,
+}));
+
 
   return (
     <div className="container mx-auto mt-[60px] p-5">
