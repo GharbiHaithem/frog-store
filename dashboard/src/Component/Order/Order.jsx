@@ -4,7 +4,9 @@ import { Table } from 'antd';
 import { commandes } from '../../features/commande/commandeSlice';
 import { allproduct, productByParentCategory } from '../../features/product/productSlice';
 import { getcategories } from '../../features/category/categorySlice';
+import { io } from 'socket.io-client';
 
+const socket = io('https://frog-store-server.onrender.com'); 
 const columns = [
   {
     title: 'Key',
@@ -81,7 +83,19 @@ const ListProduct = () => {
   const { commande } = useSelector(state => state?.commande);
   const { categories } = useSelector(state => state?.category);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
+ const [commandess, setCommandess] = useState([]);
 
+  useEffect(() => {
+    // Recevoir une nouvelle commande
+    socket.on('newCommande', (commande) => {
+      setCommandess(prev => [commande, ...prev]); // Ajouter la commande en tête de liste
+    });
+
+    return () => {
+      socket.off('newCommande');
+    };
+  }, []);
+  console.log(commandess)
   useEffect(() => {
     dispatch(commandes());
     dispatch(allproduct());
