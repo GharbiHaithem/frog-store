@@ -108,9 +108,10 @@ const ListProduct = () => {
     }
   }, [selectedCategoryId, dispatch]);
 
- const allCommandes = [...commandess, ...commande]; // ✅ nouvelles en haut
+const allCommandes = [...commandess, ...(Array.isArray(commande) ? commande : [])];
 
-const _data = allCommandes?.map((c, i) => ({
+
+const _data =allCommandes&& allCommandes?.map((c, i) => ({
   key: i + 1,
   user: c?.user,
   items: c?.cart?.items?.map(
