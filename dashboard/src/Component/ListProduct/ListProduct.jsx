@@ -1,88 +1,158 @@
-import React, { useEffect, useState } from 'react';
-import { IoMdArchive } from 'react-icons/io';
-import { useDispatch, useSelector } from 'react-redux';
-import { Table } from 'antd';
-import { allproduct, deleteProduct, productByParentCategory } from '../../features/product/productSlice';
-import { MdLabelImportant } from 'react-icons/md';
-import { getcategories } from '../../features/category/categorySlice';
-import './style.css'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Table, Select, Tag, Popconfirm, Tooltip } from "antd";
+import {
+  allproduct,
+  deleteProduct,
+  productByParentCategory,
+} from "../../features/product/productSlice";
+import { getcategories } from "../../features/category/categorySlice";
 import { GrTrash } from "react-icons/gr";
 import { FaRegEdit } from "react-icons/fa";
-import { useNavigate } from 'react-router';
-const columns = [
-  {
-    title: 'Key',
-    dataIndex: 'key',
-  },
-  {
-      title: 'Images',
-      dataIndex: 'images_product',
-    },
-  {
-    title: 'Titre',
-    dataIndex: 'titre',
-  },
-  {
-    title: 'Description',
-    dataIndex: 'description',
-    render: (text) => <div dangerouslySetInnerHTML={{ __html: text }} />, // Utilise dangerouslySetInnerHTML ici
-  },
-  {
-    title: "Action",
-    dataIndex: 'Actions'
-  }
-];
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router";
+
+const { Option } = Select;
 
 const ListProduct = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { products } = useSelector((state) => state?.product);
+  const { categories } = useSelector((state) => state?.category);
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
+  // Charger les données
   useEffect(() => {
     dispatch(allproduct());
+    dispatch(getcategories());
   }, [dispatch]);
-  const navigate= useNavigate()
-  const { products } = useSelector(state => state?.product);
-  const _data = products?.map((product, i) => ({
-    key: i + 1,
-    images_product:<img  src={product?.images_product[0]?.url} className='object-cover w-[100px] h-[100px] rounded-lg'/>,
-    titre: product?.titre,
-    description: product?.description, // Stocke la chaîne HTML directement
-    Actions: (
-      <div className='flex gap-2'>
-        <button onClick={()=>dispatch(deleteProduct(product?._id))} style={{ padding: '10px' , fontSize :'20px'}} className='bg-red-500 text-white rounded-full hover:text-red-500 hover:bg-white border border-transparent hover:border-red-500'><GrTrash/></button>
-         <button  onClick={()=>navigate(`/editcategory/${product?._id}`)} style={{ padding: '10px' , fontSize :'20px'}} className='bg-yellow-500 text-white rounded-full hover:text-yellow-500 hover:bg-white border border-transparent hover:border-yellow-500'><FaRegEdit/></button>
-        
-      </div>
-    ),
-  })) || [];
 
-     const{categories} = useSelector(state=>state?.category)
-     const subCategoryIds = categories.flatMap(cat => cat.subCategories.map(subCat => subCat._id));
-    
-     // Étape 2 : Filtrer les catégories principales en excluant celles qui sont dans la liste des sous-catégories
-     const mainCategories = categories.filter(cat => !subCategoryIds.includes(cat._id)); 
-     const [selectedCategoryId, setSelectedCategoryId] = useState('');
+  useEffect(() => {
+    if (selectedCategoryId) {
+      dispatch(productByParentCategory(selectedCategoryId));
+    }
+  }, [selectedCategoryId, dispatch]);
 
-     const handleCategoryChange = (event) => {
-       const selectedId = event.target.value;
-       setSelectedCategoryId(selectedId);
-       console.log('Selected Category ID:', selectedId); // Affiche l'ID de la catégorie sélectionnée dans la console
-    
-      
-      };
-      useEffect(()=>{
-        dispatch(getcategories())
-        if(selectedCategoryId !== null){
-         
-            
-          
-           dispatch(productByParentCategory(selectedCategoryId))
-         }
-       },[selectedCategoryId,dispatch])
-     return (
-    <div className='container mt-5 h-[100vh]'>
-
-      <Table columns={columns} dataSource={_data} />
-    </div>
+  // Gestion des catégories principales
+  const subCategoryIds = categories.flatMap((cat) =>
+    cat.subCategories.map((subCat) => subCat._id)
   );
-}
+  const mainCategories = categories.filter(
+    (cat) => !subCategoryIds.includes(cat._id)
+  );
+
+  // Colonnes du tableau
+  const columns = [
+    {
+      title: "Image",
+      dataIndex: "images_product",
+      align: "center",
+    },
+    {
+      title: "Titre",
+      dataIndex: "titre",
+      render: (text) => <span className="font-semibold text-gray-800">{text}</span>,
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      render: (text) => (
+        <div
+          className="text-gray-500 text-sm"
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
+      ),
+    },
+    {
+      title: "Actions",
+      dataIndex: "Actions",
+      align: "center",
+    },
+  ];
+
+  // Données formatées
+  const _data =
+    products?.map((product, i) => ({
+      key: i + 1,
+      images_product: (
+        <motion.img
+          whileHover={{ scale: 1.1 }}
+          src={product?.images_product[0]?.url}
+          alt="product"
+          className="object-cover w-[80px] h-[80px] rounded-xl shadow-md"
+        />
+      ),
+      titre: product?.titre,
+      description: product?.description,
+      Actions: (
+        <div className="flex justify-center gap-4">
+          <Tooltip title="Modifier" placement="top">
+            <button
+              onClick={() => navigate(`/editcategory/${product?._id}`)}
+              className="bg-yellow-500 hover:bg-yellow-400 text-white p-2 rounded-full shadow-md transition-transform hover:scale-110"
+            >
+              <FaRegEdit size={18} />
+            </button>
+          </Tooltip>
+
+          <Tooltip title="Supprimer" placement="top">
+            <Popconfirm
+              title="Supprimer ce produit ?"
+              okText="Oui"
+              cancelText="Non"
+              onConfirm={() => dispatch(deleteProduct(product?._id))}
+            >
+              <button className="bg-red-500 hover:bg-red-400 text-white p-2 rounded-full shadow-md transition-transform hover:scale-110">
+                <GrTrash size={18} />
+              </button>
+            </Popconfirm>
+          </Tooltip>
+        </div>
+      ),
+    })) || [];
+
+  return (
+<motion.div
+  className="p-4 md:p-6 rounded-xl bg-white shadow-lg h-[100vh] flex flex-col"
+  initial={{ opacity: 0, y: 10 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.3 }}
+>
+  {/* Header */}
+  <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 flex-shrink-0 gap-3 md:gap-0">
+    <h1 className="text-xl md:text-2xl font-bold text-blue-700">
+      🛍️ Liste des Produits
+    </h1>
+
+    <Select
+      placeholder="Filtrer par catégorie"
+      onChange={(value) => setSelectedCategoryId(value)}
+      value={selectedCategoryId || undefined}
+      className="w-full md:w-60"
+      allowClear
+    >
+      {mainCategories.map((cat) => (
+        <Option key={cat._id} value={cat._id}>
+          {cat.name}
+        </Option>
+      ))}
+    </Select>
+  </div>
+
+  {/* Tableau scrollable verticalement */}
+  <div className="flex-1 overflow-y-auto">
+    <Table
+      columns={columns}
+      dataSource={_data}
+      pagination={{ pageSize: 5 }}
+      bordered
+      className="shadow-sm rounded-lg overflow-hidden"
+      scroll={{ x: "max-content" }} // permet scroll horizontal si le tableau est large
+    />
+  </div>
+</motion.div>
+
+  );
+};
 
 export default ListProduct;

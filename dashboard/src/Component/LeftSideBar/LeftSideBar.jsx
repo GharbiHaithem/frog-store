@@ -9,57 +9,46 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-const LeftSideBar = () => {
-  const [openMenu, setOpenMenu] = useState(true); // élargi ou réduit
+const LeftSideBar = ({openMenu,setOpenMenu}) => {
+
   const [isMobile, setIsMobile] = useState(false);
 
-  // Détecter si on est sur petit écran
+  // Détecter si écran est mobile
   useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      if (mobile) setOpenMenu(false); // mobile par défaut réduit
-      else setOpenMenu(true); // desktop par défaut ouvert
-    };
-    window.addEventListener("resize", handleResize);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
+    window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // 🔹 Bouton mobile uniquement si petit écran
-  const MobileButton = () => (
-    <button
-      className="fixed top-4 left-4 z-50 bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700 transition md:hidden"
-      onClick={() => setOpenMenu(!openMenu)}
-    >
-      {openMenu ? <FaTimes size={20} /> : <FaBars size={20} />}
-    </button>
-  );
-
+  console.log(openMenu)
+  localStorage.setItem('menu',openMenu)
   return (
     <>
-      {isMobile && <MobileButton />}
+      {/* Bouton mobile + desktop */}
+      <button
+        className="fixed top-4 left-4 z-50 bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700 transition"
+        onClick={() => setOpenMenu(!openMenu)}
+      >
+        {openMenu ? <FaTimes size={18} /> : <FaBars size={18} />}
+      </button>
 
-      {/* 🔹 Sidebar unique */}
-      <motion.div
+      {/* ✅ Sidebar unique */}
+      <motion.aside
         animate={{ width: openMenu ? 240 : 80 }}
         transition={{ duration: 0.3 }}
-        className={`fixed top-0 left-0 h-full mt-[60px] bg-gradient-to-b from-blue-700 to-blue-900 text-white shadow-xl p-3 flex flex-col items-start z-40`}
+        className="fixed top-0 left-0 h-full bg-gradient-to-b from-blue-700 to-blue-900 text-white shadow-xl flex flex-col items-start p-3 z-40 mt-[60px] overflow-y-auto"
       >
         {/* Header */}
-        <div className="flex items-center justify-between w-full px-2 mb-8">
+        <div className="flex items-center justify-center w-full mb-8 mt-2">
           <AiOutlineDashboard className="text-2xl text-blue-200" />
-          {!isMobile && (
-            <button
-              onClick={() => setOpenMenu(!openMenu)}
-              className="text-blue-200 hover:text-white transition"
-            >
-              {openMenu ? <FaTimes size={18} /> : <FaBars size={18} />}
-            </button>
+          {openMenu && (
+            <h1 className="ml-2 font-semibold tracking-wide text-sm">
+              ADMIN PANEL
+            </h1>
           )}
         </div>
 
-        {/* Menu items */}
+        {/* Links */}
         <SidebarItem
           openMenu={openMenu}
           icon={<AiTwotoneSkin className="text-xl text-blue-200" />}
@@ -101,22 +90,21 @@ const LeftSideBar = () => {
           openMenu={openMenu}
           icon={<RiShoppingBag3Fill className="text-xl text-blue-200" />}
           title="ORDERS"
-          items={[
-            { label: "List Commandes", icon: <MdOutlineChecklistRtl />, path: "/listcommand" },
-          ]}
+          items={[{ label: "List Commandes", icon: <MdOutlineChecklistRtl />, path: "/listcommand" }]}
         />
 
         {/* Footer */}
         {openMenu && (
-          <div className="absolute bottom-5 left-0 w-full text-center text-sm text-blue-300">
+          <div className="absolute bottom-4 left-0 w-full text-center text-sm text-blue-300">
             <p className="opacity-70">&copy; 2025 Your Company</p>
           </div>
         )}
-      </motion.div>
+      </motion.aside>
     </>
   );
 };
 
+// Sous-composant menu
 const SidebarItem = ({ openMenu, icon, title, items }) => {
   const [open, setOpen] = useState(false);
 

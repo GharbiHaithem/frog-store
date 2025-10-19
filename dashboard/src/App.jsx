@@ -19,7 +19,7 @@ import { commande, commandes } from './features/commande/commandeSlice'
 function App() {
   const[
     
-    openMenu,setOpenMenu]= useState(false)
+    openMenu,setOpenMenu]= useState(true)
   const dispatch = useDispatch()
  useEffect(()=>{
 dispatch(commandes())
