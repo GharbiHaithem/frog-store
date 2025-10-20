@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import LeftSideBar from '../LeftSideBar/LeftSideBar'
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +9,9 @@ import moment from "moment";
 import "moment/locale/fr";
 moment.locale("fr");
 const Navbar = () => {
+  useEffect(()=>{
+     dispatch(commandes());
+  },[])
   const {commande}= useSelector(state=>state?.commande)
   return (
 <div className='w-full fixed top-0 left-0 z-50  h-[80px]   bg-[#1d4ed7] border text-white ' >
