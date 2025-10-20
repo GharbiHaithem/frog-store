@@ -40,6 +40,8 @@ export const deletecart = createAsyncThunk('cart/delete',async(data,thunkAPI)=>{
     }
 })
 export const resetState = createAction('/resetallstate')
+export const resetCartUuid = createAction('/resetCartUuid')
+
 export const cartSlice = createSlice({
     name:'cart',
     reducers:{},
@@ -108,6 +110,12 @@ export const cartSlice = createSlice({
         state.isSuccess = false
         state.isError = true
         state.cart= null
+     })
+     .addCase(resetCartUuid,(state,action)=>{
+          state.isLoading = false
+        state.isSuccess = false
+        state.isError = true
+       state.detailscart = null
      })
      .addCase(deletecart.pending,(state)=>{
         state.isLoading = true

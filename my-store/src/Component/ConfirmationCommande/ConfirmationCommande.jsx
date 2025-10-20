@@ -45,14 +45,14 @@ const navigate = useNavigate()
             localStorage.removeItem('user');
             localStorage.removeItem('step');
             localStorage.removeItem('disconnect');
-            localStorage.removeItem('cartUuid');
+            localStorage.setItem('cartUuid' , null);
             dispatch(resetState());
        },3500)
     } else {
       setTotalQuantity(0)
    
     }
-  }, [detailscart?.items, commande])
+  }, [detailscart?.items, commande,dispatch])
 const [showPdfModal, setShowPdfModal] = useState(false)
 
   return (

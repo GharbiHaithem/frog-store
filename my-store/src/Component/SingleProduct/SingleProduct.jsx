@@ -15,8 +15,9 @@ const SingleProduct = ({ setQuantity, quantity }) => {
   const { id } = useParams()
   const dispatch = useDispatch()
   const { cart, detailscart, isLoadingCart, isSuccess ,message} = useSelector(state => state?.cart)
-  const [uuidCart, setUuidCart] = useState(cart?.cartUuid)
   const cartUuid = localStorage.getItem('cartUuid')
+  const [uuidCart, setUuidCart] = useState(cartUuid)
+  
   useEffect(() => {
     dispatch(resetState())
     dispatch(productByid(id))
