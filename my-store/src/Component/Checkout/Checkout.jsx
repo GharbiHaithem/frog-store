@@ -269,10 +269,15 @@ const Checkout = ({userfromstorage,setUserRecover}) => {
    const handleSubmit3 = (e) => {
      e.preventDefault();
      dispatch(createcommande({user:userfromstorage?._id , cart:detailscart?._id,payementMethode:formData.payementMethode,adress:formData.adress,numtel:formData.numtel}))
-    setTimeout(()=>{
      navigate('/ConfirmationCommande')
+     setTimeout(()=>{
+  
      dispatch(deletecart(detailscart?._id))
-    localStorage.removeItem('cartUuid')
+       localStorage.removeItem('user');
+       localStorage.removeItem('step');
+       localStorage.removeItem('disconnect');
+       localStorage.removeItem('cartUuid');
+       dispatch(resetState());
     },1500)
      const newStep = {
      step1: true,

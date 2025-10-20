@@ -268,14 +268,23 @@ const Commande = ({userfromstorage,setUserRecover}) => {
    console.log(userfromstorage)
    const navigate = useNavigate()
 
-   const handleSubmit3 = (e) => {
+   const handleSubmit3 = async(e) => {
      e.preventDefault();
      dispatch(createcommande({user:userfromstorage?._id , cart:detailscart?._id,payementMethode:formData.payementMethode,adress:formData.adress,numtel:formData.numtel}))
     setTimeout(()=>{
-     navigate('/ConfirmationCommande')
+     navigate('/ConfirmationCommande').then(()=>{
+   dispatch(deletecart(detailscart?._id))
+         localStorage.removeItem('user');
+         localStorage.removeItem('step');
+         localStorage.removeItem('disconnect');
+       
+         dispatch(resetState());
+     })
+  
+     
+    },1000)
      dispatch(deletecart(detailscart?._id))
-    localStorage.removeItem('cartUuid')
-    },1500)
+       localStorage.removeItem('cartUuid');
      const newStep = {
      step1: true,
      step2: true,
@@ -286,17 +295,22 @@ const Commande = ({userfromstorage,setUserRecover}) => {
     
    
    };
+   const commandeState = useSelector(state=>state?.commande)
    useEffect(()=>{
-     if(disconnection===true ){
-       const newStep = {
-         step1: false,
-         step2: false,
-         step3: false
-       };
-       setStep(newStep);
-    dispatch(resetState())
-     }
-   },[disconnection,dispatch])
+    if(commandeState?.commande?.isSuccess){
+
+     navigate('/ConfirmationCommande')
+ 
+       dispatch(deletecart(detailscart?._id))
+         localStorage.removeItem('user');
+         localStorage.removeItem('step');
+         localStorage.removeItem('disconnect');
+         localStorage.removeItem('cartUuid');
+         dispatch(resetState());
+  
+    
+    }
+   },[dispatch,commandeState?.commande?.isSuccess,detailscart?._id,navigate])
  console.log(erreur)
 
 
