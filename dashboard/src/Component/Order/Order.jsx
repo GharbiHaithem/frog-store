@@ -123,22 +123,28 @@ const _data =allCommandes&& allCommandes?.map((c, i) => ({
       sum + ((current.product.prix - ((current.product.prix * current.product.promotion) / 100)) * current.quantity),
     0
   ) + ' DT',
+    status: c?.status || "Unread", // 🔹 ajoute le statut
   date: c?.createdAt,
 }));
 
 
   return (
-    <div className="container mx-auto mt-[60px] p-5">
+    <div className="container mx-auto mt-[10px] p-5">
    
 
       <div className="bg-white shadow-lg rounded-xl overflow-hidden">
-        <Table
-          columns={columns}
-          dataSource={_data}
-          pagination={{ pageSize: 3 }}
-          className="min-w-full"
-          rowClassName={() => "hover:bg-gray-50 transition-all duration-200"}
-        />
+   <Table
+  columns={columns}
+  dataSource={_data}
+  pagination={{ pageSize: 10 }}
+  className="min-w-full"
+  rowClassName={(record) =>
+    record.status === "Unread"
+      ? "bg-gray-100 font-semibold"
+      : "bg-white text-gray-500"
+  }
+/>
+
       </div>
     </div>
   );

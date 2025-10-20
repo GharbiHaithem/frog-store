@@ -41,6 +41,13 @@ const response = await axios.get(`${base_url2}/comande/all`)
 
 return await response.data
 }
-const commndeServices = {createCommande,commandeByUser,allcommandesUser,commandesbyid,allcommande
+
+export const editstatus = async(id)=>{
+  
+const response = await axios.put(`${base_url2}/edit/status/${id}`)
+
+return await response.data
+}
+const commndeServices = {createCommande,commandeByUser,allcommandesUser,commandesbyid,allcommande,editstatus
      }
 export default commndeServices

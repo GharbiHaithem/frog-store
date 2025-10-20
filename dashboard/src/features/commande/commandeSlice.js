@@ -46,6 +46,13 @@ export const commandes  = createAsyncThunk('commandes',async(thunkAPI)=>{
         return thunkAPI.rejectWithValue(error)
     }
 })
+export const editstatus  = createAsyncThunk('statusedit',async(id,thunkAPI)=>{
+    try {
+        return  await commandeService.editstatus(id)
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 export const commandeSlice = createSlice({
     name:'commande',
     reducers:{},
@@ -141,7 +148,35 @@ export const commandeSlice = createSlice({
             state.message = action.payload
          
         })
-      
+          .addCase(editstatus.pending,(state)=>{
+            state.isLoading = true
+        })
+      .addCase(editstatus.fulfilled, (state, action) => {
+  state.isLoading = false;
+  state.isSuccess = true;
+  state.isError = false;
+
+  const updatedCommande = action.payload; // la commande mise à jour (avec status = "read")
+
+  // Vérifie que state.commande est bien un tableau
+  if (Array.isArray(state.commande)) {
+    state.commande = state.commande.map(cmd =>
+      cmd._id === updatedCommande._id ? updatedCommande : cmd
+    );
+  } else {
+    // Si jamais ce n'est pas un tableau, on met à jour directement
+    state.commande = [updatedCommande];
+  }
+
+  console.log("✅ Commande mise à jour :", updatedCommande);
+})
+        .addCase(editstatus.rejected,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = false
+            state.isError = true
+            state.message = action.payload
+         
+        })
      
     }
 })
