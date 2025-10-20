@@ -7,8 +7,10 @@ import './Navbar.css'
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import "moment/locale/fr";
+import { commandes } from '../../features/commande/commandeSlice';
 moment.locale("fr");
 const Navbar = () => {
+  const dispatch = useDispatch()
   useEffect(()=>{
      dispatch(commandes());
   },[])
