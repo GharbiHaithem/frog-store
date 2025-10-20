@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import LeftSideBar from '../LeftSideBar/LeftSideBar'
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,13 +8,28 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import "moment/locale/fr";
 import { commandes } from '../../features/commande/commandeSlice';
+import { io } from 'socket.io-client';
+
+const socket = io('https://frog-store-server.onrender.com'); 
 moment.locale("fr");
 const Navbar = () => {
   const dispatch = useDispatch()
+   const [commandess, setCommandess] = useState([]);
+  
+    useEffect(() => {
+    socket.on('newCommande', (newCommande) => {
+      console.log('🆕 Nouvelle commande reçue :', newCommande);
+      setCommandess((prev) => [newCommande, ...prev]); // ✅ ajoute en haut de la liste
+    });
+  
+    return () => socket.off('newCommande');
+  }, []);
+  
   useEffect(()=>{
      dispatch(commandes());
-  },[])
+  },[dispatch])
   const {commande}= useSelector(state=>state?.commande)
+  const allCommandes = [...commandess, ...(Array.isArray(commande) ? commande : [])];
   return (
 <div className='w-full fixed top-0 left-0 z-50  h-[80px]   bg-[#1d4ed7] border text-white ' >
      <div className=' px-16 py-3  '>
@@ -28,7 +43,7 @@ const Navbar = () => {
 
   <Dropdown.Menu className='w-[300px]'>
  {
-  commande?.length > 0 && commande.map((c, i) => (
+  allCommandes?.length > 0 && allCommandes?.map((c, i) => (
     <Dropdown.Item
       key={i}
       href="#/action-1"
