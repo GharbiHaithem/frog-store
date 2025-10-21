@@ -420,44 +420,86 @@ const Commande = ({userfromstorage,setUserRecover}) => {
     </div>
 
     {/* --- Étape 2 : Adresse --- */}
-    <div className="bg-white shadow-md rounded-xl p-5 mb-6 border border-gray-100">
-      <h2
-        className={`flex items-center gap-2 text-sm font-semibold uppercase tracking-wide px-4 py-2 rounded-md ${
-          step?.step2 ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700"
-        }`}
-      >
-        <i className="fa-solid fa-location-dot"></i>
-        2. Adresse
-      </h2>
+<div className="bg-white shadow-lg rounded-xl p-6 mb-6 border border-gray-100">
+  <h2
+    className={`flex items-center gap-2 text-sm font-semibold uppercase tracking-wide px-4 py-2 rounded-md ${
+      step?.step2 ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700"
+    }`}
+  >
+    <i className="fa-solid fa-location-dot"></i>
+    2. Adresse
+  </h2>
 
-      {step.step1 && !step.step2 && (
-        <form onSubmit={handleSubmit1} className="flex flex-col gap-4 px-4 mt-3">
-          <textarea
-            name="adress"
-            value={formData.adress}
-            onChange={handleChange}
-            placeholder={`${erreur.adress ? erreur.adress : 'Adresse complète' }`}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition"
-          />
+  {step.step1 && !step.step2 && (
+    <form
+      onSubmit={handleSubmit1}
+      className="flex flex-col gap-5 px-4 mt-4"
+      noValidate
+    >
+      {/* Adresse */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Adresse complète
+        </label>
+        <textarea
+          name="adress"
+          value={formData.adress}
+          onChange={handleChange}
+          placeholder="Ex: 12 Rue Habib Bourguiba, Tunis"
+          className={`w-full px-4 py-3 rounded-lg border text-sm transition focus:ring-2 focus:ring-blue-500 ${
+            erreur.adress ? "border-red-500" : "border-gray-300"
+          }`}
+        />
+        {erreur.adress && (
+          <p className="text-xs text-red-500 mt-1">{erreur.adress}</p>
+        )}
+      </div>
+
+      {/* Numéro de téléphone */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Numéro de téléphone
+        </label>
+        <div className="flex items-center border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 transition">
+          <span className="bg-gray-100 text-gray-600 px-3 py-2 text-sm select-none">
+            +216
+          </span>
           <input
+            type="text"
             name="numtel"
+            maxLength={8}
+            pattern="[0-9]{8}"
             value={formData.numtel}
-            onChange={handleChange}
-            placeholder={`${erreur.numtel ? erreur.numtel  : 'Téléphone'}  `}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 transition"
+            onChange={(e) => {
+              // ✅ Empêche d'écrire autre chose que des chiffres
+              const onlyNumbers = e.target.value.replace(/\D/g, "");
+              setFormData({ ...formData, numtel: onlyNumbers });
+            }}
+            placeholder="XX XXX XXX"
+            className={`w-full px-3 py-2 text-sm outline-none ${
+              erreur.numtel ? "border-red-500" : "border-none"
+            }`}
           />
-          <div className="flex justify-end mt-3">
-            <button
-              type="submit"
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition"
-            >
-              Suivant
-              <i className="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </form>
-      )}
-    </div>
+        </div>
+        {erreur.numtel && (
+          <p className="text-xs text-red-500 mt-1">{erreur.numtel}</p>
+        )}
+      </div>
+
+      {/* Bouton Suivant */}
+      <div className="flex justify-end mt-2">
+        <button
+          type="submit"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-lg shadow-sm transition-all duration-200"
+        >
+          Suivant
+          <i className="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </form>
+  )}
+</div>
+
 
     {/* --- Étape 3 : Paiement --- */}
     <div className="bg-white shadow-md rounded-xl p-5  border border-gray-100">
