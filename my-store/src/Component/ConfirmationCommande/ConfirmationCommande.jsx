@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { commande as orderfn } from '../../features/commande/commandeSlice'
-import { cartDetails } from '../../features/cart/cartSlice'
+import { cartDetails, resetCartUuid } from '../../features/cart/cartSlice'
 import GeneratePDF from '../GeneratePdf/GeneratePdf'
 import i from '../../assets/spinner-icon-12071.gif'
 import axios from 'axios'
@@ -46,7 +46,8 @@ const navigate = useNavigate()
             localStorage.removeItem('step');
             localStorage.removeItem('disconnect');
             localStorage.setItem('cartUuid' , null);
-            dispatch(resetState());
+            dispatch(resetCartUuid());
+            
        },3500)
     } else {
       setTotalQuantity(0)

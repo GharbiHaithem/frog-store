@@ -115,7 +115,7 @@ export const cartSlice = createSlice({
           state.isLoading = false
         state.isSuccess = false
         state.isError = true
-       state.detailscart = null
+       state.cart = []
      })
      .addCase(deletecart.pending,(state)=>{
         state.isLoading = true
