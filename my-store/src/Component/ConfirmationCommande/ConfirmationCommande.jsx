@@ -47,13 +47,14 @@ const navigate = useNavigate()
             localStorage.removeItem('disconnect');
             localStorage.setItem('cartUuid' , null);
             dispatch(resetCartUuid());
+            navigate('/')
             
        },3500)
     } else {
       setTotalQuantity(0)
    
     }
-  }, [detailscart?.items, commande,dispatch])
+  }, [detailscart?.items, commande,dispatch,navigate])
 const [showPdfModal, setShowPdfModal] = useState(false)
 
   return (

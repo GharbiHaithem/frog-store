@@ -38,7 +38,7 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
       const totalprix = detailscart.items.reduce((sum, cur) => sum + (cur.product.prix - ((cur.product.prix * cur.product.promotion)/100)) * cur.quantity, 0)
       setTotalQuantity(totalQuantite)
       setTotalPrice(totalprix.toLocaleString())
-      setTT((totalprix + 7).toLocaleString())
+      setTT((totalprix + 8).toLocaleString())
     } else {
       setTotalQuantity(0)
       setTotalPrice(0)
@@ -138,7 +138,7 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
 
     <div className="flex justify-between text-sm">
       <span className="text-gray-600">Livraison</span>
-      <span className="font-semibold text-gray-800">7 TND</span>
+      <span className="font-semibold text-gray-800">8 TND</span>
     </div>
 
     <div className="flex justify-between items-center font-bold text-lg border-t pt-4">
