@@ -9,6 +9,7 @@ import moment from "moment";
 import "moment/locale/fr";
 import { commandes, editstatus } from '../../features/commande/commandeSlice';
 import { io } from 'socket.io-client';
+import { useNavigate } from 'react-router';
 
 const socket = io('https://frog-store-server.onrender.com'); 
 moment.locale("fr");
@@ -24,7 +25,7 @@ const Navbar = () => {
   
     return () => socket.off('newCommande');
   }, []);
-  
+  const navigate = useNavigate()
   useEffect(()=>{
      dispatch(commandes());
   },[dispatch])
@@ -47,7 +48,7 @@ const allCommandes = [
  <Dropdown>
   <Dropdown.Toggle  className='relative'>
   <IoNotificationsOutline  style={{fontSize:'25px'}}/>
-  <div className='absolute w-6 h-6 rounded-full bottom-0 text-center text-xs right-[-5px]  border-2 bg-red-800 text-white '>{allCommandes
+  <div onClick={()=>navigate('/listcommand')}  className='absolute w-6 h-6 rounded-full bottom-0 text-center text-xs right-[-5px]  border-2 bg-red-800 text-white '>{allCommandes
     ?.filter(c => c?.status === "Unread")?.length   }</div>
   </Dropdown.Toggle>
 

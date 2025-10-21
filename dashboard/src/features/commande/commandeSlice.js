@@ -53,6 +53,13 @@ export const editstatus  = createAsyncThunk('statusedit',async(id,thunkAPI)=>{
         return thunkAPI.rejectWithValue(error)
     }
 })
+export const deleteorder  = createAsyncThunk('delorder',async(id,thunkAPI)=>{
+    try {
+        return  await commandeService.delorder(id)
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 export const commandeSlice = createSlice({
     name:'commande',
     reducers:{},
@@ -171,6 +178,25 @@ export const commandeSlice = createSlice({
   console.log("✅ Commande mise à jour :", updatedCommande);
 })
         .addCase(editstatus.rejected,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = false
+            state.isError = true
+            state.message = action.payload
+         
+        })
+            .addCase(deleteorder.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(deleteorder.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = true
+            const deletedOrder = action.payload._id
+            state.commande =  state.commande.filter((cmd) =>cmd._id !== deletedOrder);
+            console.log(action.payload)
+            state.isError = false
+          
+        })
+        .addCase(deleteorder.rejected,(state,action)=>{
             state.isLoading = false
             state.isSuccess = false
             state.isError = true

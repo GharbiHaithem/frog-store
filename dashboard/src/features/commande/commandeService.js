@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const base_url2 ="https://frog-store-server.onrender.com/api"
+const base_url2 ="http://localhost:5000/api"
 const API = axios.create({baseURL:base_url2});
 API.interceptors.request.use((req)=>{
    if(localStorage.getItem('customer')){
@@ -48,6 +48,12 @@ const response = await axios.put(`${base_url2}/edit/status/${id}`)
 
 return await response.data
 }
-const commndeServices = {createCommande,commandeByUser,allcommandesUser,commandesbyid,allcommande,editstatus
+export const delorder = async(id)=>{
+    console.log(id)
+const response = await axios.delete(`${base_url2}/commande/${id}`)
+
+return await response.data
+}
+const commndeServices = {createCommande,commandeByUser,allcommandesUser,commandesbyid,allcommande,editstatus,delorder
      }
 export default commndeServices
