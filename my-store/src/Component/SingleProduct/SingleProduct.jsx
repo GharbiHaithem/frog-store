@@ -30,7 +30,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
   useEffect(() => {
     if (cart?.cartUuid) {
       localStorage.setItem('cartUuid', cart?.cartUuid);
-      alert('hiiiii')
+     
       setUuidCart(localStorage.getItem('cartUuid'))
     }
     else{
