@@ -29,7 +29,15 @@ const Navbar = () => {
      dispatch(commandes());
   },[dispatch])
   const {commande}= useSelector(state=>state?.commande)
-  const allCommandes = [...commandess, ...(Array.isArray(commande) ? commande : [])];
+const allCommandes = [
+  ...commandess,
+  ...(Array.isArray(commande) ? commande : []),
+].reduce((acc, curr) => {
+  if (!acc.find(c => c._id === curr._id)) {
+    acc.push(curr);
+  }
+  return acc;
+}, []);
   return (
 <div className='w-full fixed top-0 left-0 z-50  h-[80px]   bg-[#1d4ed7] border text-white ' >
      <div className=' px-16 py-3  '>

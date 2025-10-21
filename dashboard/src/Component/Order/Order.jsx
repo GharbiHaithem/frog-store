@@ -129,11 +129,12 @@ const _data =allCommandes&& allCommandes?.map((c, i) => ({
 
 
   return (
-    <div className="container mx-auto mt-[10px] p-5">
+    <div className="container mx-auto mt-[10px] w-full p-5">
    
 
-      <div className="bg-white shadow-lg rounded-xl overflow-hidden">
-   <Table
+      <div className="bg-white w-full shadow-lg rounded-xl overflow-hidden">
+  <Table
+  
   columns={columns}
   dataSource={_data}
   pagination={{ pageSize: 10 }}
@@ -143,7 +144,9 @@ const _data =allCommandes&& allCommandes?.map((c, i) => ({
       ? "bg-gray-100 font-semibold"
       : "bg-white text-gray-500"
   }
+  scroll={{ x: 'max-content', y: 500 }} // ✅ permet le scroll horizontal et vertical
 />
+
 
       </div>
     </div>
