@@ -193,7 +193,36 @@ console.log(totalQuantity)
             <div className='my-3 flex flex-col gap-1'>
               <span className=' text-xl font-extralight'>Quantity</span>
 
-           <InputQuantity  setQuantity={setQuantity} qtyStk={qtyStock}/>
+         <InputQuantity setQuantity={setQuantity} qtyStk={qtyStock}/>
+
+{/* Couleurs disponibles pour la taille sélectionnée */}
+{size && (
+  <div className="mt-4 flex flex-col gap-2">
+    <span className="text-xl font-extralight">Couleurs disponibles</span>
+    <div className="flex flex-wrap gap-3 bg-white p-3 rounded-2xl border border-gray-200 shadow-sm">
+      {productbyid?.sizes
+        ?.find((s) => s.size === size)
+        ?.color?.map((col, index) => (
+          <div
+            key={index}
+            className="w-10 h-10 rounded-full cursor-pointer border-2 border-gray-300 hover:border-black shadow-sm transition-all duration-300"
+            style={{ backgroundColor: col }}
+            title={col}
+          ></div>
+        ))}
+      {productbyid?.sizes?.find((s) => s.size === size)?.color?.length === 0 && (
+        <span className="text-gray-500 text-sm italic">Aucune couleur disponible</span>
+      )}
+    </div>
+  </div>
+)}
+
+{message && (
+  <div className="mt-3 flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 shadow-sm animate-pulse">
+    ...
+  </div>
+)}
+
 {message && (
   <div className="mt-3 flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 shadow-sm animate-pulse">
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
