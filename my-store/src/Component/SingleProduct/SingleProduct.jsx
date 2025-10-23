@@ -77,6 +77,8 @@ useEffect(() => {
   0
 );
 console.log(totalQuantity)
+const [color, setColor] = useState(null);
+console.log(color)
   return (
      <>
       
@@ -205,13 +207,20 @@ console.log(totalQuantity)
         ?.color?.map((col, index) => (
           <div
             key={index}
-            className="w-10 h-10 rounded-full cursor-pointer border-2 border-gray-300 hover:border-black shadow-sm transition-all duration-300"
+            onClick={() => setColor(col)} // ✅ sélection de la couleur
+            className={`w-10 h-10 rounded-full cursor-pointer border-4 transition-all duration-300 ${
+              color === col
+                ? "border-black scale-110 shadow-lg"
+                : "border-gray-200 hover:border-gray-400"
+            }`}
             style={{ backgroundColor: col }}
             title={col}
           ></div>
         ))}
       {productbyid?.sizes?.find((s) => s.size === size)?.color?.length === 0 && (
-        <span className="text-gray-500 text-sm italic">Aucune couleur disponible</span>
+        <span className="text-gray-500 text-sm italic">
+          Aucune couleur disponible
+        </span>
       )}
     </div>
   </div>
@@ -236,32 +245,54 @@ console.log(totalQuantity)
     
 
             <div className='mt-3 flex flex-col gap-4'>
-          <button
-  disabled={qtyStock === 0}
-  className={`${qtyStock === 0 ? 'bg-gray-300 text-white' : 'bg-white text-black'} text-sm font-light cursor-pointer rounded-lg border p-4`}
+       <button
+  disabled={qtyStock === 0 || !color}
+  className={`${
+    qtyStock === 0 || !color
+      ? 'bg-gray-300 text-white cursor-not-allowed'
+      : 'bg-white text-black hover:bg-gray-100'
+  } text-sm font-light rounded-lg border p-4 transition-all`}
   onClick={() => {
+    if (!color) return alert("Veuillez choisir une couleur !");
     dispatch(createcart({
       cartUuid: uuidCart,
       productId: productbyid?._id,
       quantity,
-      size
+      size,
+      color, // ✅ on envoie la couleur
     }));
-    setTimeout(() => { dispatch(cartDetails(cartUuid))
-       
-         dispatch(productByid(id))
-         setQuantity(1);
-     }, 3000);
+    setTimeout(() => {
+      dispatch(cartDetails(cartUuid));
+      dispatch(productByid(id));
+      setQuantity(1);
+    }, 3000);
   }}
 >
   Ajouter au panier
 </button>
 
-              <button className='bg-black cursor-pointer text-white text-sm font-light border rounded-lg p-4' onClick={() =>{
-                dispatch(createcart({ cartUuid: uuidCart, productId: productbyid?._id, quantity ,size})) 
-                   setTimeout(()=>{ dispatch(cartDetails(cartUuid))
-                    setTimeout(()=>{   navigate('/checkout')},2000)
-                   },5000)
-             }}   disabled={qtyStock === 0}>Acheter maintenant</button>
+
+           <button
+  className="bg-black cursor-pointer text-white text-sm font-light border rounded-lg p-4"
+  onClick={() => {
+    if (!color) return alert("Veuillez choisir une couleur !");
+    dispatch(createcart({
+      cartUuid: uuidCart,
+      productId: productbyid?._id,
+      quantity,
+      size,
+      color, // ✅ il faut aussi le transmettre ici
+    }));
+    setTimeout(() => {
+      dispatch(cartDetails(cartUuid));
+      setTimeout(() => navigate('/checkout'), 2000);
+    }, 3000);
+  }}
+  disabled={qtyStock === 0 || !color}
+>
+  Acheter maintenant
+</button>
+
                      {/* --- Description Bande --- */}
 <div className="mt-8 bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300">
   <h4 className="text-lg font-semibold text-gray-800 mb-2 border-b border-gray-300 pb-2">

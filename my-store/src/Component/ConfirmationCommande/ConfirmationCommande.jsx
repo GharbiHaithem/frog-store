@@ -80,29 +80,30 @@ const [showPdfModal, setShowPdfModal] = useState(false)
             <div className="flex md:flex-row flex-col gap-8">
               {/* Liste des produits */}
               <div className="flex md:w-[60%] w-full flex-col gap-6">
-                {commande?.commande?.cart?.items?.map((prod) => (
-                  <div
-                    key={prod?._id}
-                    className="flex justify-between items-center border rounded-lg p-1 shadow-sm hover:shadow-md transition"
-                  >
-                    <div className="flex items-center gap-2 w-[30%]">
-                      <img
-                        className="w-[70px] h-[70px] rounded-md object-cover border"
-                        src={prod?.product?.images_product[0]?.url}
-                        alt={prod?.product?.titre}
-                      />
-                      <span className="text-sm font-medium">{prod?.product?.titre}</span>
-                    </div>
-                    <div className='text-white bg-black p-2 rounded-full w-10 text-center text-xl font-semibold'>
-                      {prod?.size}
-                    </div>
-                    <div className="flex items-center justify-between gap-6 text-sm w-1/2">
-                      <span>{(prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))} TND</span>
-                      <span>x {prod?.quantity}</span>
-                      <span className="font-semibold">{prod?.quantity * (prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))} TND</span>
-                    </div>
-                  </div>
-                ))}
+            {commande?.commande?.cart?.items?.map((prod) => (
+  <div
+    key={prod?._id}
+    className="flex justify-between items-center border rounded-lg p-1 shadow-sm hover:shadow-md transition"
+  >
+    <div className="flex items-center gap-2 w-[30%]">
+      <img
+        className="w-[70px] h-[70px] rounded-md object-cover border"
+        src={prod?.product?.images_product[0]?.url}
+        alt={prod?.product?.titre}
+      />
+      <span className="text-sm font-medium">{prod?.product?.titre}</span>
+    </div>
+    <div className='text-white bg-black p-2 rounded-full w-10 text-center text-xl font-semibold'>
+      {prod?.size}
+    </div>
+    <div className="flex items-center justify-between gap-6 text-sm w-1/2">
+      <span>{(prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))} TND</span>
+      <span>x {prod?.quantity}</span>
+      <span className="font-semibold">{prod?.quantity * (prod?.product?.prix-((prod.product.prix* prod.product.promotion)/100))} TND</span>
+    </div>
+  </div>
+))}
+
 
                 {/* ✅ Résumé prix */}
                 <div className="mt-5 border-t pt-4 text-sm">
