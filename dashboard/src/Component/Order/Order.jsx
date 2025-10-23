@@ -47,7 +47,7 @@ const ListProduct = () => {
     items:
       c?.cart?.items?.map(
         art =>
-          `${art?.product?.titre || 'Produit inconnu'} - ${art?.product?.prix || 0} DT * ${art?.quantity}`
+          `${art?.product?.titre || 'Produit inconnu'} - ${art?.product?.prix || 0} DT * ${art?.quantity} ====> ${art?.color} `
       ) || [],
     size: c?.cart?.items?.map(art => art?.size) || [],
     priceTotal:
@@ -83,7 +83,7 @@ const ListProduct = () => {
                 key={i}
                 className="bg-blue-50 text-blue-800 px-3 py-1 rounded-lg text-sm font-medium shadow-sm"
               >
-                {item}
+                {item} 
               </span>
             ))
           ) : (
