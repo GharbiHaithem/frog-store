@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import NavBar from './Component/NavBar/NavBar'
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
@@ -28,8 +28,9 @@ import { CiLinkedin } from "react-icons/ci";
 import { PiWhatsappLogoThin } from "react-icons/pi";
 
 
-
+import { io } from 'socket.io-client';
 function App() {
+  
   const [openMenu, setOpenMenu] = useState(false)
   const userfromstorage = JSON.parse(localStorage.getItem('user'))|| undefined
   const navigate = useNavigate()
@@ -102,8 +103,6 @@ dispatch(cartDetails(cartUuid))
           const isSmall = useMediaQuery({ maxWidth: 640 });
           const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
 
- 
-    
   return (
     <HelmetProvider>
       

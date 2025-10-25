@@ -45,7 +45,7 @@ useEffect(()=>{
      dispatch(cartDetails(cartUuid))
       console.log(detailscart?.items?.length)
   }
-},[isSuccess,dispatch])
+},[isSuccess,dispatch,cartUuid])
 
 
   console.log(detailscart?.items?.length)

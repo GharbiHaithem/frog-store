@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import x from "../../assets/aqw-removebg-preview.png";
 import { CiSearch, CiUser, CiShop, CiMenuBurger } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import RotatingText from '../RotatingText/RotatingText'
 import { useMediaQuery } from "react-responsive";
+import { io } from 'socket.io-client';
 const NavBar = ({ setOpenMenu, openMenu, setOpenSearch, cartitem }) => {
+  const socket = io('http://localhost:5000');
   const navigate = useNavigate();
   const location = useLocation();
   const isSmall = useMediaQuery({ maxWidth: 640 });
   const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 2024 });
+
   return (
     <>
     <RotatingText/>
