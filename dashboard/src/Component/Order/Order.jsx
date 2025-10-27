@@ -50,12 +50,16 @@ const ListProduct = () => {
           `${art?.product?.titre || 'Produit inconnu'} - ${art?.product?.prix || 0} DT * ${art?.quantity} ====> ${art?.color} `
       ) || [],
     size: c?.cart?.items?.map(art => art?.size) || [],
-    priceTotal:
-      c?.cart?.items?.reduce(
-        (sum, current) =>
-          sum + ((current.product.prix - ((current.product.prix * current.product.promotion) / 100)) * current.quantity),
-        0
-      ) + ' DT',
+ priceTotal:
+  c?.cart?.items?.reduce(
+    (sum, current) => {
+      const prix = current?.product?.prix || 0;
+      const promo = current?.product?.promotion || 0;
+      return sum + ((prix - (prix * promo) / 100) * (current?.quantity || 0));
+    },
+    0
+  ) + ' DT',
+
     status: c?.status || "Unread",
     date: c?.createdAt,
   }));
