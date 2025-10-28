@@ -112,7 +112,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
             <div className="w-full h-auto rounded-2xl overflow-hidden shadow-sm">
               <img
                 src={imageSelected}
-                className="w-full md:h-full h-[350px] object-cover hover:scale-105 transition-transform duration-300"
+                className="w-full md:h-[450px] h-[250px] object-contain hover:scale-105 transition-transform duration-300"
                 alt="product"
               />
             </div>
@@ -121,12 +121,12 @@ const SingleProduct = ({ setQuantity, quantity }) => {
               {productbyid?.images_product?.map((img, idx) => (
                 <div
                   key={idx}
-                  className="w-full h-[110px] rounded-xl overflow-hidden"
+                  className="w-full h-[150px]  "
                   onClick={() => setImageSelected(img.url)}
                 >
                   <img
                     src={img.url}
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover border rounded-xl hover:border hover:scale-110 transition-transform duration-300"
                     alt={`product-${idx}`}
                   />
                 </div>
@@ -192,7 +192,11 @@ const SingleProduct = ({ setQuantity, quantity }) => {
                 <span className="text-xl font-extralight">Quantity</span>
                 <InputQuantity setQuantity={setQuantity} qtyStk={qtyStock} />
               </div>
-
+    {message && (
+        <div className="mt-3 bg-green-100 text-green-800 px-4 py-2 rounded-md shadow-md transition-opacity duration-500">
+          {message}
+        </div>
+      )}
               {/* --- Colors --- */}
               {size && (
                 <div className="mt-4 flex flex-col gap-2">

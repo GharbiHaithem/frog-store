@@ -15,7 +15,7 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
     dispatch(cartDetails(cartUuid))
   }, [dispatch, cartUuid])
 
-  const { detailscart } = useSelector(state => state?.cart)
+  const { detailscart , isSuccess } = useSelector(state => state?.cart)
 
   const handleQuantityChange = (productId, newQuantity) => {
     setQuantity(prev => ({ ...prev, [productId]: newQuantity }))
@@ -23,11 +23,13 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
 
   const handledeletefromcarte = (cartid, productid) => {
     dispatch(deleteproductfromcart({ id: cartid, productId: productid }))
-    setTimeout(() => {
-      dispatch(cartDetails(cartUuid))
-    }, 2000)
-  }
 
+  }
+useEffect(()=>{
+  if(isSuccess){
+         dispatch(cartDetails(cartUuid))
+  }
+},[isSuccess,cartUuid,dispatch])
   const [totalQuantity, setTotalQuantity] = useState(0)
   const [totalPrice, setTotalPrice] = useState(0)
   const [tt, setTT] = useState(0)
@@ -69,11 +71,14 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
                     
                     {/* Image et titre */}
                     <div className="flex items-center gap-4 w-full md:w-1/2">
-                      <img
+                     <div className='relative'>
+                       <img
                         src={cart?.product?.images_product[0]?.url}
                         alt={cart?.product?.titre}
-                        className="w-[100px] h-[100px] object-cover rounded-lg border"
+                        className="w-[100px] h-[100px] hover:scale-105 md:w-[200px] md:h-[150px]  object-cover rounded-lg border"
                       />
+                      <span className='absolute right-[-10px] top-[-10px] w-10 h-10 border-2 border-gray-700 text-black bg-white rounded-lg flex items-center justify-center'>{quantity[cart.product._id] || cart.quantity}</span>
+                     </div>
                       <div className="flex flex-col w-full gap-1">
                         <span className="uppercase font-semibold text-sm">{cart.product.titre}</span>
                       <div className="flex justify-between gap-3 w-[100%] items-center mt-2">
@@ -97,10 +102,10 @@ const Cart = ({ userfromstorage, setQuantity, quantity, handleGenerateAndUpload 
 
                     {/* Quantité + total + supprimer */}
                     <div className="flex items-center justify-between w-full md:w-1/2 gap-4">
-                      <InputQuantity
+                      {/* <InputQuantity
                         quantity={quantity[cart.product._id] || cart.quantity}
                         setQuantity={(newQuantity) => handleQuantityChange(cart.product._id, newQuantity)}
-                      />
+                      /> */}
                       <span className="font-semibold text-gray-700">{cart.product.prix * cart.quantity} TND</span>
                       <div
                         onClick={() => handledeletefromcarte(detailscart._id, cart.product._id)}
