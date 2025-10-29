@@ -93,7 +93,7 @@ export const cartSlice = createSlice({
         .addCase(deleteproductfromcart.fulfilled,(state,action)=>{
             state.isLoading = false
             state.isSuccess = true
-            state.detailscart =  action.payload.cart;
+            state.detailscart =  action.payload.updatedCart;
             console.log(action.payload)
             state.isError = false
            toast.warning(`${action.payload.removedItem.product.titre} supprimé`)

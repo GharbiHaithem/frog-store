@@ -112,7 +112,7 @@ const SingleProduct = ({ setQuantity, quantity }) => {
             <div className="w-full h-auto rounded-2xl overflow-hidden shadow-sm">
               <img
                 src={imageSelected}
-                className="w-full md:h-[450px] h-[250px] object-contain hover:scale-105 transition-transform duration-300"
+                className="w-full md:h-[450px] h-[250px] object-cover hover:scale-105 transition-transform duration-300"
                 alt="product"
               />
             </div>
